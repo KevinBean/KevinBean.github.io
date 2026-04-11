@@ -95,13 +95,13 @@
 <div id="podcast-chatgpt_4o_image_generation" style="margin:12px 0"></div>
 <noscript>
 <audio controls style="width:100%">
-  <source src="../assets/media/podcast-chatgpt-4o-image-generation.mp3" type="audio/mpeg">
+  <source src="../media/podcast-chatgpt-4o-image-generation.mp3" type="audio/mpeg">
 </audio>
 </noscript>
 <script>
 (function(){
   var el = document.getElementById("podcast-chatgpt_4o_image_generation");
-  var mb = (location.pathname.indexOf("/posts/") >= 0) ? "../assets/media/" : "assets/media/";
+  var mb = (location.pathname.indexOf("/posts/") >= 0) ? "../media/" : "media/";
   function go(d) {
     d.audioUrl = mb + "podcast-chatgpt-4o-image-generation.mp3";
     (d.scenes || []).forEach(function(sc) { if (sc.image_file) sc.image_url = mb + sc.image_file; });

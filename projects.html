@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Bin Bian's Site</title>
+  <meta name="description" content="Building a personal AI OS from scratch — 60+ apps with event-driven architecture, plugin system, and self-extending capabilities via LLM-powered code generation">
+  <meta property="og:title" content="Projects">
+  <meta property="og:description" content="Building a personal AI OS from scratch — 60+ apps with event-driven architecture, plugin system, and self-extending capabilities via LLM-powered code generation">
+  <meta property="og:type" content="article">
+  <link rel="stylesheet" href="site.css">
+  <link rel="alternate" type="application/atom+xml" title="Bin Bian's Site Feed" href="atom.xml">
+  
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="max-width:900px">
+      <a href="index.html" class="site-name">Bin Bian's Site</a>
+      <nav class="site-nav">
+        <a href="index.html">Blog</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+        <a href="tags.html">Tags</a>
+        <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+      </nav>
+    </div>
+  </header>
+  <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <input class="search-input" id="search-input" placeholder="Search posts..." oninput="doSearch(this.value)" autofocus>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <main class="container">
+    <article>
+  <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:20px;font-weight:700">Projects</h1>
+  <div class="article">
+    <h2 id="ai-automation">AI &amp; Automation<a class="header-link" href="#ai-automation" title="Permanent link">&para;</a></h2>
+<h3 id="personal-ai-operating-system">Personal AI Operating System<a class="header-link" href="#personal-ai-operating-system" title="Permanent link">&para;</a></h3>
+<p>Building a personal AI OS from scratch — 60+ apps with event-driven architecture, plugin system, and self-extending capabilities via LLM-powered code generation. Features include AI podcast studio, knowledge management, and this blog's publishing pipeline. Open-source release coming soon.</p>
+<h3 id="ai-podcast-studio">AI Podcast Studio<a class="header-link" href="#ai-podcast-studio" title="Permanent link">&para;</a></h3>
+<p>Dual-host AI podcast generation from any topic or document. LLM writes conversational scripts, text-to-speech synthesizes natural voices, AI generates scene images, then assembles everything into video. Fully automated pipeline.</p>
+<h3 id="ai-music-creation">AI Music Creation<a class="header-link" href="#ai-music-creation" title="Permanent link">&para;</a></h3>
+<p>Exploring AI-assisted music composition — generating original songs with AI tools, experimenting with different genres and styles.</p>
+<hr />
+<h2 id="engineering">Engineering<a class="header-link" href="#engineering" title="Permanent link">&para;</a></h2>
+<p>Over 15 years in power systems engineering across transmission, distribution, substations, and renewables — in both China and Australia.</p>
+<h3 id="key-experience-areas">Key Experience Areas<a class="header-link" href="#key-experience-areas" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>High voltage cable systems</strong> — Design, thermal analysis, sheath voltage studies, and safety assessments for cable tunnels and duct systems</li>
+<li><strong>Substation &amp; protection</strong> — Protection coordination, earthing design, and BESS integration for utility-scale projects</li>
+<li><strong>Transmission line design</strong> — Overhead line routing, structural analysis, and electromagnetic field studies</li>
+<li><strong>Software development for engineering</strong> — Contributed to commercial engineering software products, including calculation engines, UI/UX design, and AI feature integration</li>
+<li><strong>Digital transformation</strong> — Applying Python automation and AI to streamline traditional engineering workflows</li>
+</ul>
+  </div>
+</article>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      Powered by <a href="https://github.com/anthropics/emptyos">EmptyOS</a>
+    </div>
+  </footer>
+  <script>
+  // Theme toggle
+  (function(){
+    try{var t=localStorage.getItem('site-theme');if(t==='alt-theme')document.body.classList.add('alt-theme');}catch(e){}
+  })();
+  function toggleTheme(){
+    document.body.classList.toggle('alt-theme');
+    try{localStorage.setItem('site-theme',document.body.classList.contains('alt-theme')?'alt-theme':'dark');}catch(e){}
+    var btn=document.querySelector('.theme-toggle');
+    btn.innerHTML=document.body.classList.contains('alt-theme')?'&#9788;':'&#9790;';
+  }
+  // Search
+  var _searchIndex=null;
+  function openSearch(){
+    document.getElementById('search-overlay').classList.add('open');
+    document.getElementById('search-input').focus();
+  }
+  function closeSearch(){
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch();
+  });
+  function doSearch(q){
+    if(!_searchIndex){
+      var searchUrl='search-index.json';
+      if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
+      fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
+      return;
+    }
+    var el=document.getElementById('search-results');
+    if(!q.trim()){el.innerHTML='';return;}
+    var lq=q.toLowerCase();
+    var hits=_searchIndex.filter(function(p){
+      return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
+    }).slice(0,8);
+    el.innerHTML=hits.map(function(p){
+      var href=p.type==='page'?(''+p.slug+'.html'):(''+'posts/'+p.slug+'.html');
+      return '<a class="search-result" href="'+href+'">'
+        +'<div class="search-result-title">'+p.title+'</div>'
+        +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';
+    }).join('')||'<div style="padding:12px;color:var(--text-muted);font-size:0.85rem">No results</div>';
+  }
+  </script>
+</body>
+</html>

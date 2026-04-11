@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Using BPMN to Design and Coordinate AI Agent Workflows — Bin Bian's Site</title>
+  <meta name="description" content="How BPMN can serve as a blueprint for coordinating multiple AI agents, demonstrated through an emergency response triage system.">
+  <meta property="og:title" content="Using BPMN to Design and Coordinate AI Agent Workflows">
+  <meta property="og:description" content="How BPMN can serve as a blueprint for coordinating multiple AI agents, demonstrated through an emergency response triage system.">
+  <meta property="og:type" content="article">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="alternate" type="application/atom+xml" title="Bin Bian's Site Feed" href="../atom.xml">
+  
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="max-width:900px">
+      <a href="../index.html" class="site-name">Bin Bian's Site</a>
+      <nav class="site-nav">
+        <a href="../index.html">Blog</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../tags.html">Tags</a>
+        <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+      </nav>
+    </div>
+  </header>
+  <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <input class="search-input" id="search-input" placeholder="Search posts..." oninput="doSearch(this.value)" autofocus>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <main class="container">
+    <article>
+  
+  
+  <div class="post-layout">
+    <div>
+      <div style="margin-bottom:24px">
+        <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:8px">Using BPMN to Design and Coordinate AI Agent Workflows</h1>
+        <div class="post-meta">2025-04-05 &middot; 7 min read <a href="../tags/ai.html" class="tag">AI</a> <a href="../tags/agents.html" class="tag">agents</a> <a href="../tags/workflow.html" class="tag">workflow</a> <a href="../tags/emergency-response.html" class="tag">emergency-response</a></div>
+      </div>
+      <div class="article">
+        <h2 id="introduction">Introduction<a class="header-link" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>In my previous work supporting a disaster response coordination team, I saw firsthand how quickly systems can become overwhelmed during bushfires and floods. Volunteers were often undertrained, and workflows broke down under pressure. This experience inspired me to explore how structured AI workflows — guided by BPMN and powered by AI agents — can offer scalable, reliable support in emergency situations.</p>
+<p>As the adoption of AI continues to expand in real-world applications, a major challenge lies in effectively coordinating multiple AI agents to perform complex, real-world tasks. Business Process Model and Notation (BPMN) offers a powerful way to design, visualize, and orchestrate these multi-agent systems with clarity and structure. This article explores how BPMN can be used as a foundation for designing AI agent workflows, with a focus on a real-world emergency response scenario: triaging resident-reported incidents during bushfires and floods.</p>
+<hr />
+<h2 id="why-use-bpmn-for-ai-agent-coordination">Why Use BPMN for AI Agent Coordination?<a class="header-link" href="#why-use-bpmn-for-ai-agent-coordination" title="Permanent link">&para;</a></h2>
+<p>BPMN is a standardized graphical notation that illustrates the steps of a business process. It can also serve as a blueprint for AI-based automation. When combined with AI agents, BPMN provides:</p>
+<ul>
+<li><strong>Visual clarity:</strong> Easy-to-understand diagrams for non-technical stakeholders</li>
+<li><strong>Defined roles:</strong> Each task in the diagram can be assigned to a specific AI agent</li>
+<li><strong>Debuggability:</strong> Failures or bottlenecks can be easily traced</li>
+<li><strong>Scalability:</strong> Modular agent design allows for future expansion or replacement</li>
+</ul>
+<p>BPMN helps bridge the gap between business process owners and AI engineers, making it a valuable tool in cross-functional projects.</p>
+<hr />
+<h2 id="real-world-example-emergency-incident-triage-workflow">Real-World Example: Emergency Incident Triage Workflow<a class="header-link" href="#real-world-example-emergency-incident-triage-workflow" title="Permanent link">&para;</a></h2>
+<p>In bushfire or flood emergencies, residents often submit incident reports to community centers. These reports must be quickly understood, categorized, and routed to appropriate response teams. Traditionally, this process is handled by volunteers, many of whom may be unfamiliar with emergency protocols or uncomfortable using complex systems.</p>
+<h3 id="problems-in-the-traditional-workflow">Problems in the Traditional Workflow<a class="header-link" href="#problems-in-the-traditional-workflow" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Volunteer inconsistency</strong>: Untrained volunteers may misclassify or mishandle reports.</li>
+<li><strong>Computer literacy gaps</strong>: Some staff struggle with digital systems under pressure.</li>
+<li><strong>Manual bottlenecks</strong>: Delays in reading, categorizing, and dispatching reports.</li>
+<li><strong>Fatigue and overload</strong>: Stress and high volume reduce decision quality.</li>
+</ol>
+<h3 id="benefits-of-ai-agent-support">Benefits of AI Agent Support<a class="header-link" href="#benefits-of-ai-agent-support" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consistent triage decisions</li>
+<li>Faster response times</li>
+<li>Reduced training burden on volunteers</li>
+<li>Natural language input accepted</li>
+<li>Traceable decision-making and handoffs</li>
+</ul>
+<hr />
+<h2 id="bpmn-model-emergency-incident-triage">BPMN Model: Emergency Incident Triage<a class="header-link" href="#bpmn-model-emergency-incident-triage" title="Permanent link">&para;</a></h2>
+<p>To implement the BPMN model using the OpenAI Agents SDK, we must determine which tasks are best handled by full agents and which can be managed as lightweight function tools.</p>
+<p><strong>Process Name:</strong> AI-Assisted Emergency Report Triage</p>
+<div class="highlight"><pre><span></span><code>[Start: Resident Report Received]
+            |
+[Summarize Incident] - AI Agent: Incident Summarizer
+            |
+[Classify Type] - AI Agent: Disaster Classifier
+            |
+[Determine Urgency] - AI Agent: Urgency Assessor
+            |
+[Identify Needs] - AI Agent: Needs Extractor
+            |
+[Log to System] - Function Tool in Dispatcher Agent
+            |
+[Assign to Response Team] - Function Tool in Dispatcher Agent
+            |
+[End: Task Created or Routed]
+</code></pre></div>
+
+<p><strong>Optional Path:</strong> Low-confidence results are flagged for human review.</p>
+<hr />
+<h2 id="considerations-for-agents-vs-function-tools">Considerations for Agents vs. Function Tools<a class="header-link" href="#considerations-for-agents-vs-function-tools" title="Permanent link">&para;</a></h2>
+<p>When building AI workflows using the OpenAI Agents SDK, it's important to decide whether a task should be handled by a standalone agent or by a function tool within an agent:</p>
+<ul>
+<li><strong>Create a new agent</strong> when the task requires complex reasoning, understanding of natural language, or independent decision-making (e.g., summarization, classification).</li>
+<li><strong>Use a function tool</strong> when the task is procedural, utility-based, or easily scriptable (e.g., logging data, routing based on pre-defined rules).</li>
+</ul>
+<p>This distinction helps ensure that the system is modular, scalable, and easy to maintain.</p>
+<h2 id="ai-agent-roles-based-on-bpmn-tasks">AI Agent Roles Based on BPMN Tasks<a class="header-link" href="#ai-agent-roles-based-on-bpmn-tasks" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>BPMN Task</th>
+<th>Role Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Summarize Incident</td>
+<td>Agent: Incident Summarizer</td>
+<td>Extracts key facts from resident messages</td>
+</tr>
+<tr>
+<td>Classify Type</td>
+<td>Agent: Disaster Classifier</td>
+<td>Tags as fire, flood, medical, etc.</td>
+</tr>
+<tr>
+<td>Determine Urgency</td>
+<td>Agent: Urgency Assessor</td>
+<td>Determines criticality of the incident</td>
+</tr>
+<tr>
+<td>Identify Needs</td>
+<td>Agent: Needs Extractor</td>
+<td>Extracts specific needs (evacuation, food, etc.)</td>
+</tr>
+<tr>
+<td>Log to System</td>
+<td>Function Tool in Dispatcher Agent</td>
+<td>Outputs structured data (e.g., JSON)</td>
+</tr>
+<tr>
+<td>Assign to Team</td>
+<td>Function Tool in Dispatcher Agent</td>
+<td>Routes to appropriate response unit</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="test-cases-for-ai-agent-workflow">Test Cases for AI Agent Workflow<a class="header-link" href="#test-cases-for-ai-agent-workflow" title="Permanent link">&para;</a></h2>
+<h3 id="test-case-1-life-threatening-fire">Test Case 1: Life-Threatening Fire<a class="header-link" href="#test-case-1-life-threatening-fire" title="Permanent link">&para;</a></h3>
+<p><strong>Input:</strong> "The fire is spreading fast near our property in Kangaroo Valley, and there's heavy smoke. My elderly parents are here and need evacuation urgently."</p>
+<ul>
+<li>Category: Bushfire</li>
+<li>Urgency: Critical</li>
+<li>Needs: Evacuation, medical support</li>
+</ul>
+<h3 id="test-case-2-flooded-road-access">Test Case 2: Flooded Road Access<a class="header-link" href="#test-case-2-flooded-road-access" title="Permanent link">&para;</a></h3>
+<p><strong>Input:</strong> "The only road out of our area in Byron Bay is under water. We're stuck and supplies are running low."</p>
+<ul>
+<li>Category: Flood</li>
+<li>Urgency: High</li>
+<li>Needs: Road clearance, food</li>
+</ul>
+<h3 id="test-case-3-smoke-hazard">Test Case 3: Smoke Hazard<a class="header-link" href="#test-case-3-smoke-hazard" title="Permanent link">&para;</a></h3>
+<p><strong>Input:</strong> "There's a lot of smoke in the air from nearby fires, and it's hard to breathe even inside the house."</p>
+<ul>
+<li>Category: Bushfire (Air Quality)</li>
+<li>Urgency: Medium</li>
+<li>Needs: Health advice, evacuation support</li>
+</ul>
+<h3 id="test-case-4-power-outage-medical">Test Case 4: Power Outage &amp; Medical<a class="header-link" href="#test-case-4-power-outage-medical" title="Permanent link">&para;</a></h3>
+<p><strong>Input:</strong> "We lost power last night due to the storm and my husband uses a breathing machine."</p>
+<ul>
+<li>Category: Storm</li>
+<li>Urgency: Critical</li>
+<li>Needs: Power supply, medical help</li>
+</ul>
+<h3 id="test-case-5-vague-report">Test Case 5: Vague Report<a class="header-link" href="#test-case-5-vague-report" title="Permanent link">&para;</a></h3>
+<p><strong>Input:</strong> "Things are bad here. Everyone's panicking. Help."</p>
+<ul>
+<li>Category: Unknown</li>
+<li>Urgency: Needs human review</li>
+<li>Needs: Undefined</li>
+</ul>
+<hr />
+<h2 id="why-use-multiple-ai-agents-instead-of-one">Why Use Multiple AI Agents Instead of One?<a class="header-link" href="#why-use-multiple-ai-agents-instead-of-one" title="Permanent link">&para;</a></h2>
+<p>While a single large language model could, in theory, perform the entire workflow — summarizing, classifying, prioritizing, and routing — using multiple AI agents provides several practical advantages, especially in real-world, high-stakes environments like emergency response.</p>
+<ul>
+<li><strong>Modularity</strong>: Each agent is responsible for one distinct task. This separation makes it easier to test, improve, and debug individual components without impacting the whole system.</li>
+<li><strong>Performance</strong>: Tasks can be executed in parallel. For example, summarization and urgency estimation can run simultaneously, reducing end-to-end processing time during a crisis.</li>
+<li><strong>Specialization</strong>: Each agent can be tuned with tailored prompts, memory contexts, or tools that fit its specific role, improving output quality.</li>
+<li><strong>Transparency &amp; Auditability</strong>: A clear division of responsibility across agents allows for better traceability. You can identify precisely where an error occurred or a decision was made.</li>
+<li><strong>Error Isolation &amp; Recovery</strong>: If one agent fails or makes an error, only that part of the pipeline needs correction or human review — not the entire system.</li>
+<li><strong>Human-in-the-Loop Readiness</strong>: It's easier to integrate oversight points. For example, if confidence is low in the Disaster Classifier, the system can escalate only that decision to a human expert.</li>
+</ul>
+<p>In contrast, a single-agent approach may seem simpler but tends to become a monolith — harder to govern, extend, and debug — especially when tasks are diverse and critical. BPMN aligns naturally with a multi-agent structure, supporting clear task separation and role-based execution.</p>
+<h2 id="conclusion">Conclusion<a class="header-link" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>As AI becomes more embedded in real-world infrastructure, designing intelligent systems that are interpretable, modular, and responsive isn't just useful — it's essential. BPMN gives us a blueprint for making that a reality.</p>
+<p>By using BPMN as the backbone of AI agent coordination, complex workflows can be implemented with clarity and precision. The emergency triage workflow is just one example of how structured modeling paired with AI can improve response time, consistency, and resilience during high-pressure situations. This approach not only supports automation but also enhances the collaboration between humans and machines in meaningful, life-saving ways.</p>
+<hr />
+<h2 id="listen-to-this-post">Listen to this post<a class="header-link" href="#listen-to-this-post" title="Permanent link">&para;</a></h2>
+<video controls width="100%" style="border-radius:8px;margin:12px 0">
+  <source src="../assets/media/podcast-bpmn-ai-agent-workflows.mp4" type="video/mp4">
+  Your browser does not support video. <a href="media/podcast-bpmn-ai-agent-workflows.mp4">Download MP4</a>
+</video>
+<p style="font-size:0.8rem;color:var(--text-muted)">AI-generated podcast discussion of this article</p>
+      </div>
+      <div class="author-card">
+  <img src="../assets/avatar.png" class="author-avatar" alt="Bin Bian">
+  <div class="author-info">
+    <div class="author-name">Bin Bian</div>
+    <div class="author-bio">Electrical engineer turned AI & digital transformation enthusiast</div>
+    <div class="author-links"><a href="https://www.linkedin.com/in/bianbin/">LinkedIn</a> <a href="https://github.com/KevinBean/">GitHub</a> <a href="mailto:bianbin+contact@gmail.com">Email</a></div>
+  </div>
+</div>
+      <div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--border)">
+  <h3 style="font-size:1rem;color:var(--text-heading);margin-bottom:12px">Related Posts</h3>
+  <ul class="post-list" style="margin:0">
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/chatgpt-4o-image-generation.html" class="post-title" style="font-size:0.95rem">Exploring ChatGPT 4o's New Image Generation from an Engineer's Perspective</a>
+  <div class="post-meta">2025-04-01</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/ai-noting-system.html" class="post-title" style="font-size:0.95rem">Creating a Noting System with AI in 1 Hour – No Coding</a>
+  <div class="post-meta">2025-03-20</div>
+</li>
+  </ul>
+</div>
+      <div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border)">
+        <a href="../index.html">&larr; Back to posts</a>
+      </div>
+    </div>
+    <aside class="toc-sidebar">
+  <div class="toc-title">Contents</div>
+  <div class="toc">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#why-use-bpmn-for-ai-agent-coordination">Why Use BPMN for AI Agent Coordination?</a></li>
+<li><a href="#real-world-example-emergency-incident-triage-workflow">Real-World Example: Emergency Incident Triage Workflow</a><ul>
+<li><a href="#problems-in-the-traditional-workflow">Problems in the Traditional Workflow</a></li>
+<li><a href="#benefits-of-ai-agent-support">Benefits of AI Agent Support</a></li>
+</ul>
+</li>
+<li><a href="#bpmn-model-emergency-incident-triage">BPMN Model: Emergency Incident Triage</a></li>
+<li><a href="#considerations-for-agents-vs-function-tools">Considerations for Agents vs. Function Tools</a></li>
+<li><a href="#ai-agent-roles-based-on-bpmn-tasks">AI Agent Roles Based on BPMN Tasks</a></li>
+<li><a href="#test-cases-for-ai-agent-workflow">Test Cases for AI Agent Workflow</a><ul>
+<li><a href="#test-case-1-life-threatening-fire">Test Case 1: Life-Threatening Fire</a></li>
+<li><a href="#test-case-2-flooded-road-access">Test Case 2: Flooded Road Access</a></li>
+<li><a href="#test-case-3-smoke-hazard">Test Case 3: Smoke Hazard</a></li>
+<li><a href="#test-case-4-power-outage-medical">Test Case 4: Power Outage &amp; Medical</a></li>
+<li><a href="#test-case-5-vague-report">Test Case 5: Vague Report</a></li>
+</ul>
+</li>
+<li><a href="#why-use-multiple-ai-agents-instead-of-one">Why Use Multiple AI Agents Instead of One?</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#listen-to-this-post">Listen to this post</a></li>
+</ul>
+</div>
+
+</aside>
+  </div>
+</article>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      Powered by <a href="https://github.com/anthropics/emptyos">EmptyOS</a>
+    </div>
+  </footer>
+  <script>
+  // Theme toggle
+  (function(){
+    try{var t=localStorage.getItem('site-theme');if(t==='alt-theme')document.body.classList.add('alt-theme');}catch(e){}
+  })();
+  function toggleTheme(){
+    document.body.classList.toggle('alt-theme');
+    try{localStorage.setItem('site-theme',document.body.classList.contains('alt-theme')?'alt-theme':'dark');}catch(e){}
+    var btn=document.querySelector('.theme-toggle');
+    btn.innerHTML=document.body.classList.contains('alt-theme')?'&#9788;':'&#9790;';
+  }
+  // Search
+  var _searchIndex=null;
+  function openSearch(){
+    document.getElementById('search-overlay').classList.add('open');
+    document.getElementById('search-input').focus();
+  }
+  function closeSearch(){
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch();
+  });
+  function doSearch(q){
+    if(!_searchIndex){
+      var searchUrl='../search-index.json';
+      if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
+      fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
+      return;
+    }
+    var el=document.getElementById('search-results');
+    if(!q.trim()){el.innerHTML='';return;}
+    var lq=q.toLowerCase();
+    var hits=_searchIndex.filter(function(p){
+      return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
+    }).slice(0,8);
+    el.innerHTML=hits.map(function(p){
+      var href=p.type==='page'?('../'+p.slug+'.html'):('../'+'posts/'+p.slug+'.html');
+      return '<a class="search-result" href="'+href+'">'
+        +'<div class="search-result-title">'+p.title+'</div>'
+        +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';
+    }).join('')||'<div style="padding:12px;color:var(--text-muted);font-size:0.85rem">No results</div>';
+  }
+  </script>
+</body>
+</html>

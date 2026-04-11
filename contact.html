@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Bin Bian's Site</title>
+  <meta name="description" content="I'm always open to conversations about power systems engineering, AI tools, digital transformation, or interesting side projects. Whether it's a collaboration i">
+  <meta property="og:title" content="Contact">
+  <meta property="og:description" content="I'm always open to conversations about power systems engineering, AI tools, digital transformation, or interesting side projects. Whether it's a collaboration i">
+  <meta property="og:type" content="article">
+  <link rel="stylesheet" href="site.css">
+  <link rel="alternate" type="application/atom+xml" title="Bin Bian's Site Feed" href="atom.xml">
+  
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="max-width:900px">
+      <a href="index.html" class="site-name">Bin Bian's Site</a>
+      <nav class="site-nav">
+        <a href="index.html">Blog</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+        <a href="tags.html">Tags</a>
+        <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+      </nav>
+    </div>
+  </header>
+  <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <input class="search-input" id="search-input" placeholder="Search posts..." oninput="doSearch(this.value)" autofocus>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <main class="container">
+    <article>
+  <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:20px;font-weight:700">Contact</h1>
+  <div class="article">
+    <h2 id="get-in-touch">Get in Touch<a class="header-link" href="#get-in-touch" title="Permanent link">&para;</a></h2>
+<p>I'm always open to conversations about power systems engineering, AI tools, digital transformation, or interesting side projects. Whether it's a collaboration idea, a technical question, or just a hello — feel free to reach out.</p>
+<h2 id="where-to-find-me">Where to Find Me<a class="header-link" href="#where-to-find-me" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><a href="https://www.linkedin.com/in/bianbin/">LinkedIn</a></strong> — Best for professional connections and longer discussions</li>
+<li><strong><a href="https://github.com/KevinBean/">GitHub</a></strong> — Check out my projects, including EmptyOS</li>
+<li><strong><a href="mailto:bianbin+contact@gmail.com">Email</a></strong> — For anything else</li>
+</ul>
+<h2 id="what-im-open-to">What I'm Open To<a class="header-link" href="#what-im-open-to" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Engineering tool collaborations (especially power systems + AI)</li>
+<li>Open-source contributions to EmptyOS</li>
+<li>Speaking or writing about AI in engineering workflows</li>
+<li>Board game nights in Sydney</li>
+</ul>
+  </div>
+</article>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      Powered by <a href="https://github.com/anthropics/emptyos">EmptyOS</a>
+    </div>
+  </footer>
+  <script>
+  // Theme toggle
+  (function(){
+    try{var t=localStorage.getItem('site-theme');if(t==='alt-theme')document.body.classList.add('alt-theme');}catch(e){}
+  })();
+  function toggleTheme(){
+    document.body.classList.toggle('alt-theme');
+    try{localStorage.setItem('site-theme',document.body.classList.contains('alt-theme')?'alt-theme':'dark');}catch(e){}
+    var btn=document.querySelector('.theme-toggle');
+    btn.innerHTML=document.body.classList.contains('alt-theme')?'&#9788;':'&#9790;';
+  }
+  // Search
+  var _searchIndex=null;
+  function openSearch(){
+    document.getElementById('search-overlay').classList.add('open');
+    document.getElementById('search-input').focus();
+  }
+  function closeSearch(){
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch();
+  });
+  function doSearch(q){
+    if(!_searchIndex){
+      var searchUrl='search-index.json';
+      if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
+      fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
+      return;
+    }
+    var el=document.getElementById('search-results');
+    if(!q.trim()){el.innerHTML='';return;}
+    var lq=q.toLowerCase();
+    var hits=_searchIndex.filter(function(p){
+      return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
+    }).slice(0,8);
+    el.innerHTML=hits.map(function(p){
+      var href=p.type==='page'?(''+p.slug+'.html'):(''+'posts/'+p.slug+'.html');
+      return '<a class="search-result" href="'+href+'">'
+        +'<div class="search-result-title">'+p.title+'</div>'
+        +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';
+    }).join('')||'<div style="padding:12px;color:var(--text-muted);font-size:0.85rem">No results</div>';
+  }
+  </script>
+</body>
+</html>

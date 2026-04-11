@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creating a Noting System with AI in 1 Hour – No Coding — Bin Bian's Site</title>
+  <meta name="description" content="An experiment building a fully functional note-taking system using ChatGPT and Claude AI tools\u2014all within one hour and without traditional coding.">
+  <meta property="og:title" content="Creating a Noting System with AI in 1 Hour – No Coding">
+  <meta property="og:description" content="An experiment building a fully functional note-taking system using ChatGPT and Claude AI tools\u2014all within one hour and without traditional coding.">
+  <meta property="og:type" content="article">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="alternate" type="application/atom+xml" title="Bin Bian's Site Feed" href="../atom.xml">
+  
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="max-width:900px">
+      <a href="../index.html" class="site-name">Bin Bian's Site</a>
+      <nav class="site-nav">
+        <a href="../index.html">Blog</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../tags.html">Tags</a>
+        <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+      </nav>
+    </div>
+  </header>
+  <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <input class="search-input" id="search-input" placeholder="Search posts..." oninput="doSearch(this.value)" autofocus>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <main class="container">
+    <article>
+  
+  
+  <div class="post-layout">
+    <div>
+      <div style="margin-bottom:24px">
+        <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:8px">Creating a Noting System with AI in 1 Hour – No Coding</h1>
+        <div class="post-meta">2025-03-20 &middot; 4 min read <a href="../tags/ai.html" class="tag">AI</a> <a href="../tags/productivity.html" class="tag">productivity</a> <a href="../tags/no-code.html" class="tag">no-code</a></div>
+      </div>
+      <div class="article">
+        <p>In a recent experiment, I set out to build a fully functional note-taking system using ChatGPT AI tools — all within one hour and without traditional coding! I recorded the process during a video call where my friend simultaneously worked with Claude AI to build a similar tool. Although his initial results were more refined, our collaboration and subsequent iterations led to a robust solution that perfectly met our requirements.</p>
+<h2 id="the-experiment">The Experiment<a class="header-link" href="#the-experiment" title="Permanent link">&para;</a></h2>
+<p>The goal was simple: leverage AI's programming abilities to generate a modern note-taking system with features like:</p>
+<ul>
+<li>A three-column layout (Notes, Actions, Results)</li>
+<li>Modal editors for adding and editing notes and actions</li>
+<li>A live Markdown preview for notes</li>
+<li>A tagging system to differentiate regular notes from AI-generated ones</li>
+<li>Full integration with an AI agent to perform actions on selected notes</li>
+</ul>
+<p>Throughout our conversation with the AI, we iterated quickly — adjusting requirements, tweaking the layout, and even improving the user experience. The AI-generated code provided a solid foundation, though it required a few adjustments as the complexity increased.</p>
+<p>Below is the initial prompt provided to ChatGPT and Claude to start the project:</p>
+<div class="highlight"><pre><span></span><code>Please help me build a note taking system, here are the requirements:
+
+### User Interface
+- HTML &amp; CSS: A static webpage with forms for adding documents and clauses,
+  along with sections for displaying search results.
+- JavaScript: Handles core application logic including data operations,
+  search functionality, and data organization.
+
+### The layout will be like in the picture:
+- Notes part: allow users to input notes and view them
+- Action part: serve as task direction of an AI agent
+- Results part: AI agent performs action based on selected notes
+</code></pre></div>
+
+<p><img alt="" src="../assets/865ea93c51d467a47ca1e9eb2e7260c5_MD5.png" /></p>
+<p>A prototype image was included with the prompt to visually guide the AI model, ensuring it accurately understood the desired concept and layout.</p>
+<p>The final results from ChatGPT (GPT-4o-mini-high) and Claude AI (Claude 3.7 Sonnet) clearly demonstrate the distinct approaches and outcomes produced by each AI model:</p>
+<p><img alt="" src="../assets/ed9988f8ca82501f33c6a218effdecdc_MD5.png" /></p>
+<p>Result of ChatGPT o3-mini-high. Code: <a href="https://github.com/KevinBean/AI-testing">GitHub</a></p>
+<p><img alt="" src="../assets/e5a8c29b8195c557c6d6a2bdaf624dc6_MD5.png" /></p>
+<p>Result of Claude 3.7 Sonnet. Code: <a href="https://github.com/codingzilin/AI-notes-agent---CL">GitHub</a></p>
+<p>The recorded video: <a href="https://www.youtube.com/watch?v=M_irOE-Hr-E">Watch on YouTube</a></p>
+<h2 id="the-process-and-comparison">The Process and Comparison<a class="header-link" href="#the-process-and-comparison" title="Permanent link">&para;</a></h2>
+<p>During our session, my friend using Claude AI demonstrated his approach first. His early rounds produced cleaner results, which was impressive given the constraints of a no-code environment. However, as we discussed additional features — like incorporating note titles, tags, and handling complex prompts — the conversation became more intricate.</p>
+<p>I followed a similar path, engaging in back-and-forth refinements:</p>
+<ul>
+<li>Adding modal pop-up editors for notes and actions</li>
+<li>Implementing a tagging system that automatically marked AI-generated notes with a distinct color</li>
+<li>Modifying the AI prompt to include both note titles and content</li>
+</ul>
+<p>While Claude AI delivered better code in the first few rounds, the iterative process with my tool led to the desired functionality, proving that AI can effectively generate "instinct tools" to boost work efficiency.</p>
+<h2 id="lessons-learned">Lessons Learned<a class="header-link" href="#lessons-learned" title="Permanent link">&para;</a></h2>
+<p>Our experiment reinforced the tremendous potential of AI in application development:</p>
+<ul>
+<li><strong>Efficiency Boost:</strong> AI tools can rapidly generate prototypes, enabling non-coders to create meaningful tools that assist in everyday tasks.</li>
+<li><strong>Rapid Iteration:</strong> With AI, the turnaround time for changes is dramatically reduced, allowing for agile experimentation.</li>
+<li><strong>Complexity Challenges:</strong> As features become more advanced and the codebase grows longer, both AI and non-expert users might struggle with debugging. The generated code may contain bugs that require human expertise to resolve effectively.</li>
+</ul>
+<h2 id="conclusion">Conclusion<a class="header-link" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>The experience was both exciting and insightful. We succeeded in creating a functional note-taking system in under an hour, which confirmed that AI tools are not only useful but also powerful in generating tools that enhance productivity. However, as our project evolved, it became clear that for more complex systems, a blend of AI assistance and human expertise remains essential.</p>
+<p>This experiment is a testament to the evolving landscape of programming, where AI acts as a co-pilot — accelerating development while still relying on skilled hands to navigate the nuances of complex code.</p>
+      </div>
+      <div class="author-card">
+  <img src="../assets/avatar.png" class="author-avatar" alt="Bin Bian">
+  <div class="author-info">
+    <div class="author-name">Bin Bian</div>
+    <div class="author-bio">Electrical engineer turned AI & digital transformation enthusiast</div>
+    <div class="author-links"><a href="https://www.linkedin.com/in/bianbin/">LinkedIn</a> <a href="https://github.com/KevinBean/">GitHub</a> <a href="mailto:bianbin+contact@gmail.com">Email</a></div>
+  </div>
+</div>
+      <div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--border)">
+  <h3 style="font-size:1rem;color:var(--text-heading);margin-bottom:12px">Related Posts</h3>
+  <ul class="post-list" style="margin:0">
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/bpmn-ai-agent-workflows.html" class="post-title" style="font-size:0.95rem">Using BPMN to Design and Coordinate AI Agent Workflows</a>
+  <div class="post-meta">2025-04-05</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/chatgpt-4o-image-generation.html" class="post-title" style="font-size:0.95rem">Exploring ChatGPT 4o's New Image Generation from an Engineer's Perspective</a>
+  <div class="post-meta">2025-04-01</div>
+</li>
+  </ul>
+</div>
+      <div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border)">
+        <a href="../index.html">&larr; Back to posts</a>
+      </div>
+    </div>
+    <aside class="toc-sidebar">
+  <div class="toc-title">Contents</div>
+  <div class="toc">
+<ul>
+<li><a href="#the-experiment">The Experiment</a></li>
+<li><a href="#the-process-and-comparison">The Process and Comparison</a></li>
+<li><a href="#lessons-learned">Lessons Learned</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</div>
+
+</aside>
+  </div>
+</article>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      Powered by <a href="https://github.com/anthropics/emptyos">EmptyOS</a>
+    </div>
+  </footer>
+  <script>
+  // Theme toggle
+  (function(){
+    try{var t=localStorage.getItem('site-theme');if(t==='alt-theme')document.body.classList.add('alt-theme');}catch(e){}
+  })();
+  function toggleTheme(){
+    document.body.classList.toggle('alt-theme');
+    try{localStorage.setItem('site-theme',document.body.classList.contains('alt-theme')?'alt-theme':'dark');}catch(e){}
+    var btn=document.querySelector('.theme-toggle');
+    btn.innerHTML=document.body.classList.contains('alt-theme')?'&#9788;':'&#9790;';
+  }
+  // Search
+  var _searchIndex=null;
+  function openSearch(){
+    document.getElementById('search-overlay').classList.add('open');
+    document.getElementById('search-input').focus();
+  }
+  function closeSearch(){
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch();
+  });
+  function doSearch(q){
+    if(!_searchIndex){
+      var searchUrl='../search-index.json';
+      if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
+      fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
+      return;
+    }
+    var el=document.getElementById('search-results');
+    if(!q.trim()){el.innerHTML='';return;}
+    var lq=q.toLowerCase();
+    var hits=_searchIndex.filter(function(p){
+      return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
+    }).slice(0,8);
+    el.innerHTML=hits.map(function(p){
+      var href=p.type==='page'?('../'+p.slug+'.html'):('../'+'posts/'+p.slug+'.html');
+      return '<a class="search-result" href="'+href+'">'
+        +'<div class="search-result-title">'+p.title+'</div>'
+        +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';
+    }).join('')||'<div style="padding:12px;color:var(--text-muted);font-size:0.85rem">No results</div>';
+  }
+  </script>
+</body>
+</html>

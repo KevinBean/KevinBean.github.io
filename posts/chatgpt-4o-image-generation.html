@@ -101,7 +101,7 @@
 <script>
 (function(){
   var el = document.getElementById("podcast-chatgpt_4o_image_generation");
-  var mb = (location.pathname.indexOf("/posts/") >= 0) ? "../media/" : "media/";
+  var mb = (location.pathname.indexOf("/posts/") >= 0) ? "../media/" : (location.search.indexOf("path=posts/") >= 0) ? "/publish/api/site-file?path=media/" : "media/";
   function go(d) {
     d.audioUrl = mb + "podcast-chatgpt-4o-image-generation.mp3";
     (d.scenes || []).forEach(function(sc) { if (sc.image_file) sc.image_url = mb + sc.image_file; });

@@ -90,6 +90,34 @@
 <p>So far, ChatGPT-4o's image generation is great for <strong>visualising ideas</strong>, telling stories, and even experimenting with engineering concepts.</p>
 <p>But for now, it's not yet reliable for <strong>precise technical illustrations</strong> without strong guidance.</p>
 <p>Still, it's a powerful tool worth exploring — and maybe just a few versions away from being something truly transformative for engineers.</p>
+<hr />
+<h2 id="listen-to-this-post">Listen to this post<a class="header-link" href="#listen-to-this-post" title="Permanent link">&para;</a></h2>
+<div id="podcast-chatgpt_4o_image_generation" style="margin:12px 0"></div>
+<noscript>
+<audio controls style="width:100%">
+  <source src="../assets/media/podcast-chatgpt-4o-image-generation.mp3" type="audio/mpeg">
+</audio>
+</noscript>
+<script>
+(function(){
+  var el = document.getElementById("podcast-chatgpt_4o_image_generation");
+  var mb = (location.pathname.indexOf("/posts/") >= 0) ? "../assets/media/" : "assets/media/";
+  function go(d) {
+    d.audioUrl = mb + "podcast-chatgpt-4o-image-generation.mp3";
+    (d.scenes || []).forEach(function(sc) { if (sc.image_file) sc.image_url = mb + sc.image_file; });
+    SlideshowPlayer.create(el, d);
+  }
+  function load() {
+    fetch(mb + "podcast-chatgpt-4o-image-generation-slideshow.json").then(function(r) { return r.json(); }).then(go);
+  }
+  if (window.SlideshowPlayer) { load(); return; }
+  var s = document.createElement("script");
+  s.src = mb + "slideshow-player.js";
+  s.onload = load;
+  document.head.appendChild(s);
+})();
+</script>
+<p style="font-size:0.8rem;color:var(--text-muted)">AI-generated podcast discussion of this article</p>
       </div>
       <div class="author-card">
   <img src="../assets/avatar.png" class="author-avatar" alt="Bin Bian">
@@ -126,6 +154,7 @@
 <li><a href="#functional-applications-in-engineering">Functional? — Applications in Engineering</a></li>
 <li><a href="#but-there-are-limitations">But There Are Limitations</a></li>
 <li><a href="#final-thoughts">Final Thoughts</a></li>
+<li><a href="#listen-to-this-post">Listen to this post</a></li>
 </ul>
 </div>
 

@@ -2,29 +2,29 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Bin Bian's Site</title>
   <subtitle>Engineering, AI, and Digital Transformation</subtitle>
-  <link href="https://blog.binbian.net/" rel="alternate"/>
-  <link href="https://blog.binbian.net/atom.xml" rel="self"/>
+  <link href="https://binbian.net/" rel="alternate"/>
+  <link href="https://binbian.net/atom.xml" rel="self"/>
   <updated>2025-04-05T00:00:00Z</updated>
-  <id>https://blog.binbian.net/</id>
+  <id>https://binbian.net/</id>
   <author><name>Bin Bian</name></author>
   <entry>
     <title>Using BPMN to Design and Coordinate AI Agent Workflows</title>
-    <link href="https://blog.binbian.net/posts/bpmn-ai-agent-workflows.html"/>
-    <id>https://blog.binbian.net/posts/bpmn-ai-agent-workflows.html</id>
+    <link href="https://binbian.net/posts/bpmn-ai-agent-workflows.html"/>
+    <id>https://binbian.net/posts/bpmn-ai-agent-workflows.html</id>
     <updated>2025-04-05T00:00:00Z</updated>
     <summary>How BPMN can serve as a blueprint for coordinating multiple AI agents, demonstrated through an emergency response triage system.</summary>
   </entry>
   <entry>
     <title>Exploring ChatGPT 4o's New Image Generation from an Engineer's Perspective</title>
-    <link href="https://blog.binbian.net/posts/chatgpt-4o-image-generation.html"/>
-    <id>https://blog.binbian.net/posts/chatgpt-4o-image-generation.html</id>
+    <link href="https://binbian.net/posts/chatgpt-4o-image-generation.html"/>
+    <id>https://binbian.net/posts/chatgpt-4o-image-generation.html</id>
     <updated>2025-04-01T00:00:00Z</updated>
     <summary>Testing ChatGPT-4o's image generation for both creative storytelling and engineering applications \u2014 fantastic for art, but not yet functional for precise technical illustrations.</summary>
   </entry>
   <entry>
     <title>Creating a Noting System with AI in 1 Hour – No Coding</title>
-    <link href="https://blog.binbian.net/posts/ai-noting-system.html"/>
-    <id>https://blog.binbian.net/posts/ai-noting-system.html</id>
+    <link href="https://binbian.net/posts/ai-noting-system.html"/>
+    <id>https://binbian.net/posts/ai-noting-system.html</id>
     <updated>2025-03-20T00:00:00Z</updated>
     <summary>An experiment building a fully functional note-taking system using ChatGPT and Claude AI tools\u2014all within one hour and without traditional coding.</summary>
   </entry>

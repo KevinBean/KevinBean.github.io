@@ -11,12 +11,12 @@
   --mono: 'IBM Plex Mono', 'JetBrains Mono', monospace;
 }
 body.alt-theme {
-  --bg: #ede9e3; --bg-card: #f8f6f2; --bg-input: #f8f6f2;
-  --text: #2e2e36; --text-heading: #1a1a20;
-  --text-secondary: #5c5c68; --text-muted: #8e8e9a;
-  --border: #d6d2ca; --border-strong: #c4c0b6;
-  --accent: #6c5ce7; --accent-bg: rgba(108,92,231,0.08);
-  --success: #27ae76; --warning: #d4a017; --danger: #d44040;
+  --bg: #08080f; --bg-card: rgba(255,255,255,0.025); --bg-input: rgba(255,255,255,0.04);
+  --text: #c8c8d0; --text-heading: #ededf0;
+  --text-secondary: #8888a0; --text-muted: #555568;
+  --border: rgba(255,255,255,0.06); --border-strong: rgba(255,255,255,0.12);
+  --accent: #8b7bf6; --accent-bg: rgba(139,123,246,0.1);
+  --success: #34d399; --warning: #fbbf24; --danger: #f87171;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }

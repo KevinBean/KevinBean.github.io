@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your notes folder is the operating system, and AI is the engine — Bin Bian's Site</title>
+  <meta name="description" content="Everyone is quietly converging on the same shape: markdown files, an LLM, and a thin layer of plumbing. The interesting question isn't whether to build on this ">
+  <meta property="og:title" content="Your notes folder is the operating system, and AI is the engine">
+  <meta property="og:description" content="Everyone is quietly converging on the same shape: markdown files, an LLM, and a thin layer of plumbing. The interesting question isn't whether to build on this ">
+  <meta property="og:type" content="article">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="alternate" type="application/atom+xml" title="Bin Bian's Site Feed" href="../atom.xml">
+  
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="max-width:900px">
+      <a href="../index.html" class="site-name">Bin Bian's Site</a>
+      <nav class="site-nav">
+        <a href="../index.html">Blog</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../tags.html">Tags</a>
+        <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+      </nav>
+    </div>
+  </header>
+  <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <input class="search-input" id="search-input" placeholder="Search posts..." oninput="doSearch(this.value)" autofocus>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <main class="container">
+    <article>
+  
+  
+  <div class="post-layout">
+    <div>
+      <div style="margin-bottom:24px">
+        <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:8px">Your notes folder is the operating system, and AI is the engine</h1>
+        <div class="post-meta">2026-04-14 &middot; 4 min read <a href="../tags/ai.html" class="tag">AI</a> <a href="../tags/pkm.html" class="tag">PKM</a> <a href="../tags/knowledge-management.html" class="tag">knowledge-management</a> <a href="../tags/emptyos.html" class="tag">EmptyOS</a> <a href="../tags/linkedin-series.html" class="tag">linkedin-series</a></div>
+      </div>
+      <div class="article">
+        <blockquote>
+<p>Every Sunday at 9pm, my note vault writes a review of me.</p>
+</blockquote>
+<p>Not a log of tasks — I have an app for that. It generates a scored review across eight dimensions of life: physical, social, intellectual, emotional, spiritual, environmental, financial, occupational. The material is drawn from signals gathered throughout the week from my notes.</p>
+<p>More than once, it has flagged a dimension I’d neglected for weeks.<br />
+The system noticed where I forgot to look.</p>
+<hr />
+<p>That’s not AI answering a question I asked.<br />
+That’s AI extracting patterns — automatically.</p>
+<p>And it runs on a system originally designed as a coding assistant, now evolving into a more general reasoning tool for a broader audience, not just software engineers.</p>
+<p>A recent example is <a href="https://www.anthropic.com/product/claude-cowork">Claude Cowork</a> by Anthropic, evolving from its earlier coding-focused tool, Claude Code.</p>
+<hr />
+<p>I’ve kept nearly 4,000 notes in Obsidian over the years. I like it because it allows me to store everything as plain text in a folder, and Obsidian builds application layers on top of it. If I want, I can read everything without relying on any specific tool, and my data is not locked into any service.</p>
+<p>At the same time, it can index the “vault” — what Obsidian calls the note folder — and provide a structured interface: backlinks, cross-references, and even database-like views.</p>
+<p>But the more I used AI elsewhere, the more this interface started to feel like a wall between me and my own knowledge.</p>
+<p>I didn’t want to click through notes anymore.<br />
+I wanted to <em>talk</em> to them.</p>
+<hr />
+<p>Those notes turned out to be perfect input for a personal productivity AI system. They provide context — something close to the “vibe” in <em>vibe coding</em> — and allow answers to become more relevant to me, not just generally correct.</p>
+<hr />
+<p>It turns out many people have hit the same wall and started building past it.</p>
+<p>Andrej Karpathy shared an <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">LLM wiki workflow</a>.<br />
+The Obsidian community has seen a surge of <a href="https://obsidian.md/plugins">AI-agent plugins</a>.<br />
+The New Stack argued that <a href="https://thenewstack.io/skills-vs-mcp-agent-architecture/">markdown-based approaches can simplify or even replace MCP-style architectures in some cases</a>.<br />
+Visual Studio Magazine highlighted <a href="https://visualstudiomagazine.com/articles/2026/02/24/in-agentic-ai-its-all-about-the-markdown.aspx">markdown as a central working layer for agentic AI workflows</a>, with some sources describing it as <a href="https://blog.cloudflare.com/markdown-for-agents/">the “lingua franca” of agentic AI</a>.</p>
+<p>Strip away the branding from many of these “AI second brain” ideas, and the structure looks very similar:</p>
+<ul>
+<li>a folder of plain markdown files  </li>
+<li>an LLM with read/write/search access  </li>
+<li>a thin layer connecting the two  </li>
+</ul>
+<p>This feels less like a trend, and more like convergence.</p>
+<p>Plain markdown survives any tool going out of business.<br />
+Models are now good enough that the connecting layer can remain thin.<br />
+The core building blocks are simple and stable.</p>
+<hr />
+<p>PKM tools were designed for humans to retrieve information.<br />
+But retrieval is exactly what AI is now better at.</p>
+<p>Semantic search often outperforms my tagging system.<br />
+Summarisation replaces manual highlighting.<br />
+Synthesis across dozens of notes happens faster than I could do on my own.</p>
+<hr />
+<p>But better AI answers are not the whole story.</p>
+<p>The more interesting question isn’t how to add AI to PKM.<br />
+It’s this:</p>
+<p><strong>What happens when your notes folder stops being a filing cabinet,<br />
+and becomes the storage layer of an operating system — with AI as the interface?</strong></p>
+<p>A few things change.</p>
+<ul>
+<li>
+<p>Your knowledge stays yours — plain <code>.md</code> files, portable and independent.  </p>
+</li>
+<li>
+<p>One input starts to show up everywhere — a note, a task, a reminder.  </p>
+</li>
+<li>
+<p>And the system begins to surface patterns, but leaves the decisions to you.  </p>
+</li>
+</ul>
+<p>That boundary matters.</p>
+<hr />
+<p>PKM built the body of a second brain.<br />
+AI is what finally makes it move.</p>
+<hr />
+<h2 id="listen-to-this-post">Listen to this post<a class="header-link" href="#listen-to-this-post" title="Permanent link">&para;</a></h2>
+<div id="podcast-notes_folder_is_operating_system" style="margin:12px 0"></div>
+<noscript>
+<audio controls style="width:100%">
+  <source src="../media/podcast-notes-folder-is-operating-system.mp3" type="audio/mpeg">
+</audio>
+</noscript>
+<script>
+(function(){
+  var el = document.getElementById("podcast-notes_folder_is_operating_system");
+  var mb = (location.pathname.indexOf("/posts/") >= 0) ? "../media/" : (location.search.indexOf("path=posts/") >= 0) ? "/publish/api/site-file?path=media/" : "media/";
+  function go(d) {
+    d.audioUrl = mb + "podcast-notes-folder-is-operating-system.mp3";
+    (d.scenes || []).forEach(function(sc) { if (sc.image_file) sc.image_url = mb + sc.image_file; });
+    SlideshowPlayer.create(el, d);
+  }
+  function load() {
+    fetch(mb + "podcast-notes-folder-is-operating-system-slideshow.json").then(function(r) { return r.json(); }).then(go);
+  }
+  if (window.SlideshowPlayer) { load(); return; }
+  var s = document.createElement("script");
+  s.src = mb + "slideshow-player.js";
+  s.onload = load;
+  document.head.appendChild(s);
+})();
+</script>
+<p style="font-size:0.8rem;color:var(--text-muted)">AI-generated podcast discussion of this article</p>
+      </div>
+      <div class="author-card">
+  <img src="../assets/avatar.png" class="author-avatar" alt="Bin Bian">
+  <div class="author-info">
+    <div class="author-name">Bin Bian</div>
+    <div class="author-bio">Electrical engineer turned AI & digital transformation enthusiast</div>
+    <div class="author-links"><a href="https://www.linkedin.com/in/bianbin/">LinkedIn</a> <a href="https://github.com/KevinBean/">GitHub</a> <a href="mailto:bianbin+contact@gmail.com">Email</a></div>
+  </div>
+</div>
+      <div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--border)">
+  <h3 style="font-size:1rem;color:var(--text-heading);margin-bottom:12px">Related Posts</h3>
+  <ul class="post-list" style="margin:0">
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/bpmn-ai-agent-workflows.html" class="post-title" style="font-size:0.95rem">Using BPMN to Design and Coordinate AI Agent Workflows</a>
+  <div class="post-meta">2025-04-05</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/chatgpt-4o-image-generation.html" class="post-title" style="font-size:0.95rem">Exploring ChatGPT 4o's New Image Generation from an Engineer's Perspective</a>
+  <div class="post-meta">2025-04-01</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/ai-noting-system.html" class="post-title" style="font-size:0.95rem">Creating a Noting System with AI in 1 Hour – No Coding</a>
+  <div class="post-meta">2025-03-20</div>
+</li>
+  </ul>
+</div>
+      <div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border)">
+        <a href="../index.html">&larr; Back to posts</a>
+      </div>
+    </div>
+    <aside class="toc-sidebar">
+  <div class="toc-title">Contents</div>
+  <div class="toc">
+<ul>
+<li><a href="#listen-to-this-post">Listen to this post</a></li>
+</ul>
+</div>
+
+</aside>
+  </div>
+</article>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      Powered by <a href="https://github.com/anthropics/emptyos">EmptyOS</a>
+    </div>
+  </footer>
+  <script>
+  // Theme toggle
+  (function(){
+    try{var t=localStorage.getItem('site-theme');if(t==='alt-theme')document.body.classList.add('alt-theme');}catch(e){}
+  })();
+  function toggleTheme(){
+    document.body.classList.toggle('alt-theme');
+    try{localStorage.setItem('site-theme',document.body.classList.contains('alt-theme')?'alt-theme':'dark');}catch(e){}
+    var btn=document.querySelector('.theme-toggle');
+    btn.innerHTML=document.body.classList.contains('alt-theme')?'&#9788;':'&#9790;';
+  }
+  // Search
+  var _searchIndex=null;
+  function openSearch(){
+    document.getElementById('search-overlay').classList.add('open');
+    document.getElementById('search-input').focus();
+  }
+  function closeSearch(){
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch();
+  });
+  function doSearch(q){
+    if(!_searchIndex){
+      var searchUrl='../search-index.json';
+      if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
+      fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
+      return;
+    }
+    var el=document.getElementById('search-results');
+    if(!q.trim()){el.innerHTML='';return;}
+    var lq=q.toLowerCase();
+    var hits=_searchIndex.filter(function(p){
+      return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
+    }).slice(0,8);
+    el.innerHTML=hits.map(function(p){
+      var href=p.type==='page'?('../'+p.slug+'.html'):('../'+'posts/'+p.slug+'.html');
+      return '<a class="search-result" href="'+href+'">'
+        +'<div class="search-result-title">'+p.title+'</div>'
+        +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';
+    }).join('')||'<div style="padding:12px;color:var(--text-muted);font-size:0.85rem">No results</div>';
+  }
+  </script>
+</body>
+</html>

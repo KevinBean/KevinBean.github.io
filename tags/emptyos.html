@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tags — Bin Bian's Site</title>
-  <meta name="description" content="All tags">
-  <meta property="og:title" content="Tags">
-  <meta property="og:description" content="All tags">
+  <title>Tag: EmptyOS — Bin Bian's Site</title>
+  <meta name="description" content="Posts tagged EmptyOS">
+  <meta property="og:title" content="Tag: EmptyOS">
+  <meta property="og:description" content="Posts tagged EmptyOS">
   <meta property="og:type" content="article">
-  <link rel="stylesheet" href="site.css">
-  <link rel="alternate" type="application/atom+xml" title="Bin Bian's Site Feed" href="atom.xml">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="alternate" type="application/atom+xml" title="Bin Bian's Site Feed" href="../atom.xml">
   
 </head>
 <body>
   <header class="site-header">
     <div class="container" style="max-width:900px">
-      <a href="index.html" class="site-name">Bin Bian's Site</a>
+      <a href="../index.html" class="site-name">Bin Bian's Site</a>
       <nav class="site-nav">
-        <a href="index.html">Blog</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="contact.html">Contact</a>
-        <a href="tags.html">Tags</a>
+        <a href="../index.html">Blog</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../tags.html">Tags</a>
         <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
         <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
       </nav>
@@ -34,20 +34,18 @@
     </div>
   </div>
   <main class="container">
-    <h1 style="font-size:1.4rem;color:var(--text-heading);margin-bottom:24px">Tags</h1>
-<div style="display:flex;flex-wrap:wrap;gap:8px">
-<a href="tags/ai.html" class="tag" style="font-size:0.85rem;padding:4px 14px">AI (4)</a>
-<a href="tags/emptyos.html" class="tag" style="font-size:0.85rem;padding:4px 14px">EmptyOS (1)</a>
-<a href="tags/pkm.html" class="tag" style="font-size:0.85rem;padding:4px 14px">PKM (1)</a>
-<a href="tags/agents.html" class="tag" style="font-size:0.85rem;padding:4px 14px">agents (1)</a>
-<a href="tags/emergency-response.html" class="tag" style="font-size:0.85rem;padding:4px 14px">emergency-response (1)</a>
-<a href="tags/engineering.html" class="tag" style="font-size:0.85rem;padding:4px 14px">engineering (1)</a>
-<a href="tags/generative-ai.html" class="tag" style="font-size:0.85rem;padding:4px 14px">generative-ai (1)</a>
-<a href="tags/knowledge-management.html" class="tag" style="font-size:0.85rem;padding:4px 14px">knowledge-management (1)</a>
-<a href="tags/linkedin-series.html" class="tag" style="font-size:0.85rem;padding:4px 14px">linkedin-series (1)</a>
-<a href="tags/no-code.html" class="tag" style="font-size:0.85rem;padding:4px 14px">no-code (1)</a>
-<a href="tags/productivity.html" class="tag" style="font-size:0.85rem;padding:4px 14px">productivity (1)</a>
-<a href="tags/workflow.html" class="tag" style="font-size:0.85rem;padding:4px 14px">workflow (1)</a>
+    <h1 style="font-size:1.4rem;color:var(--text-heading);margin-bottom:24px">
+  Posts tagged <span class="tag" style="font-size:0.9rem">EmptyOS</span>
+</h1>
+<ul class="post-list">
+<li class="post-item">
+  <a href="posts/notes-folder-is-operating-system.html" class="post-title">Your notes folder is the operating system, and AI is the engine</a>
+  <div class="post-meta">2026-04-14 </div>
+  <div class="post-summary">Everyone is quietly converging on the same shape: markdown files, an LLM, and a thin layer of plumbing. The interesting question isn't whether to build on this shape — it's which fork to take once you're there.</div>
+</li>
+</ul>
+<div style="margin-top:24px">
+  <a href="../tags.html">&larr; All tags</a>
 </div>
   </main>
   <footer class="site-footer">
@@ -81,7 +79,7 @@
   });
   function doSearch(q){
     if(!_searchIndex){
-      var searchUrl='search-index.json';
+      var searchUrl='../search-index.json';
       if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
       fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
       return;
@@ -93,7 +91,7 @@
       return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
     }).slice(0,8);
     el.innerHTML=hits.map(function(p){
-      var href=p.type==='page'?(''+p.slug+'.html'):(''+'posts/'+p.slug+'.html');
+      var href=p.type==='page'?('../'+p.slug+'.html'):('../'+'posts/'+p.slug+'.html');
       return '<a class="search-result" href="'+href+'">'
         +'<div class="search-result-title">'+p.title+'</div>'
         +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';

@@ -4,9 +4,16 @@
   <subtitle>Engineering, AI, and Digital Transformation</subtitle>
   <link href="https://binbian.net/" rel="alternate"/>
   <link href="https://binbian.net/atom.xml" rel="self"/>
-  <updated>2026-04-14T00:00:00Z</updated>
+  <updated>2026-04-22T00:00:00Z</updated>
   <id>https://binbian.net/</id>
   <author><name>Bin Bian (Kevin)</name></author>
+  <entry>
+    <title>The Harness and the Model: Why the 'Vibe' Defines the 'Code'</title>
+    <link href="https://binbian.net/posts/the-harness-is-the-product.html"/>
+    <id>https://binbian.net/posts/the-harness-is-the-product.html</id>
+    <updated>2026-04-22T00:00:00Z</updated>
+    <summary>Same model, same prompt, same day — two AI coding tools produced dramatically different apps. The lesson isn't about the model. It's about everything around the model.</summary>
+  </entry>
   <entry>
     <title>Your notes folder is the operating system, and AI is the engine</title>
     <link href="https://binbian.net/posts/notes-folder-is-operating-system.html"/>

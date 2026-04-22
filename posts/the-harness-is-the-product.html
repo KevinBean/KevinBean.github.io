@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Harness and the Model: Why the 'Vibe' Defines the 'Code' — Bin Bian's Site</title>
+  <meta name="description" content="Same model, same prompt, same day — two AI coding tools produced dramatically different apps. The lesson isn't about the model. It's about everything around the">
+  <meta property="og:title" content="The Harness and the Model: Why the 'Vibe' Defines the 'Code'">
+  <meta property="og:description" content="Same model, same prompt, same day — two AI coding tools produced dramatically different apps. The lesson isn't about the model. It's about everything around the">
+  <meta property="og:type" content="article">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="alternate" type="application/atom+xml" title="Bin Bian's Site Feed" href="../atom.xml">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <meta property="og:image" content="https://binbian.net/media/cover-the-harness-is-the-product.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="max-width:900px">
+      <a href="../index.html" class="site-name">Bin Bian's Site</a>
+      <nav class="site-nav">
+        <a href="../index.html">Blog</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../tags.html">Tags</a>
+        <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+      </nav>
+    </div>
+  </header>
+  <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <input class="search-input" id="search-input" placeholder="Search posts..." oninput="doSearch(this.value)" autofocus>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <main class="container">
+    <article>
+  
+  
+  <div class="post-layout">
+    <div>
+      <div style="margin-bottom:24px">
+        <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:8px">The Harness and the Model: Why the 'Vibe' Defines the 'Code'</h1>
+        <div class="post-meta">2026-04-22 &middot; 5 min read <a href="../tags/ai.html" class="tag">AI</a> <a href="../tags/agents.html" class="tag">agents</a> <a href="../tags/coding-tools.html" class="tag">coding-tools</a> <a href="../tags/emptyos.html" class="tag">EmptyOS</a> <a href="../tags/linkedin-series.html" class="tag">linkedin-series</a></div>
+      </div>
+      <div class="article">
+        <!-- eos-cover -->
+<p><img alt="The Harness and the Model: Why the \&quot;Vibe\&quot; Defines the \&quot;Code\ — cover" src="../media/cover-the-harness-is-the-product.png" /></p>
+<!-- /eos-cover -->
+
+<p>I spent a night running a simple experiment. I gave the exact same prompt to the same model—<strong>Claude 4.7 Opus</strong>—at the exact same time.</p>
+<blockquote>
+<p><em>"Make a gesture control demo app based on the camera input, log the development effort for this app so we can assess the ability of our coding tool."</em></p>
+</blockquote>
+<p>The only thing that changed was the environment. </p>
+<h3 id="the-two-versions-of-the-same-ai">The Two Versions of the "Same" AI<a class="header-link" href="#the-two-versions-of-the-same-ai" title="Permanent link">&para;</a></h3>
+<p>On one side, I had <strong>Method A</strong>: a raw coding tool in a fresh, empty directory. On the other, <strong>Method B</strong>: a session running inside <strong>EmptyOS</strong>. This is my own project space where I’ve set specific "house rules," a memory store, and a clear definition of what "done" looks like.</p>
+<p>I expected the code to look a bit different, but I didn't expect the AI performance to fundamentally change. After all, it was the same brain underneath.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Method A (The Raw Tool)</th>
+<th style="text-align: left;">Method B (EmptyOS)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Output</strong></td>
+<td style="text-align: left;">1 file (<code>index.html</code>), 454 lines.</td>
+<td style="text-align: left;">4 files, 582 lines (Manifest, Backend, UI, Tests).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Philosophy</strong></td>
+<td style="text-align: left;">A cool, isolated "hack."</td>
+<td style="text-align: left;">A structured "system component."</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Integration</strong></td>
+<td style="text-align: left;">None (Siloed).</td>
+<td style="text-align: left;">Wired to a system-wide event bus.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Verification</strong></td>
+<td style="text-align: left;">"Human needs to check it."</td>
+<td style="text-align: left;">10 passing tests (Automated).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cost/Effort</strong></td>
+<td style="text-align: left;">~2.5 mins, 6 tool calls.</td>
+<td style="text-align: left;">~13 mins, 65 tool calls.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="the-finding-the-vibe-is-load-bearing">The Finding: The "Vibe" is Load-Bearing<a class="header-link" href="#the-finding-the-vibe-is-load-bearing" title="Permanent link">&para;</a></h3>
+<p>In an empty directory, the model correctly assumed the vibe was <strong>"quick and dirty."</strong> Inside EmptyOS, it correctly assumed the vibe was <strong>"system membership."</strong></p>
+<p>This is the part people miss when they talk about AI models being "good" or "bad." The model provides the raw reasoning—the engine—but the <strong>Harness</strong> (the rules, the memory, the tests) is what defines the output's ambition.</p>
+<p>When the model is inside a structured environment, it doesn't just write code; it follows a standard and wires itself into the ecosystem. It spends its tokens on things that don't "show up" in a demo but matter in production:
+* <strong>Standardized event names</strong> for cross-app communication.
+* <strong>Self-correction</strong> via automated test loops.
+* <strong>Updating release manifests</strong> and documentation.
+* <strong>Ensuring the new code "plays nice"</strong> with existing background daemons.</p>
+<h3 id="the-verification-gap">The Verification Gap<a class="header-link" href="#the-verification-gap" title="Permanent link">&para;</a></h3>
+<p>The most telling moment was the bug. During the EmptyOS session, the model tried to use a helper function called <code>EOS.get()</code>. In this specific project, that function didn't exist.</p>
+<p>Because the harness forces the model to run a test suite before it finishes, the AI caught its own mistake, realized the function was missing, and fixed the logic. In the "Raw" setup, that bug would have just lived there until a human tried to run it and saw the console error. </p>
+<p><strong>The harness pays for itself by reducing the "human tax" of checking the AI’s work.</strong></p>
+<hr />
+<h3 id="my-takeaway">My Takeaway<a class="header-link" href="#my-takeaway" title="Permanent link">&para;</a></h3>
+<p>If you swap out a model (moving from 4.7 to a future 4.8, for example) but keep a messy environment, you just get a faster version of messy code. </p>
+<p>The "vibe" of your project directory—your <code>.rules</code>, your test harnesses, your directory structure—isn't just organizational fluff. It is the <strong>infrastructure</strong> that tells the AI how much effort to put in. </p>
+<p>If you want the AI to act like a Senior Engineer, you have to give it an environment that demands it. Strip the context, and you strip the ambition, no matter how "smart" the model is.</p>
+<hr />
+<h3 id="try-the-gesture-recognition-yourself">Try the gesture recognition yourself<a class="header-link" href="#try-the-gesture-recognition-yourself" title="Permanent link">&para;</a></h3>
+<p>Both apps are running live in your browser below — camera stays entirely on your device, nothing is uploaded.</p>
+<p><a href="/demo-gesture-raw.html">▶ Method A — Raw demo</a> &nbsp;·&nbsp; <a href="/demo-gesture-emptyos.html">▶ Method B — EmptyOS demo</a></p>
+<p><em>A note on what you're seeing:</em> the real difference between the two methods is structural — the manifest, the 10 automated tests, the event bus wiring. None of that is visible in a browser demo. To make Method B hostable as a static page here, I removed the server integration that is the whole point of the EmptyOS version. What you're comparing is the output UX, not the architecture. The real story is in the table above.</p>
+<p>This is what the actual EmptyOS version looks like when running — the part the static demo can't show:</p>
+<p><img alt="The EmptyOS gesture app dashboard: real-time history log on the right, configurable gesture→action mapping wired to the system event bus" src="../media/gesture-dashboard.png" /></p>
+<p>Every detection is persisted to a server log (right panel), and the action labels (Approve, Reject, Capture…) are broadcast as <code>gesture:detected</code> events that any other app in the system can subscribe to. Method A has none of this — and it never would, because the environment never asked for it.</p>
+<hr />
+<h2 id="listen-to-this-post">Listen to this post<a class="header-link" href="#listen-to-this-post" title="Permanent link">&para;</a></h2>
+<div id="podcast-the_harness_is_the_product" style="margin:12px 0"></div>
+<noscript>
+<audio controls style="width:100%">
+  <source src="../media/podcast-the-harness-is-the-product.mp3" type="audio/mpeg">
+</audio>
+</noscript>
+<script>
+(function(){
+  var el = document.getElementById("podcast-the_harness_is_the_product");
+  var mb = (location.pathname.indexOf("/posts/") >= 0) ? "../media/" : (location.search.indexOf("path=posts/") >= 0) ? "/publish/api/site-file?path=media/" : "media/";
+  function go(d) {
+    d.audioUrl = mb + "podcast-the-harness-is-the-product.mp3";
+    (d.scenes || []).forEach(function(sc) { if (sc.image_file) sc.image_url = mb + sc.image_file; });
+    SlideshowPlayer.create(el, d);
+  }
+  function load() {
+    fetch(mb + "podcast-the-harness-is-the-product-slideshow.json").then(function(r) { return r.json(); }).then(go);
+  }
+  if (window.SlideshowPlayer) { load(); return; }
+  var s = document.createElement("script");
+  s.src = mb + "slideshow-player.js";
+  s.onload = load;
+  document.head.appendChild(s);
+})();
+</script>
+<p id="vid-the_harness_is_the_product_vid" style="margin:6px 0 0;font-size:0.85rem"><a href="media/podcast-the-harness-is-the-product.mp4" download>&#11015; Download as video</a> <span style="color:var(--text-muted)">— share on LinkedIn, X, etc.</span></p>
+<script>(function(){var a=document.querySelector("#vid-the_harness_is_the_product_vid a");if(!a)return;if(location.pathname.indexOf("/posts/")>=0)a.href="../media/podcast-the-harness-is-the-product.mp4";else if(location.search.indexOf("path=posts/")>=0)a.href="/publish/api/site-file?path=media/podcast-the-harness-is-the-product.mp4";})();</script>
+<p style="font-size:0.8rem;color:var(--text-muted)">AI-generated podcast discussion of this article</p>
+      </div>
+      <div class="author-card">
+  <img src="../assets/avatar.png" class="author-avatar" alt="Bin Bian (Kevin)">
+  <div class="author-info">
+    <div class="author-name">Bin Bian (Kevin)</div>
+    <div class="author-bio">Electrical engineer turned AI & digital transformation enthusiast. Also known as Kevin.</div>
+    <div class="author-links"><a href="https://www.linkedin.com/in/bianbin/">LinkedIn</a> <a href="https://github.com/KevinBean/">GitHub</a> <a href="mailto:bianbin+contact@gmail.com">Email</a></div>
+  </div>
+</div>
+      <div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--border)">
+  <h3 style="font-size:1rem;color:var(--text-heading);margin-bottom:12px">Related Posts</h3>
+  <ul class="post-list" style="margin:0">
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/notes-folder-is-operating-system.html" class="post-title" style="font-size:0.95rem">Your notes folder is the operating system, and AI is the engine</a>
+  <div class="post-meta">2026-04-14</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/bpmn-ai-agent-workflows.html" class="post-title" style="font-size:0.95rem">Using BPMN to Design and Coordinate AI Agent Workflows</a>
+  <div class="post-meta">2025-04-05</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/chatgpt-4o-image-generation.html" class="post-title" style="font-size:0.95rem">Exploring ChatGPT 4o's New Image Generation from an Engineer's Perspective</a>
+  <div class="post-meta">2025-04-01</div>
+</li>
+  </ul>
+</div>
+      <div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border)">
+        <a href="../index.html">&larr; Back to posts</a>
+      </div>
+    </div>
+    <aside class="toc-sidebar">
+  <div class="toc-title">Contents</div>
+  <div class="toc">
+<ul>
+<li><a href="#the-two-versions-of-the-same-ai">The Two Versions of the "Same" AI</a></li>
+<li><a href="#the-finding-the-vibe-is-load-bearing">The Finding: The "Vibe" is Load-Bearing</a></li>
+<li><a href="#the-verification-gap">The Verification Gap</a></li>
+<li><a href="#my-takeaway">My Takeaway</a></li>
+<li><a href="#try-the-gesture-recognition-yourself">Try the gesture recognition yourself</a></li>
+<li><a href="#listen-to-this-post">Listen to this post</a></li>
+</ul>
+</div>
+
+</aside>
+  </div>
+</article>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span class="cross-site-links"><a href="https://portfolio.binbian.net">Engineering Portfolio</a> &middot; <a href="https://eos.binbian.net">EmptyOS</a></span>
+      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a>
+    </div>
+  </footer>
+  <script>
+  // Theme toggle
+  (function(){
+    try{var t=localStorage.getItem('site-theme');if(t==='alt-theme')document.body.classList.add('alt-theme');}catch(e){}
+  })();
+  function toggleTheme(){
+    document.body.classList.toggle('alt-theme');
+    try{localStorage.setItem('site-theme',document.body.classList.contains('alt-theme')?'alt-theme':'dark');}catch(e){}
+    var btn=document.querySelector('.theme-toggle');
+    btn.innerHTML=document.body.classList.contains('alt-theme')?'&#9788;':'&#9790;';
+  }
+  // Search
+  var _searchIndex=null;
+  function openSearch(){
+    document.getElementById('search-overlay').classList.add('open');
+    document.getElementById('search-input').focus();
+  }
+  function closeSearch(){
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch();
+  });
+  function doSearch(q){
+    if(!_searchIndex){
+      var searchUrl='../search-index.json';
+      if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
+      fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
+      return;
+    }
+    var el=document.getElementById('search-results');
+    if(!q.trim()){el.innerHTML='';return;}
+    var lq=q.toLowerCase();
+    var hits=_searchIndex.filter(function(p){
+      return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
+    }).slice(0,8);
+    el.innerHTML=hits.map(function(p){
+      var href=p.type==='page'?('../'+p.slug+'.html'):('../'+'posts/'+p.slug+'.html');
+      return '<a class="search-result" href="'+href+'">'
+        +'<div class="search-result-title">'+p.title+'</div>'
+        +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';
+    }).join('')||'<div style="padding:12px;color:var(--text-muted);font-size:0.85rem">No results</div>';
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Gesture Control Demo — Method A (Raw)</title>
+<style>
+  :root {
+    --bg: #0b0d12;
+    --panel: #151923;
+    --ink: #e8ecf3;
+    --muted: #8a93a6;
+    --accent: #6ee7ff;
+    --accent-2: #ff7ab6;
+    --ok: #5ddc8a;
+    --warn: #ffd166;
+    --err: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: var(--ink);
+    font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  header { padding: 14px 20px; display: flex; align-items: center; gap: 14px;
+    border-bottom: 1px solid #1f2430; background: linear-gradient(180deg, #101420, #0b0d12); }
+  header h1 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: 0.2px; }
+  header .tag { font-size: 11px; color: var(--muted); padding: 3px 8px; border: 1px solid #293042;
+    border-radius: 999px; }
+  header .method-badge { font-size: 11px; font-weight: 600; padding: 3px 10px;
+    background: rgba(110,231,255,0.08); border: 1px solid rgba(110,231,255,0.25);
+    border-radius: 999px; color: var(--accent); margin-left: auto; }
+  main { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 16px; padding: 16px; height: calc(100% - 52px); }
+  @media (max-width: 960px) { main { grid-template-columns: 1fr; height: auto; } }
+  .stage { position: relative; background: #000; border-radius: 12px; overflow: hidden;
+    border: 1px solid #1f2430; min-height: 360px; }
+  .stage video, .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; transform: scaleX(-1); }
+  .stage canvas.overlay { z-index: 2; pointer-events: none; }
+  .stage .hud { position: absolute; left: 12px; top: 12px; z-index: 3;
+    background: rgba(11,13,18,0.55); backdrop-filter: blur(6px);
+    padding: 8px 10px; border-radius: 8px; font-size: 12px; color: var(--ink);
+    border: 1px solid #1f2430; }
+  .stage .hud b { color: var(--accent); }
+  .stage .status { position: absolute; right: 12px; top: 12px; z-index: 3;
+    padding: 6px 10px; border-radius: 999px; font-size: 11px; letter-spacing: .3px;
+    background: rgba(11,13,18,0.55); border: 1px solid #1f2430; }
+  .stage .status.live { color: var(--ok); border-color: #1f3a28; }
+  .stage .status.off  { color: var(--muted); }
+  .stage .status.err  { color: var(--err); border-color: #3a1f25; }
+  aside { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .panel { background: var(--panel); border: 1px solid #1f2430; border-radius: 12px; padding: 14px; }
+  .panel h2 { margin: 0 0 10px; font-size: 12px; color: var(--muted); font-weight: 600;
+    letter-spacing: .8px; text-transform: uppercase; }
+  .btn { appearance: none; border: 1px solid #293042; background: #1a1f2c; color: var(--ink);
+    padding: 9px 14px; border-radius: 8px; font-size: 13px; cursor: pointer;
+    transition: transform .06s ease, background .15s ease, border-color .15s ease; }
+  .btn:hover { background: #222838; border-color: #39425a; }
+  .btn:active { transform: translateY(1px); }
+  .btn.primary { background: linear-gradient(180deg, #15394a, #0f2a38); border-color: #1e546e; color: #dff6ff; }
+  .btn.primary:hover { border-color: #2d7998; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .g-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .g-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+    border: 1px solid #1f2430; border-radius: 8px; font-size: 12px; color: var(--muted);
+    background: #10141d; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+  .g-item .dot { width: 8px; height: 8px; border-radius: 50%; background: #2a3244; }
+  .g-item.active { color: var(--ink); border-color: #2b4a5e; background: #10222c; }
+  .g-item.active .dot { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; font-size: 12px; }
+  .kv dt { color: var(--muted); }
+  .kv dd { margin: 0; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .controlled {
+    position: relative; height: 160px; border-radius: 8px; overflow: hidden;
+    background: radial-gradient(1200px 160px at 50% 120%, #1a2536, #0e1220 70%);
+    border: 1px solid #1f2430;
+  }
+  .ball {
+    position: absolute; width: 44px; height: 44px; border-radius: 50%;
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    background: radial-gradient(circle at 30% 30%, #fff, var(--accent) 55%, #1c6b82 100%);
+    box-shadow: 0 8px 24px rgba(110,231,255,0.35);
+    transition: background .25s ease, box-shadow .25s ease;
+  }
+  .controlled.paused { filter: grayscale(0.7) brightness(0.7); }
+  .controlled.pinched .ball { background: radial-gradient(circle at 30% 30%, #fff, var(--accent-2) 55%, #6b1c4a 100%);
+    box-shadow: 0 8px 24px rgba(255,122,182,0.45); }
+  .legend { font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .legend code { background: #10141d; border: 1px solid #1f2430; padding: 1px 6px; border-radius: 4px; color: var(--ink); }
+  .err-box { color: var(--err); font-size: 12px; }
+  .bar { height: 6px; background: #10141d; border-radius: 999px; overflow: hidden; border: 1px solid #1f2430; }
+  .bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    width: 0%; transition: width .08s linear; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Gesture Control Demo</h1>
+  <span class="tag">MediaPipe Tasks · GestureRecognizer</span>
+  <span class="method-badge">Method A — Raw (1 file, 454 lines)</span>
+</header>
+
+<main>
+  <section class="stage" id="stage">
+    <video id="video" playsinline muted></video>
+    <canvas id="overlay" class="overlay"></canvas>
+    <div class="hud">
+      Gesture: <b id="hudGesture">—</b>
+      &nbsp;·&nbsp; FPS: <b id="hudFps">0</b>
+      &nbsp;·&nbsp; Hands: <b id="hudHands">0</b>
+    </div>
+    <div id="status" class="status off">camera off</div>
+  </section>
+
+  <aside>
+    <div class="panel">
+      <h2>Camera</h2>
+      <div class="row">
+        <button class="btn primary" id="startBtn">Start camera</button>
+        <button class="btn" id="stopBtn" disabled>Stop</button>
+      </div>
+      <div class="err-box" id="errBox" style="margin-top:8px; display:none;"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Gesture → Action</h2>
+      <div class="g-list" id="gList">
+        <div class="g-item" data-g="Open_Palm"><span class="dot"></span>Open palm → resume</div>
+        <div class="g-item" data-g="Closed_Fist"><span class="dot"></span>Fist → pause</div>
+        <div class="g-item" data-g="Thumb_Up"><span class="dot"></span>Thumb up → cyan</div>
+        <div class="g-item" data-g="Thumb_Down"><span class="dot"></span>Thumb down → pink</div>
+        <div class="g-item" data-g="Victory"><span class="dot"></span>Victory → +size</div>
+        <div class="g-item" data-g="Pointing_Up"><span class="dot"></span>Point → move ball</div>
+        <div class="g-item" data-g="ILoveYou"><span class="dot"></span>I-love-you → rainbow</div>
+        <div class="g-item" data-g="Pinch"><span class="dot"></span>Pinch → grab</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Controlled Object</h2>
+      <div class="controlled" id="controlled">
+        <div class="ball" id="ball"></div>
+      </div>
+      <dl class="kv" style="margin-top:10px;">
+        <dt>Mode</dt><dd id="kvMode">idle</dd>
+        <dt>Pinch</dt><dd><div class="bar"><i id="pinchBar"></i></div></dd>
+        <dt>Finger x,y</dt><dd id="kvXY">—</dd>
+        <dt>Confidence</dt><dd id="kvConf">—</dd>
+      </dl>
+    </div>
+
+    <div class="panel">
+      <h2>How it works</h2>
+      <div class="legend">
+        Video is processed locally via <code>GestureRecognizer</code>. Built-in gestures are
+        classified each frame; pinch is derived from the distance between thumb-tip and
+        index-tip landmarks. Nothing is uploaded — all inference runs in your browser.
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script type="module">
+  import { GestureRecognizer, FilesetResolver, DrawingUtils } from
+    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs";
+
+  const video    = document.getElementById("video");
+  const overlay  = document.getElementById("overlay");
+  const octx     = overlay.getContext("2d");
+  const startBtn = document.getElementById("startBtn");
+  const stopBtn  = document.getElementById("stopBtn");
+  const statusEl = document.getElementById("status");
+  const errBox   = document.getElementById("errBox");
+  const hudG     = document.getElementById("hudGesture");
+  const hudFps   = document.getElementById("hudFps");
+  const hudHands = document.getElementById("hudHands");
+  const gItems   = [...document.querySelectorAll(".g-item")];
+  const ball     = document.getElementById("ball");
+  const ctrl     = document.getElementById("controlled");
+  const kvMode   = document.getElementById("kvMode");
+  const kvXY     = document.getElementById("kvXY");
+  const kvConf   = document.getElementById("kvConf");
+  const pinchBar = document.getElementById("pinchBar");
+
+  let recognizer = null;
+  let running    = false;
+  let lastVideoTs = -1;
+  let rafId      = 0;
+  let stream     = null;
+
+  const ballState = { x: 0.5, y: 0.5, size: 44, hue: null, paused: false, pinched: false };
+  let frames = 0, fpsTick = performance.now();
+
+  function showError(msg){
+    errBox.textContent = msg;
+    errBox.style.display = "block";
+    statusEl.textContent = "error";
+    statusEl.className = "status err";
+  }
+  function clearError(){
+    errBox.style.display = "none";
+    errBox.textContent = "";
+  }
+
+  async function ensureRecognizer() {
+    if (recognizer) return recognizer;
+    statusEl.textContent = "loading model…";
+    statusEl.className = "status off";
+    const fileset = await FilesetResolver.forVisionTasks(
+      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm"
+    );
+    recognizer = await GestureRecognizer.createFromOptions(fileset, {
+      baseOptions: {
+        modelAssetPath:
+          "https://storage.googleapis.com/mediapipe-models/gesture_recognizer/gesture_recognizer/float16/1/gesture_recognizer.task",
+        delegate: "GPU"
+      },
+      runningMode: "VIDEO",
+      numHands: 2
+    });
+    return recognizer;
+  }
+
+  async function start() {
+    clearError();
+    startBtn.disabled = true;
+    try {
+      await ensureRecognizer();
+    } catch (e) {
+      showError("Failed to load model: " + e.message);
+      startBtn.disabled = false;
+      return;
+    }
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } },
+        audio: false
+      });
+    } catch (e) {
+      showError("Camera access denied: " + e.message);
+      startBtn.disabled = false;
+      return;
+    }
+    video.srcObject = stream;
+    await video.play();
+    resizeOverlay();
+    running = true;
+    stopBtn.disabled = false;
+    statusEl.textContent = "live";
+    statusEl.className = "status live";
+    loop();
+  }
+
+  function stop() {
+    running = false;
+    cancelAnimationFrame(rafId);
+    if (stream) stream.getTracks().forEach(t => t.stop());
+    stream = null;
+    video.srcObject = null;
+    octx.clearRect(0, 0, overlay.width, overlay.height);
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+    statusEl.textContent = "camera off";
+    statusEl.className = "status off";
+    hudG.textContent = "—";
+    hudHands.textContent = "0";
+    setActive(null);
+  }
+
+  function resizeOverlay() {
+    const w = video.videoWidth || 1280;
+    const h = video.videoHeight || 720;
+    overlay.width = w; overlay.height = h;
+  }
+
+  function setActive(key) {
+    for (const el of gItems) el.classList.toggle("active", el.dataset.g === key);
+  }
+
+  function applyAction(gesture, conf) {
+    kvConf.textContent = conf == null ? "—" : conf.toFixed(2);
+    switch (gesture) {
+      case "Open_Palm":
+        ballState.paused = false;
+        ctrl.classList.remove("paused");
+        ballState.hue = null;
+        ball.style.background = "";
+        kvMode.textContent = "running";
+        break;
+      case "Closed_Fist":
+        ballState.paused = true;
+        ctrl.classList.add("paused");
+        kvMode.textContent = "paused";
+        break;
+      case "Thumb_Up":
+        ball.style.background = "radial-gradient(circle at 30% 30%, #fff, #6ee7ff 55%, #1c6b82 100%)";
+        ballState.hue = "cyan";
+        kvMode.textContent = "color: cyan";
+        break;
+      case "Thumb_Down":
+        ball.style.background = "radial-gradient(circle at 30% 30%, #fff, #ff7ab6 55%, #6b1c4a 100%)";
+        ballState.hue = "pink";
+        kvMode.textContent = "color: pink";
+        break;
+      case "Victory":
+        ballState.size = Math.min(110, ballState.size + 1.2);
+        kvMode.textContent = "growing";
+        break;
+      case "ILoveYou": {
+        const h = (performance.now() / 8) % 360;
+        ball.style.background = `radial-gradient(circle at 30% 30%, #fff, hsl(${h} 90% 65%) 55%, hsl(${(h+60)%360} 60% 25%) 100%)`;
+        ballState.hue = "rainbow";
+        kvMode.textContent = "rainbow";
+        break;
+      }
+      case "Pointing_Up":
+        kvMode.textContent = "tracking";
+        break;
+      default:
+        ballState.size += (44 - ballState.size) * 0.05;
+    }
+  }
+
+  function drawLandmarks(landmarks) {
+    const draw = new DrawingUtils(octx);
+    for (const pts of landmarks) {
+      draw.drawConnectors(pts, GestureRecognizer.HAND_CONNECTIONS, { color: "#6ee7ff", lineWidth: 3 });
+      draw.drawLandmarks(pts, { color: "#ff7ab6", lineWidth: 1, radius: 3 });
+    }
+  }
+
+  function distance(a, b) {
+    const dx = a.x - b.x, dy = a.y - b.y, dz = (a.z||0) - (b.z||0);
+    return Math.sqrt(dx*dx + dy*dy + dz*dz);
+  }
+
+  function loop() {
+    if (!running) return;
+    rafId = requestAnimationFrame(loop);
+    if (video.readyState < 2) return;
+    if (overlay.width !== video.videoWidth || overlay.height !== video.videoHeight) resizeOverlay();
+    const ts = performance.now();
+    let result = null;
+    if (video.currentTime !== lastVideoTs) {
+      lastVideoTs = video.currentTime;
+      try { result = recognizer.recognizeForVideo(video, ts); } catch (e) {}
+    }
+    octx.clearRect(0, 0, overlay.width, overlay.height);
+    let activeGesture = null;
+    let conf = null;
+    let pinch = 0;
+    if (result && result.landmarks && result.landmarks.length) {
+      drawLandmarks(result.landmarks);
+      hudHands.textContent = result.landmarks.length;
+      const lm = result.landmarks[0];
+      const thumbTip = lm[4];
+      const indexTip = lm[8];
+      const span = distance(lm[0], lm[9]) || 0.2;
+      const d = distance(thumbTip, indexTip) / span;
+      pinch = Math.max(0, Math.min(1, 1 - (d - 0.25) / 0.8));
+      ballState.pinched = pinch > 0.65;
+      ctrl.classList.toggle("pinched", ballState.pinched);
+      const cats = result.gestures && result.gestures[0];
+      if (cats && cats.length) {
+        const top = cats[0];
+        if (top.categoryName !== "None") { activeGesture = top.categoryName; conf = top.score; }
+      }
+      if (ballState.pinched) { activeGesture = "Pinch"; conf = pinch; }
+      if (activeGesture === "Pointing_Up" || ballState.pinched) {
+        const tx = 1 - indexTip.x;
+        const ty = indexTip.y;
+        ballState.x += (tx - ballState.x) * 0.35;
+        ballState.y += (ty - ballState.y) * 0.35;
+        kvXY.textContent = `${tx.toFixed(2)}, ${ty.toFixed(2)}`;
+      }
+    } else {
+      hudHands.textContent = "0";
+      kvXY.textContent = "—";
+    }
+    if (activeGesture) {
+      hudG.textContent = activeGesture + (conf != null ? `  (${(conf*100|0)}%)` : "");
+      setActive(activeGesture);
+      if (!ballState.paused || activeGesture === "Open_Palm") applyAction(activeGesture, conf);
+    } else {
+      hudG.textContent = "—";
+      setActive(null);
+      applyAction(null, null);
+    }
+    pinchBar.style.width = (pinch * 100).toFixed(0) + "%";
+    const rect = ctrl.getBoundingClientRect();
+    const px = Math.max(0, Math.min(1, ballState.x)) * rect.width;
+    const py = Math.max(0, Math.min(1, ballState.y)) * rect.height;
+    ball.style.left = px + "px";
+    ball.style.top  = py + "px";
+    ball.style.width = ballState.size + "px";
+    ball.style.height = ballState.size + "px";
+    frames++;
+    if (ts - fpsTick >= 500) {
+      hudFps.textContent = ((frames * 1000) / (ts - fpsTick)).toFixed(0);
+      frames = 0; fpsTick = ts;
+    }
+  }
+
+  startBtn.addEventListener("click", start);
+  stopBtn.addEventListener("click", stop);
+
+  if (location.protocol !== "https:" && location.hostname !== "localhost" && location.protocol !== "file:") {
+    showError("Camera requires HTTPS or localhost.");
+  }
+</script>
+</body>
+</html>

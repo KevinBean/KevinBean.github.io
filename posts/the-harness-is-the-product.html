@@ -97,11 +97,21 @@
 <h3 id="the-finding-the-vibe-is-load-bearing">The Finding: The "Vibe" is Load-Bearing<a class="header-link" href="#the-finding-the-vibe-is-load-bearing" title="Permanent link">&para;</a></h3>
 <p>In an empty directory, the model correctly assumed the vibe was <strong>"quick and dirty."</strong> Inside EmptyOS, it correctly assumed the vibe was <strong>"system membership."</strong></p>
 <p>This is the part people miss when they talk about AI models being "good" or "bad." The model provides the raw reasoning—the engine—but the <strong>Harness</strong> (the rules, the memory, the tests) is what defines the output's ambition.</p>
-<p>When the model is inside a structured environment, it doesn't just write code; it follows a standard and wires itself into the ecosystem. It spends its tokens on things that don't "show up" in a demo but matter in production:
-- <strong>Standardized event names</strong> for cross-app communication.
-- <strong>Self-correction</strong> via automated test loops.
-- <strong>Updating release manifests</strong> and documentation.
-- <strong>Ensuring the new code "plays nice"</strong> with existing background daemons.</p>
+<p>When the model is inside a structured environment, it doesn't just write code; it follows a standard and wires itself into the ecosystem. It spends its tokens on things that don't "show up" in a demo but matter in production:</p>
+<ul>
+<li>
+<p><strong>Standardized event names</strong> for cross-app communication.</p>
+</li>
+<li>
+<p><strong>Self-correction</strong> via automated test loops.</p>
+</li>
+<li>
+<p><strong>Updating release manifests</strong> and documentation.</p>
+</li>
+<li>
+<p><strong>Ensuring the new code "plays nice"</strong> with existing background daemons.</p>
+</li>
+</ul>
 <h3 id="the-verification-gap">The Verification Gap<a class="header-link" href="#the-verification-gap" title="Permanent link">&para;</a></h3>
 <p>The most telling moment was the bug. During the EmptyOS session, the model tried to use a helper function called <code>EOS.get()</code>. In this specific project, that function didn't exist.</p>
 <p>Because the harness forces the model to run a test suite before it finishes, the AI caught its own mistake, realized the function was missing, and fixed the logic. In the "Raw" setup, that bug would have just lived there until a human tried to run it and saw the console error. </p>

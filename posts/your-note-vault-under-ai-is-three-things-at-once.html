@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes as Infrastructure: the emergence of the markdown OS — Bin Bian's Site</title>
+  <meta name="description" content="In systems design we separate data from logic. Under AI, a markdown vault collapses that distinction — the same notes become knowledge, policy, and runtime in t">
+  <meta property="og:title" content="Notes as Infrastructure: the emergence of the markdown OS">
+  <meta property="og:description" content="In systems design we separate data from logic. Under AI, a markdown vault collapses that distinction — the same notes become knowledge, policy, and runtime in t">
+  <meta property="og:type" content="article">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="alternate" type="application/atom+xml" title="Bin Bian's Site Feed" href="../atom.xml">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <meta property="og:image" content="https://binbian.net/media/cover-your-note-vault-under-ai-is-three-things-at-once.png">
+  <script>(function(){try{if(navigator.doNotTrack==='1')return;var u="http://localhost:9000/web-analytics/api/collect",s="default";var b={site:s,path:location.pathname,referrer:document.referrer||''};var blob=new Blob([JSON.stringify(b)],{type:'text/plain'});if(navigator.sendBeacon){navigator.sendBeacon(u,blob);}else{fetch(u,{method:'POST',body:JSON.stringify(b),keepalive:true,headers:{'Content-Type':'text/plain'}}).catch(function(){});}}catch(e){}})();</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="max-width:900px">
+      <a href="../index.html" class="site-name">Bin Bian's Site</a>
+      <nav class="site-nav">
+        <a href="../index.html">Blog</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../tags.html">Tags</a>
+        <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+      </nav>
+    </div>
+  </header>
+  <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <input class="search-input" id="search-input" placeholder="Search posts..." oninput="doSearch(this.value)" autofocus>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <main class="container">
+    <article>
+  
+  
+  <div class="post-layout">
+    <div>
+      <div style="margin-bottom:24px">
+        <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:8px">Notes as Infrastructure: the emergence of the markdown OS</h1>
+        <div class="post-meta">2026-04-27 &middot; 7 min read <a href="../tags/ai.html" class="tag">AI</a> <a href="../tags/pkm.html" class="tag">PKM</a> <a href="../tags/knowledge-management.html" class="tag">knowledge-management</a> <a href="../tags/emptyos.html" class="tag">EmptyOS</a> <a href="../tags/linkedin-series.html" class="tag">linkedin-series</a> <a href="../tags/systemsdesign.html" class="tag">SystemsDesign</a></div>
+      </div>
+      <div class="article">
+        <!-- eos-cover -->
+<p><img alt="Notes as Infrastructure: the emergence of the markdown OS — cover" src="../media/cover-your-note-vault-under-ai-is-three-things-at-once.png" /></p>
+<!-- /eos-cover -->
+
+<blockquote>
+<p>Last week I added one line to a note about how I review pull requests. The next morning, my AI assistant reviewed a PR using exactly that line — without me telling it to.</p>
+</blockquote>
+<p>The note didn't change. My behaviour did. So did the AI's.</p>
+<p>In systems design we usually draw a hard line between <strong>data</strong> (state) and <strong>logic</strong> (behaviour). That small moment is what convinced me the line is collapsing. Treated as an AI substrate, a markdown vault evolves through three functional layers, and at each one the same humble <code>.md</code> file moves from <strong>noun → verb</strong>. <em>Is → should → does.</em></p>
+<p>Most people stop at layer one and miss the rest of the story.</p>
+<hr />
+<h2 id="1-the-knowledge-layer-ground-truth">1. The Knowledge Layer — ground truth<a class="header-link" href="#1-the-knowledge-layer-ground-truth" title="Permanent link">&para;</a></h2>
+<p><img alt="Journal — the daily ground state where notes get written" src="../media/vault-under-ai-journal.png" /></p>
+<p>At this level, the vault is the authoritative context for the model. Instead of leaning on the median opinion of its training data, the AI is grounded in specific, dated, personal facts.</p>
+<p>When I ask my system "how did the latest job interview go?" it doesn't guess. It opens the daily journal from that date, reads what I actually wrote, and replies with my own words sharpened back at me. When I ask "what's my net worth trend over the last three months?" it pulls the monthly snapshots I'd typed by hand and gives me the slope.</p>
+<p>The shift is in <em>how I write</em>. Writing stops being archiving for a future me and becomes contextualising for an agent. A precise note becomes a precise system memory; a vague note produces a vague output. Every vague sentence is a vague answer waiting to happen.</p>
+<hr />
+<h2 id="2-the-policy-layer-behavioural-constraints">2. The Policy Layer — behavioural constraints<a class="header-link" href="#2-the-policy-layer-behavioural-constraints" title="Permanent link">&para;</a></h2>
+<p><img alt="A slice of EmptyOS's CLAUDE.md — plain prose that the AI reads at every session and behaves accordingly" src="../media/vault-under-ai-skill.png" /></p>
+<p>This is where prose becomes active skill.</p>
+<p>In EmptyOS I keep a note that says, roughly: <em>"When proposing a code change, name the file and line number, propose the smallest diff that solves the problem, and never invent a function that doesn't already exist in the repo."</em> Three sentences. They sit in a folder the system reads at every session start.</p>
+<p>Because the model parses these notes as part of its system context, the prose functions as <strong>declarative policy</strong>. Before that note existed, the AI would happily suggest plausible-looking helpers from libraries I don't use. After it existed, it stopped — not because the model got smarter, but because it now has my standards to point to.</p>
+<p>This is the layer that surprises people. Every "how I do X" note is now a skill waiting to be invoked. The vault isn't documentation any more; it's the governing logic of the assistant's behaviour. The same prose serves both you and the machine, with no extra format. You write the rule once; you both follow it.</p>
+<hr />
+<h2 id="3-the-infrastructure-layer-executable-tools">3. The Infrastructure Layer — executable tools<a class="header-link" href="#3-the-infrastructure-layer-executable-tools" title="Permanent link">&para;</a></h2>
+<p><img alt="Staff — markdown-defined agents running on schedule, doing what their notes describe" src="../media/vault-under-ai-staff.png" /></p>
+<p>The final transition happens when notes contain executable steps the AI can run. The line between <em>doc</em> and <em>program</em> disappears.</p>
+<p>A note titled "how I export my expenses" stops describing the process and starts being the process. The AI reads the English intent, identifies the computational steps inside the note, and executes them. A recipe becomes a runnable. A checklist becomes a pipeline.</p>
+<p>In EmptyOS this shows up as a folder of small skills — each a markdown file that explains, in prose, what it does and when to invoke it. I author them by writing English first and code second; the prose is the interface. The vault becomes the <strong>runtime environment</strong>.</p>
+<p>The vault is no longer just what you know. It's what you can <em>do</em>.</p>
+<hr />
+<h2 id="the-progression-nobody-names">The progression nobody names<a class="header-link" href="#the-progression-nobody-names" title="Permanent link">&para;</a></h2>
+<p>Knowledge (<em>is</em>) → Policy (<em>should</em>) → Infrastructure (<em>does</em>).</p>
+<p>Most people stop at layer one and miss the real story: the vault is becoming an <strong>operating system</strong>. Not metaphorically. Literally — a place where information, policy, and action all live in the same plain-text substrate, where the same <code>.md</code> file can be read by you, by the AI, and by a runtime, with no translation layer in between.</p>
+<p>That's the part that's hard to see from the outside. From the outside it still looks like a folder of notes.</p>
+<hr />
+<h2 id="the-prerequisite-note-hygiene-as-technical-debt">The prerequisite — note hygiene as technical debt<a class="header-link" href="#the-prerequisite-note-hygiene-as-technical-debt" title="Permanent link">&para;</a></h2>
+<p>The progression from noun to verb is only as reliable as the substrate underneath it. Sloppy notes → sloppy policies → sloppy tools. The AI amplifies whatever's there; if your vault is a junk drawer, AI gives you a very fast, very confident junk drawer that occasionally hands you the wrong knife.</p>
+<p>To treat a vault as infrastructure, three engineering disciplines apply:</p>
+<ul>
+<li><strong>Atomicity</strong> — one concept or process per note.</li>
+<li><strong>Schema</strong> — consistent frontmatter and metadata so the system can find things.</li>
+<li><strong>Integrity</strong> — regular pruning of outdated or conflicting policies.</li>
+</ul>
+<p>The new digital literacy isn't found in clever prompting. It's in the disciplined management of the information substrate.</p>
+<hr />
+<h2 id="see-it-running">See it running<a class="header-link" href="#see-it-running" title="Permanent link">&para;</a></h2>
+<p>I've been exploring these ideas through <strong>EmptyOS</strong> — <em>a mind companion that thinks and creates with you, not for you</em> — a system designed to treat a markdown vault as a unified operating substrate.</p>
+<p>There's a live instance at <strong><a href="https://demo.binbian.net">demo.binbian.net</a></strong>. Browse the apps, open a journal entry, see a policy note become behaviour, watch the Staff agents treat the vault as infrastructure. It's the fastest way to feel what "vault as OS" is like without installing anything.</p>
+<p>A caveat: the cloud demo is deliberately partial. EmptyOS is built local-first and private-first — it's meant to be a safe personal tool, so the parts that touch real keys, real data, or your own machine only light up when you self-host. The demo shows the shape; running it on your own vault shows the point.</p>
+<p>I'd be interested to hear from others working at the intersection of PKM and LLMs — are you seeing the same shift toward executable knowledge?</p>
+<hr />
+<p><em>If this resonates, the next post in the series is on the harness — why the same model behaves like two different products depending on what you wrap around it.</em></p>
+<hr />
+<h2 id="listen-to-this-post">Listen to this post<a class="header-link" href="#listen-to-this-post" title="Permanent link">&para;</a></h2>
+<div id="podcast-your_note_vault_under_ai_is_three_things_at_once" style="margin:12px 0"></div>
+<noscript>
+<audio controls style="width:100%">
+  <source src="../media/podcast-your-note-vault-under-ai-is-three-things-at-once.mp3" type="audio/mpeg">
+</audio>
+</noscript>
+<script>
+(function(){
+  var el = document.getElementById("podcast-your_note_vault_under_ai_is_three_things_at_once");
+  var mb = (location.pathname.indexOf("/posts/") >= 0) ? "../media/" : (location.search.indexOf("path=posts/") >= 0) ? "/publish/api/site-file?path=media/" : "media/";
+  function go(d) {
+    d.audioUrl = mb + "podcast-your-note-vault-under-ai-is-three-things-at-once.mp3";
+    (d.scenes || []).forEach(function(sc) { if (sc.image_file) sc.image_url = mb + sc.image_file; });
+    SlideshowPlayer.create(el, d);
+  }
+  function load() {
+    fetch(mb + "podcast-your-note-vault-under-ai-is-three-things-at-once-slideshow.json").then(function(r) { return r.json(); }).then(go);
+  }
+  if (window.SlideshowPlayer) { load(); return; }
+  var s = document.createElement("script");
+  s.src = mb + "slideshow-player.js";
+  s.onload = load;
+  document.head.appendChild(s);
+})();
+</script>
+<p id="vid-your_note_vault_under_ai_is_three_things_at_once_vid" style="margin:6px 0 0;font-size:0.85rem"><a href="media/podcast-your-note-vault-under-ai-is-three-things-at-once.mp4" download>&#11015; Download as video</a> <span style="color:var(--text-muted)">— share on LinkedIn, X, etc.</span></p>
+<script>(function(){var a=document.querySelector("#vid-your_note_vault_under_ai_is_three_things_at_once_vid a");if(!a)return;if(location.pathname.indexOf("/posts/")>=0)a.href="../media/podcast-your-note-vault-under-ai-is-three-things-at-once.mp4";else if(location.search.indexOf("path=posts/")>=0)a.href="/publish/api/site-file?path=media/podcast-your-note-vault-under-ai-is-three-things-at-once.mp4";})();</script>
+<p style="font-size:0.8rem;color:var(--text-muted)">AI-generated podcast discussion of this article</p>
+      </div>
+      <div class="author-card">
+  <img src="../assets/avatar.png" class="author-avatar" alt="Bin Bian (Kevin)">
+  <div class="author-info">
+    <div class="author-name">Bin Bian (Kevin)</div>
+    <div class="author-bio">Electrical engineer turned AI & digital transformation enthusiast. Also known as Kevin.</div>
+    <div class="author-links"><a href="https://www.linkedin.com/in/bianbin/">LinkedIn</a> <a href="https://github.com/KevinBean/">GitHub</a> <a href="mailto:bianbin+contact@gmail.com">Email</a></div>
+  </div>
+</div>
+      <div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--border)">
+  <h3 style="font-size:1rem;color:var(--text-heading);margin-bottom:12px">Related Posts</h3>
+  <ul class="post-list" style="margin:0">
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/notes-folder-is-operating-system.html" class="post-title" style="font-size:0.95rem">Your notes folder is the operating system, and AI is the engine</a>
+  <div class="post-meta">2026-04-14</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/the-harness-is-the-product.html" class="post-title" style="font-size:0.95rem">The Harness and the Model: Why the 'Vibe' Defines the 'Code'</a>
+  <div class="post-meta">2026-04-22</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/bpmn-ai-agent-workflows.html" class="post-title" style="font-size:0.95rem">Using BPMN to Design and Coordinate AI Agent Workflows</a>
+  <div class="post-meta">2025-04-05</div>
+</li>
+  </ul>
+</div>
+      <div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border)">
+        <a href="../index.html">&larr; Back to posts</a>
+      </div>
+    </div>
+    <aside class="toc-sidebar">
+  <div class="toc-title">Contents</div>
+  <div class="toc">
+<ul>
+<li><a href="#1-the-knowledge-layer-ground-truth">1. The Knowledge Layer — ground truth</a></li>
+<li><a href="#2-the-policy-layer-behavioural-constraints">2. The Policy Layer — behavioural constraints</a></li>
+<li><a href="#3-the-infrastructure-layer-executable-tools">3. The Infrastructure Layer — executable tools</a></li>
+<li><a href="#the-progression-nobody-names">The progression nobody names</a></li>
+<li><a href="#the-prerequisite-note-hygiene-as-technical-debt">The prerequisite — note hygiene as technical debt</a></li>
+<li><a href="#see-it-running">See it running</a></li>
+<li><a href="#listen-to-this-post">Listen to this post</a></li>
+</ul>
+</div>
+
+</aside>
+  </div>
+</article>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span class="cross-site-links"><a href="https://portfolio.binbian.net">Engineering Portfolio</a> &middot; <a href="https://eos.binbian.net">EmptyOS</a></span>
+      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a>
+    </div>
+  </footer>
+  <script>
+  // Theme toggle
+  (function(){
+    try{var t=localStorage.getItem('site-theme');if(t==='alt-theme')document.body.classList.add('alt-theme');}catch(e){}
+  })();
+  function toggleTheme(){
+    document.body.classList.toggle('alt-theme');
+    try{localStorage.setItem('site-theme',document.body.classList.contains('alt-theme')?'alt-theme':'dark');}catch(e){}
+    var btn=document.querySelector('.theme-toggle');
+    btn.innerHTML=document.body.classList.contains('alt-theme')?'&#9788;':'&#9790;';
+  }
+  // Search
+  var _searchIndex=null;
+  function openSearch(){
+    document.getElementById('search-overlay').classList.add('open');
+    document.getElementById('search-input').focus();
+  }
+  function closeSearch(){
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch();
+  });
+  function doSearch(q){
+    if(!_searchIndex){
+      var searchUrl='../search-index.json';
+      if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
+      fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
+      return;
+    }
+    var el=document.getElementById('search-results');
+    if(!q.trim()){el.innerHTML='';return;}
+    var lq=q.toLowerCase();
+    var hits=_searchIndex.filter(function(p){
+      return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
+    }).slice(0,8);
+    el.innerHTML=hits.map(function(p){
+      var href=p.type==='page'?('../'+p.slug+'.html'):('../'+'posts/'+p.slug+'.html');
+      return '<a class="search-result" href="'+href+'">'
+        +'<div class="search-result-title">'+p.title+'</div>'
+        +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';
+    }).join('')||'<div style="padding:12px;color:var(--text-muted);font-size:0.85rem">No results</div>';
+  }
+  </script>
+</body>
+</html>

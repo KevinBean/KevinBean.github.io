@@ -4,9 +4,16 @@
   <subtitle>Engineering, AI, and Digital Transformation</subtitle>
   <link href="https://binbian.net/" rel="alternate"/>
   <link href="https://binbian.net/atom.xml" rel="self"/>
-  <updated>2026-04-22T00:00:00Z</updated>
+  <updated>2026-04-27T00:00:00Z</updated>
   <id>https://binbian.net/</id>
   <author><name>Bin Bian (Kevin)</name></author>
+  <entry>
+    <title>Notes as Infrastructure: the emergence of the markdown OS</title>
+    <link href="https://binbian.net/posts/your-note-vault-under-ai-is-three-things-at-once.html"/>
+    <id>https://binbian.net/posts/your-note-vault-under-ai-is-three-things-at-once.html</id>
+    <updated>2026-04-27T00:00:00Z</updated>
+    <summary>In systems design we separate data from logic. Under AI, a markdown vault collapses that distinction — the same notes become knowledge, policy, and runtime in three layers.</summary>
+  </entry>
   <entry>
     <title>The Harness and the Model: Why the 'Vibe' Defines the 'Code'</title>
     <link href="https://binbian.net/posts/the-harness-is-the-product.html"/>

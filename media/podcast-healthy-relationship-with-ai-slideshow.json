@@ -1,6 +1,6 @@
 {
   "topic": "A Healthy Relationship with My AI Coding Agent: Use It, Abuse It, Outlive It",
-  "duration_s": 359.712,
+  "duration_s": 353.541224,
   "timings": [
     {
       "start_ms": 0,
@@ -176,49 +176,57 @@
       "start_ms": 0,
       "end_ms": 27352,
       "summary": "Let me start with the uncomfortable confession: if your coding agent vanished tomorrow, would your product still exist — or would the whole thing collapse? That question feels almost rude. It’s the right rudeness. The healthy relationship has three stages: use it, abuse it, outlive it. Most people s",
-      "image_file": "podcast-healthy-relationship-with-ai-scene-00.png"
+      "image_file": "ai-relationship-arc.png",
+      "source": "article-image"
     },
     {
       "start_ms": 27752,
       "end_ms": 78824,
       "summary": "Hold on — “abuse it” sounds suspiciously like dependency with better branding. Why is that not just reckless overreliance? Because the dependency is intentional and bounded. In stage two, you burn tokens the way a founder burns runway: deliberately, to build something you couldn’t build alone. The p",
-      "image_file": "podcast-healthy-relationship-with-ai-scene-01.png"
+      "image_file": "emptyos-apps-over-time.png",
+      "source": "article-image"
     },
     {
       "start_ms": 79224,
       "end_ms": 145528,
       "summary": "Then what does stage three actually look like in practice? Give me something concrete, not philosophy. Take the biggest category first: apps that were heavily built with the coding agent but don’t need AI at runtime. Calculators, planners, system plumbing, journals, expenses — plain Python, markdown",
-      "image_file": "podcast-healthy-relationship-with-ai-scene-02.png"
+      "image_file": "ai-relationship-shape1-fault-distribution.png",
+      "source": "article-image"
     },
     {
       "start_ms": 145928,
       "end_ms": 193984,
       "summary": "That’s shape two: the coding agent is retired, but the runtime tool still composes AI honestly. A dictionary can define and pronounce words; a reader can summarize long articles; a publishing tool can generate a cover image, a scripted episode, and two voices. Those apps depend on swappable model AP",
-      "image_file": "podcast-healthy-relationship-with-ai-scene-03.png"
+      "image_file": "ai-relationship-shape2-dictionary.png",
+      "source": "article-image"
     },
     {
       "start_ms": 194384,
       "end_ms": 240248,
       "summary": "And then there’s the part that can never outlive the agent: the forge, right? The meta-tools that keep making more tools. Right. The app generator, the model-bench, the agent app itself — those are shape three. They exist to keep generating more EmptyOS. But the key move is that every cycle through ",
-      "image_file": "podcast-healthy-relationship-with-ai-scene-04.png"
+      "image_file": "ai-relationship-shape3-app-gen.png",
+      "source": "article-image"
     },
     {
       "start_ms": 240648,
       "end_ms": 289344,
       "summary": "How do you know where you are on that arc without telling yourself a flattering story? Run the offline test: if every AI in the stack went dark tomorrow — coding agent and runtime models both — what would still work? Nothing means early stage two or stage one. The basics working but the polish gone ",
-      "image_file": "podcast-healthy-relationship-with-ai-scene-05.png"
+      "image_file": "ai-relationship-offline-banner.png",
+      "source": "article-image"
     },
     {
       "start_ms": 289744,
       "end_ms": 336232,
       "summary": "So stage three is less “AI everywhere” and more “AI where it belongs,” with most of the system no longer leaning on it. Yes, and that’s where human judgment matters most. Coding agents are extraordinary at speed, scale, and patience. They’re weak at ambiguity, taste, refusal, and deciding which shap",
-      "image_file": "podcast-healthy-relationship-with-ai-scene-06.png"
+      "image_file": "ai-relationship-shape2-publish.png",
+      "source": "article-image"
     },
     {
       "start_ms": 336632,
       "end_ms": 359712,
       "summary": "So the point isn’t to break up with the agent. It’s to stop making it emotionally and technically indispensable. That’s the mature version. Use it hard, let it help you build more than you could alone, then outlive it where you can. Keep a forge open where necessary, but let the rest stand on its ow",
-      "image_file": "podcast-healthy-relationship-with-ai-scene-07.png"
+      "image_file": "cover-healthy-relationship-with-ai.png",
+      "source": "article-image"
     }
   ]
 }

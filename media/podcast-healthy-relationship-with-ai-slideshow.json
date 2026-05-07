@@ -1,0 +1,224 @@
+{
+  "topic": "A Healthy Relationship with My AI Coding Agent: Use It, Abuse It, Outlive It",
+  "duration_s": 359.712,
+  "timings": [
+    {
+      "start_ms": 0,
+      "end_ms": 11016,
+      "speaker": "A",
+      "text": "Let me start with the uncomfortable confession: if your coding agent vanished tomorrow, would your product still exist — or would the whole thing collapse? That question feels almost rude."
+    },
+    {
+      "start_ms": 11416,
+      "end_ms": 27352,
+      "speaker": "B",
+      "text": "It’s the right rudeness. The healthy relationship has three stages: use it, abuse it, outlive it. Most people stop at “use it.” The interesting part starts when the agent stops being a tool for tasks and becomes scaffolding for a system."
+    },
+    {
+      "start_ms": 27752,
+      "end_ms": 35936,
+      "speaker": "A",
+      "text": "Hold on — “abuse it” sounds suspiciously like dependency with better branding. Why is that not just reckless overreliance?"
+    },
+    {
+      "start_ms": 36336,
+      "end_ms": 54024,
+      "speaker": "B",
+      "text": "Because the dependency is intentional and bounded. In stage two, you burn tokens the way a founder burns runway: deliberately, to build something you couldn’t build alone. The point is not comfort; it’s acceleration. But it only counts if the abuse is for something."
+    },
+    {
+      "start_ms": 54424,
+      "end_ms": 61504,
+      "speaker": "A",
+      "text": "So if I’m just generating code because I can, I’m not in some noble middle phase — I’m just accumulating fragility?"
+    },
+    {
+      "start_ms": 61904,
+      "end_ms": 78824,
+      "speaker": "B",
+      "text": "Exactly. Dependency without a destination is just dependency. The mid-phase doubt is part of the process, though: you look at the codebase and think, “What am I even good for here?” That’s not a failure signal. It’s a transition signal."
+    },
+    {
+      "start_ms": 79224,
+      "end_ms": 86064,
+      "speaker": "A",
+      "text": "Then what does stage three actually look like in practice? Give me something concrete, not philosophy."
+    },
+    {
+      "start_ms": 86464,
+      "end_ms": 108352,
+      "speaker": "B",
+      "text": "Take the biggest category first: apps that were heavily built with the coding agent but don’t need AI at runtime. Calculators, planners, system plumbing, journals, expenses — plain Python, markdown, SQLite. Turn all AI off and they still work. Most software humans need is structured and deterministic, not model-shaped."
+    },
+    {
+      "start_ms": 108752,
+      "end_ms": 115832,
+      "speaker": "A",
+      "text": "But isn’t that kind of boring? If AI helped build it, shouldn’t AI stay in the loop to justify the cost?"
+    },
+    {
+      "start_ms": 116232,
+      "end_ms": 136032,
+      "speaker": "B",
+      "text": "Not necessarily. That’s the counterintuitive win: the agent’s job was to get you there faster, not to become part of the product forever. A receipt can be categorized by AI, sure, but if the AI is missing, the app can show a yellow banner and keep going. That’s a healthier failure mode than total collapse."
+    },
+    {
+      "start_ms": 136432,
+      "end_ms": 145528,
+      "speaker": "A",
+      "text": "Okay, but some tools are obviously AI-native. A voice assistant without a model is dead. So doesn’t stage three fail there?"
+    },
+    {
+      "start_ms": 145928,
+      "end_ms": 166904,
+      "speaker": "B",
+      "text": "That’s shape two: the coding agent is retired, but the runtime tool still composes AI honestly. A dictionary can define and pronounce words; a reader can summarize long articles; a publishing tool can generate a cover image, a scripted episode, and two voices. Those apps depend on swappable model APIs, not on the original agent."
+    },
+    {
+      "start_ms": 167304,
+      "end_ms": 175296,
+      "speaker": "A",
+      "text": "So the real dependency isn’t on the coding agent anymore — it’s on the AI services those apps call. Isn’t that still risky?"
+    },
+    {
+      "start_ms": 175696,
+      "end_ms": 193984,
+      "speaker": "B",
+      "text": "Yes, but it’s a different risk. A swappable runtime dependency is much cleaner than a hidden architectural dependency on the agent that wired everything together. If the model changes, you adapt. If the coding agent is the load-bearing pillar, you’ve got a more brittle relationship."
+    },
+    {
+      "start_ms": 194384,
+      "end_ms": 202160,
+      "speaker": "A",
+      "text": "And then there’s the part that can never outlive the agent: the forge, right? The meta-tools that keep making more tools."
+    },
+    {
+      "start_ms": 202560,
+      "end_ms": 218688,
+      "speaker": "B",
+      "text": "Right. The app generator, the model-bench, the agent app itself — those are shape three. They exist to keep generating more EmptyOS. But the key move is that every cycle through the forge pushes the rest of the system toward shape one or two."
+    },
+    {
+      "start_ms": 219088,
+      "end_ms": 226984,
+      "speaker": "A",
+      "text": "So the forge is a permanent dependency, but a bounded one. You keep the door open on purpose, not by accident."
+    },
+    {
+      "start_ms": 227384,
+      "end_ms": 240248,
+      "speaker": "B",
+      "text": "Exactly. You’re not trying to abandon the agent; you’re trying to stop needing it for the old stuff. The relationship becomes specific: call it for new things, not for running the things already built."
+    },
+    {
+      "start_ms": 240648,
+      "end_ms": 245448,
+      "speaker": "A",
+      "text": "How do you know where you are on that arc without telling yourself a flattering story?"
+    },
+    {
+      "start_ms": 245848,
+      "end_ms": 265000,
+      "speaker": "B",
+      "text": "Run the offline test: if every AI in the stack went dark tomorrow — coding agent and runtime models both — what would still work? Nothing means early stage two or stage one. The basics working but the polish gone means late stage two. If you’d barely notice, you’ve reached stage three for the shape-one parts."
+    },
+    {
+      "start_ms": 265400,
+      "end_ms": 270728,
+      "speaker": "A",
+      "text": "That’s a brutal test. But why does it matter beyond architecture neatness?"
+    },
+    {
+      "start_ms": 271128,
+      "end_ms": 289344,
+      "speaker": "B",
+      "text": "Because it reveals whether AI is scaffolding or dependency. On the live demo, there’s even a switch to simulate capability offline: flip it, and you see what stays standing, what shows a banner, and what only returns when someone sits down with the coding agent again. The point is honest survivability."
+    },
+    {
+      "start_ms": 289744,
+      "end_ms": 297136,
+      "speaker": "A",
+      "text": "So stage three is less “AI everywhere” and more “AI where it belongs,” with most of the system no longer leaning on it."
+    },
+    {
+      "start_ms": 297536,
+      "end_ms": 314624,
+      "speaker": "B",
+      "text": "Yes, and that’s where human judgment matters most. Coding agents are extraordinary at speed, scale, and patience. They’re weak at ambiguity, taste, refusal, and deciding which shape an app should be. Those are values calls, and values are ours."
+    },
+    {
+      "start_ms": 315024,
+      "end_ms": 319968,
+      "speaker": "A",
+      "text": "You’re saying the agent can build fast, but it can’t decide what not to build."
+    },
+    {
+      "start_ms": 320368,
+      "end_ms": 336232,
+      "speaker": "B",
+      "text": "Precisely. It can help you produce, but it can’t choose the boundary. A healthy relationship ends with you acting like an engineer again, not a prompt-manager — with an extraordinarily capable collaborator on call, but not in control of the whole system."
+    },
+    {
+      "start_ms": 336632,
+      "end_ms": 343712,
+      "speaker": "A",
+      "text": "So the point isn’t to break up with the agent. It’s to stop making it emotionally and technically indispensable."
+    },
+    {
+      "start_ms": 344112,
+      "end_ms": 359712,
+      "speaker": "B",
+      "text": "That’s the mature version. Use it hard, let it help you build more than you could alone, then outlive it where you can. Keep a forge open where necessary, but let the rest stand on its own. That’s not just healthier — it’s better engineering."
+    }
+  ],
+  "scenes": [
+    {
+      "start_ms": 0,
+      "end_ms": 27352,
+      "summary": "Let me start with the uncomfortable confession: if your coding agent vanished tomorrow, would your product still exist — or would the whole thing collapse? That question feels almost rude. It’s the right rudeness. The healthy relationship has three stages: use it, abuse it, outlive it. Most people s",
+      "image_file": "podcast-healthy-relationship-with-ai-scene-00.png"
+    },
+    {
+      "start_ms": 27752,
+      "end_ms": 78824,
+      "summary": "Hold on — “abuse it” sounds suspiciously like dependency with better branding. Why is that not just reckless overreliance? Because the dependency is intentional and bounded. In stage two, you burn tokens the way a founder burns runway: deliberately, to build something you couldn’t build alone. The p",
+      "image_file": "podcast-healthy-relationship-with-ai-scene-01.png"
+    },
+    {
+      "start_ms": 79224,
+      "end_ms": 145528,
+      "summary": "Then what does stage three actually look like in practice? Give me something concrete, not philosophy. Take the biggest category first: apps that were heavily built with the coding agent but don’t need AI at runtime. Calculators, planners, system plumbing, journals, expenses — plain Python, markdown",
+      "image_file": "podcast-healthy-relationship-with-ai-scene-02.png"
+    },
+    {
+      "start_ms": 145928,
+      "end_ms": 193984,
+      "summary": "That’s shape two: the coding agent is retired, but the runtime tool still composes AI honestly. A dictionary can define and pronounce words; a reader can summarize long articles; a publishing tool can generate a cover image, a scripted episode, and two voices. Those apps depend on swappable model AP",
+      "image_file": "podcast-healthy-relationship-with-ai-scene-03.png"
+    },
+    {
+      "start_ms": 194384,
+      "end_ms": 240248,
+      "summary": "And then there’s the part that can never outlive the agent: the forge, right? The meta-tools that keep making more tools. Right. The app generator, the model-bench, the agent app itself — those are shape three. They exist to keep generating more EmptyOS. But the key move is that every cycle through ",
+      "image_file": "podcast-healthy-relationship-with-ai-scene-04.png"
+    },
+    {
+      "start_ms": 240648,
+      "end_ms": 289344,
+      "summary": "How do you know where you are on that arc without telling yourself a flattering story? Run the offline test: if every AI in the stack went dark tomorrow — coding agent and runtime models both — what would still work? Nothing means early stage two or stage one. The basics working but the polish gone ",
+      "image_file": "podcast-healthy-relationship-with-ai-scene-05.png"
+    },
+    {
+      "start_ms": 289744,
+      "end_ms": 336232,
+      "summary": "So stage three is less “AI everywhere” and more “AI where it belongs,” with most of the system no longer leaning on it. Yes, and that’s where human judgment matters most. Coding agents are extraordinary at speed, scale, and patience. They’re weak at ambiguity, taste, refusal, and deciding which shap",
+      "image_file": "podcast-healthy-relationship-with-ai-scene-06.png"
+    },
+    {
+      "start_ms": 336632,
+      "end_ms": 359712,
+      "summary": "So the point isn’t to break up with the agent. It’s to stop making it emotionally and technically indispensable. That’s the mature version. Use it hard, let it help you build more than you could alone, then outlive it where you can. Keep a forge open where necessary, but let the rest stand on its ow",
+      "image_file": "podcast-healthy-relationship-with-ai-scene-07.png"
+    }
+  ]
+}

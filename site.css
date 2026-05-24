@@ -235,7 +235,8 @@ audio { width: 100%; margin: 12px 0; border-radius: var(--radius); }
   min-width: 0;
 }
 .hero-pro .stats .stat:last-child { border-right: none; }
-.hero-pro .stats .stat strong { display: block; color: var(--text-heading); font-size: 0.98rem; font-weight: 700; margin-bottom: 2px; letter-spacing: -0.01em; white-space: nowrap; }
+.hero-pro .stats .stat strong { display: block; color: var(--text-heading); font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.01em; line-height: 1.25; }
+.hero-pro .stats .stat { display: flex; flex-direction: column; justify-content: center; }
 .hero-pro .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
 .hero-pro .cta a {
   display: inline-flex; align-items: center; gap: 6px;

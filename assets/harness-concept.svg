@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 560" font-family="Inter, Segoe UI, system-ui, sans-serif">
+<rect width="860" height="560" fill="#0d1117"/>
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#58a6ff"/></marker>
+<marker id="ahg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#39d3bb"/></marker>
+</defs>
+<text x="430" y="40" text-anchor="middle" fill="#e6edf3" font-size="22" font-weight="700">A harness is the loop wrapped around the model</text>
+<text x="430" y="64" text-anchor="middle" fill="#8b949e" font-size="13">the model is the raw capability · the harness is what calls it, and how</text>
+<path d="M 500,168 Q 643,177 662,252" fill="none" stroke="#58a6ff" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M 662,328 Q 643,403 500,412" fill="none" stroke="#58a6ff" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M 360,412 Q 217,403 198,328" fill="none" stroke="#58a6ff" stroke-width="2.2" marker-end="url(#ah)"/>
+<path d="M 198,252 Q 217,177 360,168" fill="none" stroke="#58a6ff" stroke-width="2.2" marker-end="url(#ah)"/>
+<line x1="430" y1="290" x2="430" y2="150" stroke="#30363d" stroke-width="1" stroke-dasharray="3 5" opacity="0.6"/>
+<line x1="430" y1="290" x2="690" y2="290" stroke="#30363d" stroke-width="1" stroke-dasharray="3 5" opacity="0.6"/>
+<line x1="430" y1="290" x2="430" y2="430" stroke="#30363d" stroke-width="1" stroke-dasharray="3 5" opacity="0.6"/>
+<line x1="430" y1="290" x2="170" y2="290" stroke="#30363d" stroke-width="1" stroke-dasharray="3 5" opacity="0.6"/>
+<rect x="342" y="250" width="176" height="80" rx="12" fill="#1b2030" stroke="#b39dff" stroke-width="2"/>
+<text x="430" y="284" text-anchor="middle" fill="#b39dff" font-size="17" font-weight="700">MODEL</text>
+<text x="430" y="305" text-anchor="middle" fill="#8b949e" font-size="11.5">raw capability (the ceiling)</text>
+<rect x="346" y="120" width="168" height="60" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="1.7"/><text x="430" y="143" text-anchor="middle" fill="#58a6ff" font-size="14.5" font-weight="700">1 ·  Look first</text><text x="430" y="163" text-anchor="middle" fill="#8b949e" font-size="11.5">grep / read before you edit</text>
+<rect x="606" y="260" width="168" height="60" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="1.7"/><text x="690" y="283" text-anchor="middle" fill="#58a6ff" font-size="14.5" font-weight="700">2 ·  Edit</text><text x="690" y="303" text-anchor="middle" fill="#8b949e" font-size="11.5">use the tool that fits</text>
+<rect x="346" y="400" width="168" height="60" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="1.7"/><text x="430" y="423" text-anchor="middle" fill="#58a6ff" font-size="14.5" font-weight="700">3 ·  Verify</text><text x="430" y="443" text-anchor="middle" fill="#8b949e" font-size="11.5">run the tests · check</text>
+<rect x="86" y="260" width="168" height="60" rx="10" fill="#161b22" stroke="#f0883e" stroke-width="1.7"/><text x="170" y="283" text-anchor="middle" fill="#f0883e" font-size="14.5" font-weight="700">4 ·  Recover</text><text x="170" y="303" text-anchor="middle" fill="#8b949e" font-size="11.5">catch the break, fix it</text>
+<text x="286" y="402" text-anchor="middle" fill="#f0883e" font-size="12" font-weight="600">↩ if it fails</text>
+<path d="M 430,460 L 430,506" fill="none" stroke="#39d3bb" stroke-width="2.4" marker-end="url(#ahg)"/>
+<text x="444" y="492" fill="#39d3bb" font-size="13" font-weight="700">if it passes → done</text>
+<text x="430" y="534" text-anchor="middle" fill="#8b949e" font-size="12">a thin loop shrugs "looks done" at the first output — a good one loops until the check actually passes</text>
+</svg>

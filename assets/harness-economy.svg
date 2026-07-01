@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" font-family="Inter, Segoe UI, system-ui, sans-serif">
+<rect width="860" height="400" fill="#0d1117"/>
+<text x="430" y="40" text-anchor="middle" fill="#e6edf3" font-size="22" font-weight="700">Same outcome. Half the thinking.</text>
+<text x="430" y="64" text-anchor="middle" fill="#8b949e" font-size="13">EmptyOS vs Claude Code, same cheap model, both 8/8 — reasoning steps to get there</text>
+<line x1="300" y1="110" x2="300" y2="320" stroke="#30363d"/>
+<line x1="300" y1="320" x2="620" y2="320" stroke="#30363d"/>
+<line x1="300" y1="320" x2="620" y2="320" stroke="#1c2128"/>
+<text x="292" y="324" text-anchor="end" fill="#6e7681" font-size="11">0</text>
+<line x1="300" y1="225" x2="620" y2="225" stroke="#1c2128"/>
+<text x="292" y="229" text-anchor="end" fill="#6e7681" font-size="11">50</text>
+<line x1="300" y1="129" x2="620" y2="129" stroke="#1c2128"/>
+<text x="292" y="133" text-anchor="end" fill="#6e7681" font-size="11">100</text>
+<text x="255" y="220" fill="#8b949e" font-size="12" transform="rotate(-90 255 220)" text-anchor="middle">iterations (model round-trips)</text>
+<rect x="340" y="226" width="90" height="94" rx="5" fill="#58a6ff" opacity="0.92"/>
+<text x="385" y="218" text-anchor="middle" fill="#e6edf3" font-size="17" font-weight="700">49</text>
+<text x="385" y="338" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">EmptyOS</text>
+<text x="385" y="354" text-anchor="middle" fill="#39d3bb" font-size="12">8/8 passed</text>
+<rect x="480" y="125" width="90" height="195" rx="5" fill="#f0883e" opacity="0.92"/>
+<text x="525" y="117" text-anchor="middle" fill="#e6edf3" font-size="17" font-weight="700">102</text>
+<text x="525" y="338" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">Claude Code</text>
+<text x="525" y="354" text-anchor="middle" fill="#39d3bb" font-size="12">8/8 passed</text>
+<text x="430" y="372" text-anchor="middle" fill="#8b949e" font-size="12">Claude Code grinds ~2× the reasoning steps for the same result — insurance you cash on genuinely hard tasks, not everyday ones.</text>
+</svg>

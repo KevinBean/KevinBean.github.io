@@ -4,9 +4,16 @@
   <subtitle>Senior Electrical Engineer — MV/HV Power Systems, Standards, Integrated Energy. Sydney, NSW. Also builds AI tools.</subtitle>
   <link href="https://binbian.net/" rel="alternate"/>
   <link href="https://binbian.net/atom.xml" rel="self"/>
-  <updated>2026-04-27T00:00:00Z</updated>
+  <updated>2026-06-27T00:00:00Z</updated>
   <id>https://binbian.net/</id>
   <author><name>Kevin (Bin) Bian</name></author>
+  <entry>
+    <title>AI coding agents: is the model or the harness the bottleneck?</title>
+    <link href="https://binbian.net/posts/2026-06-27-model-or-harness.html"/>
+    <id>https://binbian.net/posts/2026-06-27-model-or-harness.html</id>
+    <updated>2026-06-27T00:00:00Z</updated>
+    <summary>I held the model fixed and swapped the harness around it across a 12-task suite. On easy tasks it barely mattered; on hard, structured tasks the harness decided the outcome. Plus the first results I got wrong and had to correct.</summary>
+  </entry>
   <entry>
     <title>Notes as Infrastructure: the emergence of the markdown OS</title>
     <link href="https://binbian.net/posts/your-note-vault-under-ai-is-three-things-at-once.html"/>

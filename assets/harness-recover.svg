@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 320" font-family="Inter, Segoe UI, system-ui, sans-serif">
+<rect width="920" height="320" fill="#0d1117"/>
+<defs>
+<marker id="ra" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8b949e"/></marker>
+</defs>
+<text x="460" y="42" text-anchor="middle" fill="#e6edf3" font-size="22" font-weight="700">A good loop catches its own mistake and fixes it</text>
+<text x="460" y="66" text-anchor="middle" fill="#8b949e" font-size="13">delete a function, then repair every caller — EmptyOS, one run</text>
+<rect x="33" y="121" width="150" height="58" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="1.7"/>
+<text x="108" y="144" text-anchor="middle" fill="#58a6ff" font-size="14" font-weight="700">delete fn</text>
+<text x="108" y="163" text-anchor="middle" fill="#8b949e" font-size="11.5">tool warns: callers break</text>
+<line x1="186" y1="150" x2="206" y2="150" stroke="#8b949e" stroke-width="1.8" marker-end="url(#ra)"/>
+<rect x="209" y="121" width="150" height="58" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="1.7"/>
+<text x="284" y="144" text-anchor="middle" fill="#58a6ff" font-size="14" font-weight="700">grep callers</text>
+<text x="284" y="163" text-anchor="middle" fill="#8b949e" font-size="11.5">find every use</text>
+<line x1="362" y1="150" x2="382" y2="150" stroke="#8b949e" stroke-width="1.8" marker-end="url(#ra)"/>
+<rect x="385" y="121" width="150" height="58" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="1.7"/>
+<text x="460" y="144" text-anchor="middle" fill="#58a6ff" font-size="14" font-weight="700">edit callers</text>
+<text x="460" y="163" text-anchor="middle" fill="#8b949e" font-size="11.5">update them</text>
+<line x1="538" y1="150" x2="558" y2="150" stroke="#8b949e" stroke-width="1.8" marker-end="url(#ra)"/>
+<rect x="561" y="121" width="150" height="58" rx="10" fill="#161b22" stroke="#f85149" stroke-width="1.7"/>
+<text x="636" y="144" text-anchor="middle" fill="#f85149" font-size="14" font-weight="700">run import</text>
+<text x="636" y="163" text-anchor="middle" fill="#f85149" font-size="11.5">✗ NameError</text>
+<text x="636" y="201" text-anchor="middle" fill="#f85149" font-size="11" opacity="0.9">a thin loop stops here</text>
+<line x1="714" y1="150" x2="734" y2="150" stroke="#39d3bb" stroke-width="2.6" marker-end="url(#ra)"/>
+<rect x="737" y="121" width="150" height="58" rx="10" fill="#161b22" stroke="#39d3bb" stroke-width="1.7"/>
+<text x="812" y="144" text-anchor="middle" fill="#39d3bb" font-size="14" font-weight="700">grep + fix</text>
+<text x="812" y="163" text-anchor="middle" fill="#39d3bb" font-size="11.5">✓ passes</text>
+<text x="460" y="292" text-anchor="middle" fill="#8b949e" font-size="12.5">The intermediate state was broken. The harness noticed, and fixed it — that’s really the whole trick.</text>
+</svg>

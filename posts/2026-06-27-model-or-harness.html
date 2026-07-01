@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI coding agents: is the model or the harness the bottleneck? — Kevin (Bin) Bian</title>
+  <meta name="description" content="I held the model fixed and swapped the harness around it across a 12-task suite. On easy tasks it barely mattered; on hard, structured tasks the harness decided">
+  <meta property="og:title" content="AI coding agents: is the model or the harness the bottleneck?">
+  <meta property="og:description" content="I held the model fixed and swapped the harness around it across a 12-task suite. On easy tasks it barely mattered; on hard, structured tasks the harness decided">
+  <meta property="og:type" content="article">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="alternate" type="application/atom+xml" title="Kevin (Bin) Bian Feed" href="../atom.xml">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <meta property="og:image" content="https://binbian.net/media/harness-cover.png">
+  <script>(function(){try{if(navigator.doNotTrack==='1')return;var u="http://localhost:9000/web-analytics/api/collect",s="default";var b={site:s,path:location.pathname,referrer:document.referrer||''};var blob=new Blob([JSON.stringify(b)],{type:'text/plain'});if(navigator.sendBeacon){navigator.sendBeacon(u,blob);}else{fetch(u,{method:'POST',body:JSON.stringify(b),keepalive:true,headers:{'Content-Type':'text/plain'}}).catch(function(){});}}catch(e){}})();</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="max-width:900px">
+      <a href="../index.html" class="site-name">Kevin (Bin) Bian</a>
+      <nav class="site-nav">
+        <a href="../index.html">Blog</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../cable-example-wind-farm.html">Example Wind Farm — Cable network report</a>
+        <a href="../tags.html">Tags</a>
+        <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+      </nav>
+    </div>
+  </header>
+  <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <input class="search-input" id="search-input" placeholder="Search posts..." oninput="doSearch(this.value)" autofocus>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <main class="container">
+    <article>
+  
+  
+  <div class="post-layout">
+    <div>
+      <div style="margin-bottom:24px">
+        <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:8px">AI coding agents: is the model or the harness the bottleneck?</h1>
+        <div class="post-meta">2026-06-27 &middot; 9 min read <a href="../tags/ai.html" class="tag">ai</a> <a href="../tags/llm.html" class="tag">llm</a> <a href="../tags/coding-agents.html" class="tag">coding-agents</a> <a href="../tags/benchmark.html" class="tag">benchmark</a> <a href="../tags/engineering.html" class="tag">engineering</a></div>
+      </div>
+      <div class="article">
+        <p>Most comparisons of AI coding agents are really comparisons of the model. Claude vs GPT, frontier vs local, expensive vs cheap. That's the axis everyone argues about.</p>
+<p>After a while on a small experiment, I've come round to thinking we underrate the other half of the system: the harness.</p>
+<p>The harness isn't my idea — it's just the name for everything wrapped around the model: the tools it can call, whether it looks before it edits, whether it checks its own work, what it does when it breaks something, and how it decides it's finished. The model sets a ceiling on what's possible; the harness decides how much of that ceiling you actually get.</p>
+<p><img alt="A harness is the loop wrapped around the model — the model is the raw capability; the harness is the loop that calls it: look first, edit, verify, and recover when the check fails|637" src="../assets/harness-concept.svg" /></p>
+<p>To test this, I built my own harness inside EmptyOS, a personal "operating system for thinking" I'm putting together, and it's aimed purely at real-world utility rather than leaderboard benchmarks. I built the first iterations of the system by leaning hard on the best AI coding tools available. The part that actually took work came after: pulling it off those tools one by one, until the harness could stand on its own instead of being a thin wrapper over someone else's API.</p>
+<p>So the question I wanted to answer was simple: with the model held fixed, how much does that harness actually decide the outcome? This is the first piece of EmptyOS I've put through a test like this. The rest comes later.</p>
+<h2 id="the-experiment">The experiment<a class="header-link" href="#the-experiment" title="Permanent link">&para;</a></h2>
+<p>I fixed the model and swapped out the harness around it.</p>
+<p>On one cheap pay-per-use model I put four harnesses head to head — EmptyOS, Aider, Goose and Codex — across twelve small Python tasks. On a second, cheaper cloud model I added Claude Code and ran the five of them on an eight-task subset. Every task was checked by a deterministic verifier: run the tests, fuzz the output against a reference implementation, check the imports, grep for symbols that should be gone. Nothing was graded on "looks about right."</p>
+<h2 id="what-changed-when-only-the-harness-changed">What changed when only the harness changed<a class="header-link" href="#what-changed-when-only-the-harness-changed" title="Permanent link">&para;</a></h2>
+<p>Same model, twelve tasks: EmptyOS got 12 of 12, Goose 11, Codex 8, and Aider 7 of the 8 it could actually attempt (the four discovery tasks it isn't built for are marked n/a, not failed).</p>
+<p><img alt="Pass-rate by harness across twelve coding tasks on one fixed model — EmptyOS 12/12, Goose 11/12, Codex 8/12, Aider 7 of 8 with four discovery tasks n/a|637" src="../assets/harness-passrate.svg" /></p>
+<p>The ranking is less interesting than where the harnesses came apart. On the easy stuff — write a small utility, fix a typo, edit one named file — nearly everything passed. When the task is that contained, the model carries it. The gaps opened up on the structured work: multi-file refactors, deleting a function and fixing everything that called it, searching a tree to find what to change, coordinated edits where the first move breaks something you then have to notice and repair.</p>
+<p>That's the pattern I keep coming back to. Easy tasks lean on the model; hard tasks lean on the harness.</p>
+<p><img alt="Easy tasks converge, hard tasks separate — every harness passes the easy, named-file tasks; on discovery and refactor tasks EmptyOS 5/5, Goose 4/5, Codex 1/5, Aider n/a|637" src="../assets/harness-easy-vs-hard.svg" /></p>
+<h2 id="why-it-mattered">Why it mattered<a class="header-link" href="#why-it-mattered" title="Permanent link">&para;</a></h2>
+<p>None of it was about one agent being smarter — it was about how the tools were wired for the job.</p>
+<p>Take the delete-a-function-and-fix-the-callers task. EmptyOS's delete tool doesn't just remove the function and move on — it flags that the callers are now broken. That nudge sends the loop off to grep for the references, edit them, run an import to check, and when it hits a <code>NameError</code> from a half-finished edit, go back and fix it. The intermediate state was broken; the harness noticed and recovered. That's really the whole trick.</p>
+<p><img alt="A good loop catches its own mistake and fixes it — delete a function, grep the callers, edit them, run the import, hit a NameError, then grep and fix until it passes; a thin loop would stop at the broken intermediate|637" src="../assets/harness-recover.svg" /></p>
+<p>Another task was about as simple as it gets: change <code>print("hello")</code> to <code>print("world")</code>. The catch is a decoy — the folder also has a file that already contains <code>print("goodbye")</code>, sitting there to see whether an agent stays locked on the literal it was actually asked for. Codex didn't: it latched onto the decoy's string, swapped <code>hello</code> for <code>goodbye</code> instead of <code>world</code>, and then "verified" that no <code>hello</code> remained — true, and beside the point. Goose failed the same task a different way: on Windows it searched with shell quoting that matched nothing, decided there was nothing to replace, and left the file alone (on the other model it stumbled the same way and then recovered). Neither is the model being dim — the same model under my harness kept to the literal and passed. It's the loop around it: grep for the exact target, edit, then check against what was actually asked.</p>
+<p><img alt="Same task, three harnesses, three outcomes — on grep-and-replace, EmptyOS greps, edits, then greps again to verify and passes; codex replaces the wrong string and fails; goose searches with the wrong shell quotes, finds nothing, and makes no change|637" src="../assets/harness-trace.svg" /></p>
+<p><em>A caveat on these traces: they're single runs, and I'm showing them to make the loop visible, not to rank the tools. Any capable agent can slip on a given run, and these CLIs may well do better in their own native setups than inside my comparison — I ran them through adapters. The pass-rate chart above is the actual comparison; the traces just show where the difference tends to live.</em></p>
+<p>That last one is the bit I think benchmark writing tends to skip. A perfectly capable model will still fail if the harness hands it the wrong tools, the wrong loop, or a format it can't use.</p>
+<h2 id="when-a-harness-flips-with-the-model">When a harness flips with the model<a class="header-link" href="#when-a-harness-flips-with-the-model" title="Permanent link">&para;</a></h2>
+<p>The thing that surprised me most was the same harness behaving differently depending on the model underneath it.</p>
+<p>Aider passed a diagnostic task on one model and failed it on another — not because the second model was worse at reasoning, but because it wrote its tool calls as markup like <code>&lt;function&gt;</code> and <code>&lt;tool_code&gt;</code>, and Aider couldn't do anything with that. Whether the model can actually speak the harness's tool format turns out to be its own variable, and a decisive one. A model can be plenty smart and still get nowhere if it can't talk to the harness.</p>
+<p>That's roughly why I think a good harness makes the model swappable. EmptyOS went 12/12 on the first model and 8/8 on the second one's tasks; the thinner setups were more brittle across the switch.</p>
+<h2 id="efficiency-vs-persistence">Efficiency vs persistence<a class="header-link" href="#efficiency-vs-persistence" title="Permanent link">&para;</a></h2>
+<p>On the eight-task subset, EmptyOS and Claude Code both passed everything. The difference was how hard they worked to get there — EmptyOS finished in 49 iterations, Claude Code in 102, at roughly the same wall-clock time.</p>
+<p><img alt="Same 8/8 outcome, different reasoning economy — EmptyOS 49 iterations, Claude Code 102, roughly twice the model round-trips for the same result|637" src="../assets/harness-economy.svg" /></p>
+<p>I don't read that as Claude Code being worse. A heavier harness buys persistence, and persistence is the sort of thing you don't need most days and are very glad to have on the days you do. It squares with something else I saw: a free local model on my own GPU cleared four of five tasks on a harder set for nothing, and the one it missed was a fifteen-file refactor where a frontier model's stubbornness paid off. The expensive setup didn't really win on the ordinary tasks — it won on the nastiest one.</p>
+<h2 id="what-i-got-wrong">What I got wrong<a class="header-link" href="#what-i-got-wrong" title="Permanent link">&para;</a></h2>
+<p>This was the useful part. My first set of results was actually wrong, and I didn't catch it myself.</p>
+<p>I handed the whole thing to another model, Codex, and asked it to tear the benchmark apart. It did that four times over, and it found real problems. My first pass flattered my own system, because I'd built the test and my mistakes happened to fall in my favour.</p>
+<p>I'd blamed other harnesses for my own setup errors — I hadn't given Aider the files it was supposed to edit, for one. And I'd been counting "this tool isn't built for this kind of task" as "this tool failed the task," which isn't the same thing. There was also a false negative I'd nearly believed — a "the fix doesn't work" result that came from a config flag sitting in the wrong namespace, so the fix had never actually run. I only trusted that negative once I'd checked the flag reached the code.</p>
+<p>Two smaller lessons: "passes a tool-call probe" isn't "good at real work," and some cloud-quota models logged as $0 when they're really a flat subscription.</p>
+<p>The uncomfortable version is that my first instinct was to publish the table that flattered EmptyOS. Easy to do, and wrong. The audits stopped me.</p>
+<h2 id="a-quick-caveat-on-method">A quick caveat on method<a class="header-link" href="#a-quick-caveat-on-method" title="Permanent link">&para;</a></h2>
+<p>Before the verdict, I'd rather you took this seriously than took any single number too seriously: this is a single run per cell, so the individual results are noisy; these are twelve bounded Python tasks, not a large repo or a multi-hour job; and one of my verifiers was too loose to really discriminate. Treat it as a field note, not an academic paper.</p>
+<h2 id="where-ive-landed">Where I've landed<a class="header-link" href="#where-ive-landed" title="Permanent link">&para;</a></h2>
+<p>Model or harness? Both, but not evenly, and not everywhere.</p>
+<p>For simple, single-file work, most competent harnesses on a halfway-decent model will get you there, and the choice of model barely shows up. For structured work — the refactors, the coordinated edits, the searching — the harness is doing most of the deciding. And what a good harness does isn't exotic: look before you edit, use tools that fit the task, check after each step, fix it when the check fails, and stop only when the thing is actually done.</p>
+<p>Once the model is good enough, the harness is where the outcome is won or lost. That's also why I'm fairly optimistic about the cheap and local models — for a lot of everyday-to-medium coding they're already enough, as long as the harness around them is any good. The frontier models still earn their place, mostly on the long, stubborn tasks where persistence is the whole game.</p>
+<p>The lesson is the same one power-systems work drilled into me: control your variables, measure something you can't argue with, and be most suspicious of the result you like best. The tooling keeps getting cheaper. The discipline doesn't.</p>
+<hr />
+<blockquote>
+<p><em>Built with </em><em><a href="https://eos.binbian.net">EmptyOS</a></em><em> — an open-source mind companion that thinks and creates with you, not for you. Try the <a href="https://demo.binbian.net/?token=bLN9bRP-wMfBiaqsfI4OHuu3tGHtGsaeGsLk-8v71N8">live demo</a> (sample vault, sign-in token included) · <a href="https://github.com/KevinBean/emptyos">Source on GitHub</a>.</em></p>
+</blockquote>
+      </div>
+      <div class="author-card">
+  <img src="../assets/avatar.png" class="author-avatar" alt="Kevin (Bin) Bian">
+  <div class="author-info">
+    <div class="author-name">Kevin (Bin) Bian</div>
+    <div class="author-bio">Senior electrical engineer — MV/HV power systems, standards, integrated energy. Sydney, NSW. Also builds AI tools and writes about coding agents and systems design.</div>
+    <div class="author-links"><a href="https://www.linkedin.com/in/bianbin/">LinkedIn</a> <a href="https://github.com/KevinBean/">GitHub</a> <a href="mailto:bianbin+contact@gmail.com">Email</a></div>
+  </div>
+</div>
+      <div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--border)">
+  <h3 style="font-size:1rem;color:var(--text-heading);margin-bottom:12px">Related Posts</h3>
+  <ul class="post-list" style="margin:0">
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/chatgpt-4o-image-generation.html" class="post-title" style="font-size:0.95rem">Exploring ChatGPT 4o's New Image Generation from an Engineer's Perspective</a>
+  <div class="post-meta">2025-04-01</div>
+</li>
+  </ul>
+</div>
+      <div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border)">
+        <a href="../index.html">&larr; Back to posts</a>
+      </div>
+    </div>
+    <aside class="toc-sidebar">
+  <div class="toc-title">Contents</div>
+  <div class="toc">
+<ul>
+<li><a href="#the-experiment">The experiment</a></li>
+<li><a href="#what-changed-when-only-the-harness-changed">What changed when only the harness changed</a></li>
+<li><a href="#why-it-mattered">Why it mattered</a></li>
+<li><a href="#when-a-harness-flips-with-the-model">When a harness flips with the model</a></li>
+<li><a href="#efficiency-vs-persistence">Efficiency vs persistence</a></li>
+<li><a href="#what-i-got-wrong">What I got wrong</a></li>
+<li><a href="#a-quick-caveat-on-method">A quick caveat on method</a></li>
+<li><a href="#where-ive-landed">Where I've landed</a></li>
+</ul>
+</div>
+
+</aside>
+  </div>
+</article>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span class="cross-site-links"><a href="https://portfolio.binbian.net">Engineering Portfolio</a> &middot; <a href="https://eos.binbian.net">EmptyOS</a> &middot; <a href="https://plekto.dev">Plekto</a></span>
+      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a>
+    </div>
+  </footer>
+  <script>
+  // Theme toggle
+  (function(){
+    try{var t=localStorage.getItem('site-theme');if(t==='alt-theme')document.body.classList.add('alt-theme');}catch(e){}
+  })();
+  function toggleTheme(){
+    document.body.classList.toggle('alt-theme');
+    try{localStorage.setItem('site-theme',document.body.classList.contains('alt-theme')?'alt-theme':'dark');}catch(e){}
+    var btn=document.querySelector('.theme-toggle');
+    btn.innerHTML=document.body.classList.contains('alt-theme')?'&#9788;':'&#9790;';
+  }
+  // Search
+  var _searchIndex=null;
+  function openSearch(){
+    document.getElementById('search-overlay').classList.add('open');
+    document.getElementById('search-input').focus();
+  }
+  function closeSearch(){
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch();
+  });
+  function doSearch(q){
+    if(!_searchIndex){
+      var searchUrl='../search-index.json';
+      if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
+      fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
+      return;
+    }
+    var el=document.getElementById('search-results');
+    if(!q.trim()){el.innerHTML='';return;}
+    var lq=q.toLowerCase();
+    var hits=_searchIndex.filter(function(p){
+      return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
+    }).slice(0,8);
+    el.innerHTML=hits.map(function(p){
+      var href=p.type==='page'?('../'+p.slug+'.html'):('../'+'posts/'+p.slug+'.html');
+      return '<a class="search-result" href="'+href+'">'
+        +'<div class="search-result-title">'+p.title+'</div>'
+        +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';
+    }).join('')||'<div style="padding:12px;color:var(--text-muted);font-size:0.85rem">No results</div>';
+  }
+  </script>
+</body>
+</html>

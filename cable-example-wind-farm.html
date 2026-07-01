@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact — Kevin (Bin) Bian</title>
-  <meta name="description" content="I'm always open to conversations about power systems engineering, AI tools, digital transformation, or interesting side projects. Whether it's a collaboration i">
-  <meta property="og:title" content="Contact">
-  <meta property="og:description" content="I'm always open to conversations about power systems engineering, AI tools, digital transformation, or interesting side projects. Whether it's a collaboration i">
+  <title>Example Wind Farm — Cable network report — Kevin (Bin) Bian</title>
+  <meta name="description" content="Reticulation report for Example Wind Farm — 6 cables, 16 buses.">
+  <meta property="og:title" content="Example Wind Farm — Cable network report">
+  <meta property="og:description" content="Reticulation report for Example Wind Farm — 6 cables, 16 buses.">
   <meta property="og:type" content="article">
   <link rel="stylesheet" href="site.css">
   <link rel="alternate" type="application/atom+xml" title="Kevin (Bin) Bian Feed" href="atom.xml">
@@ -37,22 +37,122 @@
   </div>
   <main class="container">
     <article>
-  <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:20px;font-weight:700">Contact</h1>
+  <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:20px;font-weight:700">Example Wind Farm — Cable network report</h1>
   <div class="article">
-    <h2 id="get-in-touch">Get in Touch<a class="header-link" href="#get-in-touch" title="Permanent link">&para;</a></h2>
-<p>I'm always open to conversations about power systems engineering, AI tools, digital transformation, or interesting side projects. Whether it's a collaboration idea, a technical question, or just a hello — feel free to reach out.</p>
-<h2 id="where-to-find-me">Where to Find Me<a class="header-link" href="#where-to-find-me" title="Permanent link">&para;</a></h2>
+    <h1 id="example-wind-farm">Example Wind Farm<a class="header-link" href="#example-wind-farm" title="Permanent link">&para;</a></h1>
+<p>Reticulation project report generated from the EmptyOS cable-network app on 2026-05-26T01:25:43.</p>
 <ul>
-<li><strong><a href="https://www.linkedin.com/in/bianbin/">LinkedIn</a></strong> — Best for professional connections and longer discussions</li>
-<li><strong><a href="https://github.com/KevinBean/">GitHub</a></strong> — My projects, including <a href="https://github.com/KevinBean/emptyos">EmptyOS</a> (<a href="https://demo.binbian.net/?token=bLN9bRP-wMfBiaqsfI4OHuu3tGHtGsaeGsLk-8v71N8">live demo</a> · sign-in token included)</li>
-<li><strong><a href="mailto:bianbin+contact@gmail.com">Email</a></strong> — For anything else</li>
+<li><strong>Cables:</strong> 6</li>
+<li><strong>Buses / nodes:</strong> 16</li>
+<li><strong>Frequency:</strong> 50 Hz</li>
+<li><strong>Ambient:</strong> 20.0 °C</li>
+<li><strong>Soil ρ_T:</strong> 1.00 K·m/W</li>
+<li><strong>Max conductor temp:</strong> 90 °C</li>
 </ul>
-<h2 id="what-im-open-to">What I'm Open To<a class="header-link" href="#what-im-open-to" title="Permanent link">&para;</a></h2>
+<h2 id="cable-schedule">Cable schedule<a class="header-link" href="#cable-schedule" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Label</th>
+<th>Library</th>
+<th>Length (m)</th>
+<th>Install</th>
+<th>Iz (A)</th>
+<th>I (A)</th>
+<th>I/Iz %</th>
+<th>ΔV %</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cable-1</td>
+<td>CBL-SUB-RMU1-001</td>
+<td>nexans_19-33kv_cu_1c_400</td>
+<td>283.0</td>
+<td>direct_buried</td>
+<td>546</td>
+<td>683.0</td>
+<td>125.0</td>
+<td>-0.12</td>
+<td>FAIL</td>
+</tr>
+<tr>
+<td>cable-2</td>
+<td>CBL-SUB-RMU2-001</td>
+<td>nexans_19-33kv_cu_1c_400</td>
+<td>283.0</td>
+<td>direct_buried</td>
+<td>546</td>
+<td>683.6</td>
+<td>125.1</td>
+<td>-0.12</td>
+<td>FAIL</td>
+</tr>
+<tr>
+<td>cable-3</td>
+<td>CBL-RMU1-WTG01-001</td>
+<td>nexans_19-33kv_cu_1c_95</td>
+<td>424.0</td>
+<td>direct_buried</td>
+<td>546</td>
+<td>114.0</td>
+<td>20.9</td>
+<td>-0.03</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>cable-4</td>
+<td>CBL-RMU1-WTG02-001</td>
+<td>nexans_19-33kv_cu_1c_95</td>
+<td>283.0</td>
+<td>direct_buried</td>
+<td>546</td>
+<td>227.9</td>
+<td>41.7</td>
+<td>-0.04</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>cable-5</td>
+<td>CBL-RMU1-STRINGA-001</td>
+<td>nexans_19-33kv_cu_1c_240</td>
+<td>424.0</td>
+<td>direct_buried</td>
+<td>546</td>
+<td>341.8</td>
+<td>62.6</td>
+<td>-0.09</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>cable-6</td>
+<td>CBL-RMU2-STRINGB-001</td>
+<td>nexans_19-33kv_cu_1c_300</td>
+<td>500.0</td>
+<td>direct_buried</td>
+<td>546</td>
+<td>455.5</td>
+<td>83.4</td>
+<td>-0.14</td>
+<td>WARN</td>
+</tr>
+</tbody>
+</table>
+<h2 id="load-flow">Load-flow<a class="header-link" href="#load-flow" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Engineering tool collaborations (especially power systems + AI)</li>
-<li>Open-source contributions to EmptyOS</li>
-<li>Speaking or writing about AI in engineering workflows</li>
-<li>Board game nights in Sydney</li>
+<li><strong>Total losses:</strong> 0.00 kW</li>
+<li><strong>Worst utilisation:</strong> 125.1 % (CBL-SUB-RMU2-001)</li>
+</ul>
+<h2 id="short-circuit">Short-circuit<a class="header-link" href="#short-circuit" title="Permanent link">&para;</a></h2>
+<p><em>Short-circuit has not been run for this project.</em></p>
+<h2 id="methodology">Methodology<a class="header-link" href="#methodology" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ampacity (Iz): IEC 60287-1-1 (native engine) or CIGRE TB 963 V5 FEM where method selected.</li>
+<li>Load-flow: backward/forward-sweep (Gauss-Seidel).</li>
+<li>Short-circuit: IEC 60909 symmetric three-phase fault at each bus, Thevenin impedance reduction.</li>
+<li>Generated by EmptyOS cable-network app for project <code>demo-windfarm-50mw</code>.</li>
 </ul>
   </div>
 </article>

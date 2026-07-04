@@ -40,6 +40,7 @@
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       object-fit: cover;
+      background: #0a0a1a;
       transition: opacity 0.8s ease;
     }
     .sp-img.behind { z-index: 1; }
@@ -480,9 +481,11 @@
       compactSub.textContent = data.voice_pair_label || '';
 
       // Preload first scene or cover
-      var firstImg = (data.scenes && data.scenes.length > 0) ? data.scenes[0].image_url : (data.cover_url || '');
+      var firstScene = (data.scenes && data.scenes.length > 0) ? data.scenes[0] : null;
+      var firstImg = firstScene ? firstScene.image_url : (data.cover_url || '');
       if (firstImg) {
         imgA.src = firstImg;
+        imgA.style.objectFit = (firstScene && firstScene.fit) ? firstScene.fit : 'cover';
         compactThumb.src = firstImg;
       }
       currentScene = 0;
@@ -554,7 +557,7 @@
       if (data.scenes && data.scenes.length > 0) {
         var scIdx = findScene(data.scenes, timeMs);
         if (scIdx !== currentScene && scIdx >= 0) {
-          crossfadeTo(data.scenes[scIdx].image_url);
+          crossfadeTo(data.scenes[scIdx]);
           currentScene = scIdx;
         }
       }
@@ -593,12 +596,16 @@
       if (thumb) thumb.style.left = pct + '%';
     }
 
-    function crossfadeTo(imgUrl) {
+    function crossfadeTo(scene) {
+      // Accepts a scene object {image_url, fit} (or a bare url for compat).
+      var imgUrl = (scene && typeof scene === 'object') ? scene.image_url : scene;
       if (!imgUrl) return;
+      var fit = (scene && typeof scene === 'object' && scene.fit) ? scene.fit : 'cover';
       // The "behind" image gets the new src, then we swap visibility
       var target = frontIsA ? imgB : imgA;
       var current = frontIsA ? imgA : imgB;
       target.src = imgUrl;
+      target.style.objectFit = fit;  // "contain" = never crop the graph
       target.classList.remove('hidden');
       target.classList.add('front');
       target.classList.remove('behind');

@@ -4,9 +4,16 @@
   <subtitle>Senior Electrical Engineer — MV/HV Power Systems, Standards, Integrated Energy. Sydney, NSW. Also builds AI tools.</subtitle>
   <link href="https://binbian.net/" rel="alternate"/>
   <link href="https://binbian.net/atom.xml" rel="self"/>
-  <updated>2026-06-27T00:00:00Z</updated>
+  <updated>2026-07-04T00:00:00Z</updated>
   <id>https://binbian.net/</id>
   <author><name>Kevin (Bin) Bian</name></author>
+  <entry>
+    <title>An AI-Native Interface Is a Contract, Not a Chatbox</title>
+    <link href="https://binbian.net/posts/emptyos-native-ai-access.html"/>
+    <id>https://binbian.net/posts/emptyos-native-ai-access.html</id>
+    <updated>2026-07-04T00:00:00Z</updated>
+    <summary>AI-native isn't a chatbot beside the product — it's an interface contract: pages that declare their actions, verbs that carry safety classes, and a human at the irreversible exits. How EmptyOS exposes native AI access across pages, verbs, CLI, and coding agents.</summary>
+  </entry>
   <entry>
     <title>AI coding agents: is the model or the harness the bottleneck?</title>
     <link href="https://binbian.net/posts/2026-06-27-model-or-harness.html"/>

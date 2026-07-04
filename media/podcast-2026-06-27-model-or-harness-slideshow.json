@@ -1,0 +1,234 @@
+{
+  "topic": "AI coding agents: is the model or the harness the bottleneck?",
+  "duration_s": 158.267,
+  "timings": [
+    {
+      "start_ms": 0,
+      "end_ms": 6682,
+      "speaker": "A",
+      "text": "Everyone argues whether Claude or GPT is better. But I think you're underrating the harness around them."
+    },
+    {
+      "start_ms": 6682,
+      "end_ms": 12915,
+      "speaker": "B",
+      "text": "Exactly. The model sets a ceiling; the harness decides how much of that ceiling you actually get."
+    },
+    {
+      "start_ms": 12915,
+      "end_ms": 19276,
+      "speaker": "A",
+      "text": "So your experiment fixed one model and swapped out four different harnesses on twelve Python tasks?"
+    },
+    {
+      "start_ms": 19276,
+      "end_ms": 26472,
+      "speaker": "B",
+      "text": "Yes. We used EmptyOS, Aider, Goose, Codex, plus Claude Code. Every task was checked by a deterministic verifier."
+    },
+    {
+      "start_ms": 26472,
+      "end_ms": 32512,
+      "speaker": "A",
+      "text": "And the results were dramatic: 12 of 12 for your harness versus seven to eight for the others?"
+    },
+    {
+      "start_ms": 32512,
+      "end_ms": 39066,
+      "speaker": "B",
+      "text": "Right. On easy tasks like fixing a typo, nearly everything passed. The gaps opened on structured work."
+    },
+    {
+      "start_ms": 39066,
+      "end_ms": 43756,
+      "speaker": "A",
+      "text": "Like multi-file refactors or deleting a function and fixing every caller?"
+    },
+    {
+      "start_ms": 43756,
+      "end_ms": 51017,
+      "speaker": "B",
+      "text": "Precisely. EmptyOS flagged broken callers after deletion, then recovered from the resulting errors automatically."
+    },
+    {
+      "start_ms": 51017,
+      "end_ms": 56093,
+      "speaker": "A",
+      "text": "Can you show me how a thin harness fails versus yours on that same delete task?"
+    },
+    {
+      "start_ms": 56093,
+      "end_ms": 62518,
+      "speaker": "B",
+      "text": "If I just remove the function, it breaks imports. My loop notices and fixes; others stop at failure."
+    },
+    {
+      "start_ms": 62518,
+      "end_ms": 68879,
+      "speaker": "A",
+      "text": "What about that decoy task where Codex swapped 'hello' for 'goodbye'? Did other harnesses fail too?"
+    },
+    {
+      "start_ms": 68879,
+      "end_ms": 75240,
+      "speaker": "B",
+      "text": "Yes. Goose failed due to shell quoting issues, while others latched onto the wrong string entirely."
+    },
+    {
+      "start_ms": 75240,
+      "end_ms": 80316,
+      "speaker": "A",
+      "text": "So even a smart model can fail if the harness hands it the wrong tools or loop?"
+    },
+    {
+      "start_ms": 80316,
+      "end_ms": 86870,
+      "speaker": "B",
+      "text": "Absolutely. A perfect model still fails with bad wiring, incorrect formats, or impossible constraints."
+    },
+    {
+      "start_ms": 86870,
+      "end_ms": 93295,
+      "speaker": "A",
+      "text": "You also found that the same harness behaved differently depending on which model was underneath it?"
+    },
+    {
+      "start_ms": 93295,
+      "end_ms": 99720,
+      "speaker": "B",
+      "text": "That surprised me. Aider failed on one model because its tool format wasn't compatible with another."
+    },
+    {
+      "start_ms": 99720,
+      "end_ms": 105760,
+      "speaker": "A",
+      "text": "So a good harness makes the model swappable, but only if they can actually talk to each other?"
+    },
+    {
+      "start_ms": 105760,
+      "end_ms": 112378,
+      "speaker": "B",
+      "text": "Exactly. A heavy harness like EmptyOS bought persistence for stubborn tasks; thinner ones were brittle."
+    },
+    {
+      "start_ms": 112378,
+      "end_ms": 118353,
+      "speaker": "A",
+      "text": "Efficiency-wise, how did it compare? You mentioned Claude Code took twice as many iterations?"
+    },
+    {
+      "start_ms": 118353,
+      "end_ms": 123750,
+      "speaker": "B",
+      "text": "Yes. EmptyOS finished in 49; Claude Code needed 102 round-trips for the same result."
+    },
+    {
+      "start_ms": 123750,
+      "end_ms": 128376,
+      "speaker": "A",
+      "text": "But your local free model did well too, right? Did it miss anything big?"
+    },
+    {
+      "start_ms": 128376,
+      "end_ms": 135765,
+      "speaker": "B",
+      "text": "It missed a fifteen-file refactor where frontier models' stubbornness paid off. Persistence wins on nastiest tasks."
+    },
+    {
+      "start_ms": 135765,
+      "end_ms": 140841,
+      "speaker": "A",
+      "text": "You admitted your first results were wrong because you built the test yourself?"
+    },
+    {
+      "start_ms": 140841,
+      "end_ms": 147459,
+      "speaker": "B",
+      "text": "I did. I blamed others for my setup errors, like not giving Aider its files or misreading config flags."
+    },
+    {
+      "start_ms": 147459,
+      "end_ms": 153370,
+      "speaker": "A",
+      "text": "So you almost published a table that flattered your own system before the audits stopped it?"
+    },
+    {
+      "start_ms": 153370,
+      "end_ms": 158267,
+      "speaker": "B",
+      "text": "Yes. Once I checked those flags and re-run things, the true picture emerged."
+    }
+  ],
+  "scenes": [
+    {
+      "start_ms": 0,
+      "end_ms": 15826,
+      "summary": "Everyone argues whether Claude or GPT is better. But I think you're underrating the harness around them. Exactly. The model sets a ceiling; the harness decides how much of that ceiling you actually get. So your experiment fixed one model and swapped out four different harnesses on twelve Python task",
+      "image_file": "podcast-2026-06-27-model-or-harness-scene-00.png",
+      "fit": "cover"
+    },
+    {
+      "start_ms": 15826,
+      "end_ms": 31652,
+      "summary": "Diagram 1",
+      "image_file": "podcast-2026-06-27-model-or-harness-scene-01.png",
+      "fit": "contain"
+    },
+    {
+      "start_ms": 31652,
+      "end_ms": 47478,
+      "summary": "Like multi-file refactors or deleting a function and fixing every caller? Precisely. EmptyOS flagged broken callers after deletion, then recovered from the resulting errors automatically. Can you show me how a thin harness fails versus yours on that same delete task? If I just remove the function, i",
+      "image_file": "podcast-2026-06-27-model-or-harness-scene-02.png",
+      "fit": "cover"
+    },
+    {
+      "start_ms": 47478,
+      "end_ms": 63304,
+      "summary": "Diagram 2",
+      "image_file": "podcast-2026-06-27-model-or-harness-scene-03.png",
+      "fit": "contain"
+    },
+    {
+      "start_ms": 63304,
+      "end_ms": 79130,
+      "summary": "You also found that the same harness behaved differently depending on which model was underneath it? That surprised me. Aider failed on one model because its tool format wasn't compatible with another. So a good harness makes the model swappable, but only if they can actually talk to each other? Exa",
+      "image_file": "podcast-2026-06-27-model-or-harness-scene-04.png",
+      "fit": "cover"
+    },
+    {
+      "start_ms": 79130,
+      "end_ms": 94956,
+      "summary": "Diagram 3",
+      "image_file": "podcast-2026-06-27-model-or-harness-scene-05.png",
+      "fit": "contain"
+    },
+    {
+      "start_ms": 94956,
+      "end_ms": 110782,
+      "summary": "But your local free model did well too, right? Did it miss anything big? It missed a fifteen-file refactor where frontier models' stubbornness paid off. Persistence wins on nastiest tasks. You admitted your first results were wrong because you built the test yourself? I did. I blamed others for my s",
+      "image_file": "podcast-2026-06-27-model-or-harness-scene-06.png",
+      "fit": "cover"
+    },
+    {
+      "start_ms": 110782,
+      "end_ms": 126608,
+      "summary": "Diagram 4",
+      "image_file": "podcast-2026-06-27-model-or-harness-scene-07.png",
+      "fit": "contain"
+    },
+    {
+      "start_ms": 126608,
+      "end_ms": 142434,
+      "summary": "Diagram 5",
+      "image_file": "podcast-2026-06-27-model-or-harness-scene-08.png",
+      "fit": "contain"
+    },
+    {
+      "start_ms": 142434,
+      "end_ms": 158267,
+      "summary": "Diagram 6",
+      "image_file": "podcast-2026-06-27-model-or-harness-scene-09.png",
+      "fit": "contain"
+    }
+  ]
+}

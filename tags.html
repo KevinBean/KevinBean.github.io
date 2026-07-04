@@ -8,6 +8,9 @@
   <meta property="og:title" content="Tags">
   <meta property="og:description" content="All tags">
   <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tags">
+  <meta name="twitter:description" content="All tags">
   <link rel="stylesheet" href="site.css">
   <link rel="alternate" type="application/atom+xml" title="Kevin (Bin) Bian Feed" href="atom.xml">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -24,8 +27,8 @@
         <a href="contact.html">Contact</a>
         <a href="cable-example-wind-farm.html">Example Wind Farm — Cable network report</a>
         <a href="tags.html">Tags</a>
-        <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+        <button class="search-toggle" onclick="openSearch()" title="Search" aria-label="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">&#9790;</button>
       </nav>
     </div>
   </header>
@@ -39,30 +42,32 @@
     <h1 style="font-size:1.4rem;color:var(--text-heading);margin-bottom:24px">Tags</h1>
 <div style="display:flex;flex-wrap:wrap;gap:8px">
 <a href="tags/ai.html" class="tag" style="font-size:0.85rem;padding:4px 14px">AI (7)</a>
-<a href="tags/emptyos.html" class="tag" style="font-size:0.85rem;padding:4px 14px">EmptyOS (4)</a>
+<a href="tags/emptyos.html" class="tag" style="font-size:0.85rem;padding:4px 14px">EmptyOS (5)</a>
 <a href="tags/pkm.html" class="tag" style="font-size:0.85rem;padding:4px 14px">PKM (2)</a>
 <a href="tags/systemsdesign.html" class="tag" style="font-size:0.85rem;padding:4px 14px">SystemsDesign (1)</a>
-<a href="tags/agents.html" class="tag" style="font-size:0.85rem;padding:4px 14px">agents (2)</a>
-<a href="tags/ai.html" class="tag" style="font-size:0.85rem;padding:4px 14px">ai (1)</a>
+<a href="tags/agents.html" class="tag" style="font-size:0.85rem;padding:4px 14px">agents (3)</a>
+<a href="tags/ai.html" class="tag" style="font-size:0.85rem;padding:4px 14px">ai (2)</a>
 <a href="tags/benchmark.html" class="tag" style="font-size:0.85rem;padding:4px 14px">benchmark (1)</a>
 <a href="tags/coding-agents.html" class="tag" style="font-size:0.85rem;padding:4px 14px">coding-agents (1)</a>
 <a href="tags/coding-tools.html" class="tag" style="font-size:0.85rem;padding:4px 14px">coding-tools (1)</a>
 <a href="tags/emergency-response.html" class="tag" style="font-size:0.85rem;padding:4px 14px">emergency-response (1)</a>
 <a href="tags/engineering.html" class="tag" style="font-size:0.85rem;padding:4px 14px">engineering (2)</a>
 <a href="tags/generative-ai.html" class="tag" style="font-size:0.85rem;padding:4px 14px">generative-ai (1)</a>
+<a href="tags/interface-design.html" class="tag" style="font-size:0.85rem;padding:4px 14px">interface-design (1)</a>
 <a href="tags/knowledge-management.html" class="tag" style="font-size:0.85rem;padding:4px 14px">knowledge-management (2)</a>
 <a href="tags/linkedin-series.html" class="tag" style="font-size:0.85rem;padding:4px 14px">linkedin-series (4)</a>
 <a href="tags/llm.html" class="tag" style="font-size:0.85rem;padding:4px 14px">llm (1)</a>
 <a href="tags/no-code.html" class="tag" style="font-size:0.85rem;padding:4px 14px">no-code (1)</a>
 <a href="tags/product-design.html" class="tag" style="font-size:0.85rem;padding:4px 14px">product-design (1)</a>
 <a href="tags/productivity.html" class="tag" style="font-size:0.85rem;padding:4px 14px">productivity (1)</a>
+<a href="tags/software-architecture.html" class="tag" style="font-size:0.85rem;padding:4px 14px">software-architecture (1)</a>
 <a href="tags/workflow.html" class="tag" style="font-size:0.85rem;padding:4px 14px">workflow (1)</a>
 </div>
   </main>
   <footer class="site-footer">
     <div class="container">
       <span class="cross-site-links"><a href="https://portfolio.binbian.net">Engineering Portfolio</a> &middot; <a href="https://eos.binbian.net">EmptyOS</a> &middot; <a href="https://plekto.dev">Plekto</a></span>
-      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a>
+      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a> &middot; <a href="atom.xml">RSS</a>
     </div>
   </footer>
   <script>
@@ -89,6 +94,12 @@
     if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
     if(e.key==='Escape')closeSearch();
   });
+  function _countOcc(hay,term){
+    if(!hay||!term)return 0;
+    var n=0,i=hay.indexOf(term);
+    while(i>=0){n++;i=hay.indexOf(term,i+term.length);}
+    return n;
+  }
   function doSearch(q){
     if(!_searchIndex){
       var searchUrl='search-index.json';
@@ -98,10 +109,29 @@
     }
     var el=document.getElementById('search-results');
     if(!q.trim()){el.innerHTML='';return;}
+    // Ranked search: multi-term (AND), field-weighted (title x5, tags x3, summary x2, body x1),
+    // full-phrase-in-title bonus; sort by score desc then date desc.
     var lq=q.toLowerCase();
-    var hits=_searchIndex.filter(function(p){
-      return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
-    }).slice(0,8);
+    var terms=lq.split(/\s+/).filter(function(t){return t;});
+    var scored=[];
+    for(var i=0;i<_searchIndex.length;i++){
+      var p=_searchIndex[i];
+      var title=(p.title||'').toLowerCase();
+      var tags=(p.tags||[]).join(' ').toLowerCase();
+      var summary=(p.summary||'').toLowerCase();
+      var body=(p.body_preview||'').toLowerCase();
+      var score=0,allPresent=true;
+      for(var t=0;t<terms.length;t++){
+        var h=_countOcc(title,terms[t])*5+_countOcc(tags,terms[t])*3+_countOcc(summary,terms[t])*2+_countOcc(body,terms[t]);
+        if(h===0){allPresent=false;break;}
+        score+=h;
+      }
+      if(!allPresent)continue;
+      if(title.indexOf(lq)>=0)score+=10;
+      scored.push({p:p,s:score});
+    }
+    scored.sort(function(a,b){return b.s!==a.s?b.s-a.s:(b.p.date||'').localeCompare(a.p.date||'');});
+    var hits=scored.slice(0,8).map(function(x){return x.p;});
     el.innerHTML=hits.map(function(p){
       var href=p.type==='page'?(''+p.slug+'.html'):(''+'posts/'+p.slug+'.html');
       return '<a class="search-result" href="'+href+'">'

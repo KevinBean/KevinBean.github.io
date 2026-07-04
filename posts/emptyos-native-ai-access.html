@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>An AI-Native Interface Is a Contract, Not a Chatbox — Kevin (Bin) Bian</title>
+  <meta name="description" content="AI-native isn't a chatbot beside the product — it's an interface contract: pages that declare their actions, verbs that carry safety classes, and a human at the">
+  <meta property="og:title" content="An AI-Native Interface Is a Contract, Not a Chatbox">
+  <meta property="og:description" content="AI-native isn't a chatbot beside the product — it's an interface contract: pages that declare their actions, verbs that carry safety classes, and a human at the">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="An AI-Native Interface Is a Contract, Not a Chatbox">
+  <meta name="twitter:description" content="AI-native isn't a chatbot beside the product — it's an interface contract: pages that declare their actions, verbs that carry safety classes, and a human at the">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="alternate" type="application/atom+xml" title="Kevin (Bin) Bian Feed" href="../atom.xml">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <meta property="og:image" content="https://binbian.net/media/cover-emptyos-native-ai-access.png">
+  <meta name="twitter:image" content="https://binbian.net/media/cover-emptyos-native-ai-access.png">
+  <script>(function(){try{if(navigator.doNotTrack==='1')return;var u="http://localhost:9000/web-analytics/api/collect",s="default";var b={site:s,path:location.pathname,referrer:document.referrer||''};var blob=new Blob([JSON.stringify(b)],{type:'text/plain'});if(navigator.sendBeacon){navigator.sendBeacon(u,blob);}else{fetch(u,{method:'POST',body:JSON.stringify(b),keepalive:true,headers:{'Content-Type':'text/plain'}}).catch(function(){});}}catch(e){}})();</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="max-width:900px">
+      <a href="../index.html" class="site-name">Kevin (Bin) Bian</a>
+      <nav class="site-nav">
+        <a href="../index.html">Blog</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../cable-example-wind-farm.html">Example Wind Farm — Cable network report</a>
+        <a href="../tags.html">Tags</a>
+        <button class="search-toggle" onclick="openSearch()" title="Search" aria-label="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">&#9790;</button>
+      </nav>
+    </div>
+  </header>
+  <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <input class="search-input" id="search-input" placeholder="Search posts..." oninput="doSearch(this.value)" autofocus>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <main class="container">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "An AI-Native Interface Is a Contract, Not a Chatbox", "datePublished": "2026-07-04", "dateModified": "2026-07-04", "description": "AI-native isn't a chatbot beside the product — it's an interface contract: pages that declare their actions, verbs that carry safety classes, and a human at the irreversible exits. How EmptyOS exposes native AI access across pages, verbs, CLI, and coding agents.", "url": "https://binbian.net/posts/emptyos-native-ai-access.html", "mainEntityOfPage": "https://binbian.net/posts/emptyos-native-ai-access.html", "author": {"@type": "Person", "name": "Kevin (Bin) Bian"}, "image": "https://binbian.net/media/cover-emptyos-native-ai-access.png"}</script>
+<article>
+  
+  
+  <div class="post-layout">
+    <div>
+      <div style="margin-bottom:24px">
+        <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:8px">An AI-Native Interface Is a Contract, Not a Chatbox</h1>
+        <div class="post-meta">2026-07-04 &middot; 13 min read <a href="../tags/ai.html" class="tag">ai</a> <a href="../tags/agents.html" class="tag">agents</a> <a href="../tags/interface-design.html" class="tag">interface-design</a> <a href="../tags/emptyos.html" class="tag">EmptyOS</a> <a href="../tags/software-architecture.html" class="tag">software-architecture</a></div>
+      </div>
+      <div class="article">
+        <!-- eos-cover -->
+<p><img alt="An AI-Native Interface Is a Contract, Not a Chatbox — cover" src="../media/cover-emptyos-native-ai-access.png" /></p>
+<!-- /eos-cover -->
+
+<p>Most products that call themselves AI-native are a normal app with a chat window bolted to the side. The human keeps clicking. The AI explains things, drafts text, answers questions — and stays outside the product.</p>
+<p>I've shipped that shape myself. It's useful. I no longer think it deserves the name.</p>
+<p>After a few weeks of wiring an assistant rail into EmptyOS's own pages, the test I keep coming back to is sharper:</p>
+<blockquote>
+<p>Can the AI operate the product through the product's own interface contract?</p>
+</blockquote>
+<p>Not by guessing pixels or driving a fake mouse, and not by holding a backend token that bypasses the UI. The product should tell the AI what the current page is, which actions are legal, what state they touch, what came back — and where the human has to approve before anything consequential happens.</p>
+<p>In EmptyOS that means every workflow worth having is reachable three ways — as a human page, as a program surface (an HTTP route or a CLI command), and as a declared agent verb — with a coding-agent harness on top for changing the system itself.</p>
+<p><img alt="One workflow, three operable surfaces — the human page, the program surface (a POST route or a CLI command), and the agent surface (a declared verb with schema, safety class, and audit trail) all converge on the same underlying action: one implementation, three doors in.|637" src="../assets/ai-access-three-surfaces.png" /></p>
+<h2 id="a-chatbox-is-not-a-contract">A chatbox is not a contract<a class="header-link" href="#a-chatbox-is-not-a-contract" title="Permanent link">&para;</a></h2>
+<p>A chatbot beside an app has one durable weakness: it isn't part of the app's operating surface.</p>
+<p>If the assistant says, "click the Projects tab, filter stale projects, then add a task," the human still does the operation. If it drives the browser with raw mouse coordinates, a layout shift or a renamed CSS class breaks the run. If it skips the page and writes straight to storage, the human loses the context the page existed to provide.</p>
+<p>A page already knows the local workflow: which project is selected, which tab is active, which filters are on. The page is where the human judges state. Let the AI act there, and assistance moves from advice to action without hiding the action from the user.</p>
+<p>Getting there took one design rule I didn't start with:</p>
+<blockquote>
+<p>A page shouldn't only render its controls. It should declare its operable affordances.</p>
+</blockquote>
+<p>That declaration is the whole difference between a page the AI can talk about and a page the AI can use.</p>
+<p><img alt="A chatbox is not a contract — the same request, four routes. A bolted-on chat window fails three ways: advice (&quot;click Projects, then filter…&quot;) leaves the human doing the operation; pixel driving breaks on a layout shift or a renamed class; a backend token skips the page where the human judges. The interface contract is the fourth route: the page declares its actions (EOS.registerActions — the declared handles), verbs carry schema plus a safety class (stable auto-runs, gated waits, never stays human), and the result lands on the page, marked ✓, where the human judges. A chatbox talks about the product; a contract lets the AI use it through handles the product deliberately exposes.|637" src="../assets/ai-access-chatbox-contract.png" /></p>
+<h2 id="the-page-as-an-action-surface">The page as an action surface<a class="header-link" href="#the-page-as-an-action-surface" title="Permanent link">&para;</a></h2>
+<p>An AI-operable page has three jobs.</p>
+<p><strong>Readable.</strong> Semantic UI — buttons with names, fields with labels, stable headings, inspectable errors. This serves humans, screen readers, tests, and browser agents at once; the accessibility work and the agent work turn out to be the same work.</p>
+<p><strong>Actionable.</strong> Page-local operations, declared. Projects has <code>filter</code>, <code>set_view</code>, <code>open_project</code>; Focus has <code>set_duration</code>, <code>start_timer</code>, <code>get_suggestion</code>. These aren't abstract backend verbs — they're the operations that make sense in the current browser context.</p>
+<p><strong>Self-describing.</strong> The current app, the URL, a page description, the available actions, any live data the page chooses to expose. Without that context the model guesses; with it, a request maps to a concrete operation.</p>
+<p>In EmptyOS, every page on the shared frontend runtime loads a rail beside the page. A page opts in with <code>EOS.registerActions(...)</code> — its actions, their descriptions, a few quick prompts, a one-paragraph page description — and can define <code>EOS.getPageMetrics()</code> to hand over live state. The rail builds a context object for the current page and hands the model the page's declared actions — for on-page operations, those handles and nothing else. Anything consequential crosses into the verb-and-review layer instead of hiding in page JavaScript.</p>
+<p>The AI stops answering from beside the page and starts holding the page's declared handles.</p>
+<h2 id="real-pages-real-handles">Real pages, real handles<a class="header-link" href="#real-pages-real-handles" title="Permanent link">&para;</a></h2>
+<p>On Projects, the page registers <code>filter</code>, <code>set_view</code>, and <code>open_project</code>, plus a description: projects have status, tasks, health assessment, a kanban view. "Which projects have no recent activity?", "Switch this to list view", "Open the EmptyOS project" — none of these require the assistant to infer DOM structure. The operations were declared.</p>
+<p>In the screenshots below, the rail looks like a chatbox. The difference is what the buttons are. Each one is a page-declared action that executes under the contract — marked ✓ once it has run, with the page state visibly changed behind it — not generated advice about where to click.</p>
+<p><img alt="The same pattern on a data-rich page — and the result of a click. Asked for a one-click way to switch the board to list view, the assistant offered a Switch to list view control; clicking it flipped the board from kanban to List — the List tab is now active and the button shows ✓ (orange rings added to mark both). The page also declares filter and open_project. Captured against a sample vault.|637" src="../media/ai-access-projects-rail.png" /></p>
+<p>On Focus, the registered actions include <code>set_duration</code>, <code>start_timer</code>, and <code>get_suggestion</code>. Ask for a deep-work session and the assistant offers the page's own timer actions as one-click controls. Click, and the page changes under you; change your mind, and it follows across turns.</p>
+<p><img alt="Round one: asked to &quot;start a 45-minute deep-work session&quot;, the assistant offers Set 45 min and Start timer as one-click controls. The timer is still at 25:00, Ready.|637" src="../media/ai-access-focus-rail.png" /></p>
+<p><img alt="The result of the clicks, plus a second round. Both controls ran — the 45-minute preset is now active and the timer is counting down (44:46, Focusing), the buttons marked ✓. A follow-up — &quot;make the next one 25 minutes&quot; — gets its own fresh control. The assistant operated the page the user was already looking at, across turns.|637" src="../media/ai-access-focus-result.png" /></p>
+<p>Journal registers <code>go_today</code>, <code>select_mood</code>, <code>ai_reflect</code>, <code>do_search</code>, and <code>pin_entry</code> — a small, explicit control surface rather than a passive document.</p>
+<p>As I write this, twenty-two pages register actions this way — Search, Task, Expense, Settings, a dictionary, a handful of locally installed personal apps. Most expose only quick actions and a description; exactly one exposes live metrics so far. That ratio is honest: the contract is deliberately tiny, small enough for a page to adopt in twenty lines without turning into an agent-framework project.</p>
+<h2 id="the-page-is-not-the-whole-contract">The page is not the whole contract<a class="header-link" href="#the-page-is-not-the-whole-contract" title="Permanent link">&para;</a></h2>
+<p>Page actions alone would still be fragile. Adding a task, saving a draft, applying a pending write, deploying a site, sending a message — these need a deterministic backend shape. The page exposes the affordance; the operation underneath needs a stable verb.</p>
+<p>Inside EmptyOS, <code>call_app</code> is the app-to-app action spine, and on top of it sits a verb registry. A verb declares the app action, its argument shape, which surfaces may invoke it, and — the part I'd defend hardest — its safety class: <code>stable</code>, <code>gated</code>, or <code>never</code>.</p>
+<p>I added that classification because AI access turned out to be a trust problem before it was a routing problem. A <code>stable</code> internal action runs automatically, with audit and undo behind it. A <code>gated</code> action proposes, then waits for review. A <code>never</code> action can't be auto-delegated at all: publish, send, spend, or destructive work without a verified inverse. The page can be operable without being uncontrolled; the AI can act without holding a blank check.</p>
+<p><img alt="The gated class, live. A Claude Code CLI participant in a room proposed rooms.write_note through a DO-token; the review card renders the exact diff it wants to write — new file, author: ai frontmatter and all — and waits for Reject or Apply (orange ring added). In the same session a task.add auto-applied seconds after being proposed: the stable verb ran, the free-form write waits for a human. Captured against a sample vault.|637" src="../media/ai-access-review-gate.png" /></p>
+<p>The rail sits on the same system. In the simple path it uses page-local registered actions; in the richer paths, model output routes through server actions, review cards, Apply/Reject queues, confirm prompts, and undo surfaces. The branch I'm on right now folds the rail and Aura — the voice assistant — into one brain, so text and voice share structured cards, intent dispatch, pending actions, and session grants. Page, voice, room, CLI, and agent surfaces end up as different doors into one action graph.</p>
+<h2 id="cli-and-coding-agents-are-native-access-too">CLI and coding agents are native access too<a class="header-link" href="#cli-and-coding-agents-are-native-access-too" title="Permanent link">&para;</a></h2>
+<p>The terminal gets the same deal. <code>eos chat</code>, <code>eos rooms</code>, and <code>eos code</code> are terminal frontends over the same backends that power the web pages — not separate implementations. When the backend learns a safer verb, browser and CLI both get it.</p>
+<p>There's also an agent app, reachable through <code>/agent/</code> and <code>eos chat</code>, with tools like Read, Grep, Edit, Write, Bash, and — the one that matters here — <code>CallApp</code>: the coding agent can invoke app verbs through the running system instead of treating the repo as a pile of files.</p>
+<p>Three layers of AI access, then:</p>
+<ol>
+<li><strong>Page</strong> — the assistant operates the current page through page-declared actions.</li>
+<li><strong>Verb</strong> — assistants, CLI, voice, rooms, and external agent surfaces call deterministic app verbs with safety classes.</li>
+<li><strong>Coding agent</strong> — reads the codebase, changes it, runs checks, and calls the live app graph when it needs runtime state.</li>
+</ol>
+<p><img alt="The honest loop — the page shows the workflow so the human can judge it, the verb layer exposes it as deterministic actions with safety classes, and the coding agent changes and verifies the system while respecting the gates. Below, the failure mode of each layer alone: page-only automation breaks on redesign, verb-only leaves humans nowhere to judge, harness-only patches files but misses the running product.|637" src="../assets/ai-access-honest-loop.png" /></p>
+<p>Which is why "AI-native" reads to me as an interface architecture, not a model choice.</p>
+<h2 id="the-safety-model-is-part-of-the-interface">The safety model is part of the interface<a class="header-link" href="#the-safety-model-is-part-of-the-interface" title="Permanent link">&para;</a></h2>
+<p>"The AI can operate the page" sounds alarming if the page is treated as a bag of hidden powers. In EmptyOS, operability is bounded by the rule that governs the rest of the system: the human owns judgment and irreversible exits; the system owns reversible execution.</p>
+<p><img alt="Three action classes separated by the safety line — STABLE (reversible, internal: add a task, save a draft, tag a note) runs automatically with audit and undo; GATED (consequential, reviewable: free-form writes, bulk edits, outbound drafts) proposes and waits for review; NEVER (irreversible, external: publish the site, send the email, spend cloud money) stays with the human, and no grant crosses the exit line.|637" src="../assets/ai-access-safety-line.png" /></p>
+<p>I don't treat that line as a compliance footnote. A useful AI interface has to show what can happen now, what needs review, and what can't be delegated — the classification is UX, not policy paperwork. Followed, it makes the assistant faster without making it invisible: it handles the small reversible moves that slow people down, prepares the consequential ones, and stops at the boundary where human judgment is the product.</p>
+<h2 id="where-this-stands">Where this stands<a class="header-link" href="#where-this-stands" title="Permanent link">&para;</a></h2>
+<p>A few honest caveats, because an architecture post is easy to over-claim.</p>
+<p>The page rail is weeks old, and the unification with the voice assistant is literally the branch I'm on — parts of it sit behind feature flags while I decide whether they hold up. Twenty-two pages declare actions today; the rest get a generic assistant that can read a page description and not much more. Registration is manual, page by page — there's no magic that discovers affordances, and I think that's correct (a declared contract is the point), but it means coverage grows one page at a time. And the model still sometimes proposes the wrong action; the gates exist precisely because it does.</p>
+<p>What has held up is the shape. The same verb layer already serves the voice assistant, the assistant's slash commands, the rooms review gate, and an external-agent surface — one declaration, several doors. That's the part I'd bet on even if every detail above changes.</p>
+<h2 id="the-part-i-care-about-most">The part I care about most<a class="header-link" href="#the-part-i-care-about-most" title="Permanent link">&para;</a></h2>
+<p>Of the three layers, the page. It's where the human's attention already is, where state is visible, and where judgment actually gets applied. An AI that can act there doesn't pull the user away into a separate chat universe — it acts in the same place the user is judging the work.</p>
+<p>The threshold I'm building toward is the moment the assistant stops saying, "here's how you can use this page," and starts saying, "I can do that on this page — review this part before it crosses the line."</p>
+<p>Make every page an operable surface. Make every serious action a declared verb. Keep the human at the boundary where judgment matters.</p>
+<p>An AI-native interface is a contract, not a chatbox.</p>
+<p><img alt="The whole argument in one picture. Inside the product, the AI operates through the declared interface contract — page context, registered actions, schemas, state, results; the AI only sees what the contract exposes — with the verb layer's three safety classes underneath, split by the human-judgment boundary: the AI executes fast, reversible work, and irreversible exits stay with the human. Outside the product, a chatbox can only talk about it. Illustration — the product panels are stylized mockups, not screenshots; the real ones are above.|760" src="../media/ai-access-share-card.png" /></p>
+<hr />
+<blockquote>
+<p>Built with <a href="https://eos.binbian.net">EmptyOS</a> - an open-source mind companion that thinks and creates with you, not for you. Try the <a href="https://demo.binbian.net/?token=bLN9bRP-wMfBiaqsfI4OHuu3tGHtGsaeGsLk-8v71N8">live demo</a> (sample vault, sign-in token included) - <a href="https://github.com/KevinBean/emptyos">Source on GitHub</a>.</p>
+</blockquote>
+<hr />
+<h2 id="listen-to-this-post">Listen to this post<a class="header-link" href="#listen-to-this-post" title="Permanent link">&para;</a></h2>
+<div id="podcast-emptyos_native_ai_access" style="margin:12px 0"></div>
+<noscript>
+<audio controls style="width:100%">
+  <source src="../media/podcast-emptyos-native-ai-access.mp3" type="audio/mpeg">
+</audio>
+</noscript>
+<script>
+(function(){
+  var el = document.getElementById("podcast-emptyos_native_ai_access");
+  var mb = (location.pathname.indexOf("/posts/") >= 0) ? "../media/" : (location.search.indexOf("path=posts/") >= 0) ? "/publish/api/site-file?path=media/" : "media/";
+  function go(d) {
+    d.audioUrl = mb + "podcast-emptyos-native-ai-access.mp3";
+    (d.scenes || []).forEach(function(sc) { if (sc.image_file) sc.image_url = mb + sc.image_file; });
+    SlideshowPlayer.create(el, d);
+  }
+  function load() {
+    fetch(mb + "podcast-emptyos-native-ai-access-slideshow.json").then(function(r) { return r.json(); }).then(go);
+  }
+  if (window.SlideshowPlayer) { load(); return; }
+  var s = document.createElement("script");
+  s.src = mb + "slideshow-player.js";
+  s.onload = load;
+  document.head.appendChild(s);
+})();
+</script>
+<p id="vid-emptyos_native_ai_access_vid" style="margin:6px 0 0;font-size:0.85rem"><a href="media/podcast-emptyos-native-ai-access.mp4" download>&#11015; Download as video</a> <span style="color:var(--text-muted)">— share on LinkedIn, X, etc.</span></p>
+<script>(function(){var a=document.querySelector("#vid-emptyos_native_ai_access_vid a");if(!a)return;if(location.pathname.indexOf("/posts/")>=0)a.href="../media/podcast-emptyos-native-ai-access.mp4";else if(location.search.indexOf("path=posts/")>=0)a.href="/publish/api/site-file?path=media/podcast-emptyos-native-ai-access.mp4";})();</script>
+<p style="font-size:0.8rem;color:var(--text-muted)">AI-generated podcast discussion of this article</p>
+      </div>
+      <div class="author-card">
+  <img src="../assets/avatar.png" class="author-avatar" alt="Kevin (Bin) Bian">
+  <div class="author-info">
+    <div class="author-name">Kevin (Bin) Bian</div>
+    <div class="author-bio">Senior electrical engineer — MV/HV power systems, standards, integrated energy. Sydney, NSW. Also builds AI tools and writes about coding agents and systems design.</div>
+    <div class="author-links"><a href="https://www.linkedin.com/in/bianbin/">LinkedIn</a> <a href="https://github.com/KevinBean/">GitHub</a> <a href="mailto:bianbin+contact@gmail.com">Email</a></div>
+  </div>
+</div>
+      
+      <div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--border)">
+  <h3 style="font-size:1rem;color:var(--text-heading);margin-bottom:12px">Related Posts</h3>
+  <ul class="post-list" style="margin:0">
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/the-harness-is-the-product.html" class="post-title" style="font-size:0.95rem">The Harness and the Model: Why the 'Vibe' Defines the 'Code'</a>
+  <div class="post-meta">2026-04-22</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/2026-06-27-model-or-harness.html" class="post-title" style="font-size:0.95rem">AI coding agents: is the model or the harness the bottleneck?</a>
+  <div class="post-meta">2026-06-27</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/your-note-vault-under-ai-is-three-things-at-once.html" class="post-title" style="font-size:0.95rem">Notes as Infrastructure: the emergence of the markdown OS</a>
+  <div class="post-meta">2026-04-27</div>
+</li>
+  </ul>
+</div>
+      <div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border)">
+        <a href="../index.html">&larr; Back to posts</a>
+      </div>
+    </div>
+    <aside class="toc-sidebar">
+  <div class="toc-title">Contents</div>
+  <div class="toc">
+<ul>
+<li><a href="#a-chatbox-is-not-a-contract">A chatbox is not a contract</a></li>
+<li><a href="#the-page-as-an-action-surface">The page as an action surface</a></li>
+<li><a href="#real-pages-real-handles">Real pages, real handles</a></li>
+<li><a href="#the-page-is-not-the-whole-contract">The page is not the whole contract</a></li>
+<li><a href="#cli-and-coding-agents-are-native-access-too">CLI and coding agents are native access too</a></li>
+<li><a href="#the-safety-model-is-part-of-the-interface">The safety model is part of the interface</a></li>
+<li><a href="#where-this-stands">Where this stands</a></li>
+<li><a href="#the-part-i-care-about-most">The part I care about most</a></li>
+<li><a href="#listen-to-this-post">Listen to this post</a></li>
+</ul>
+</div>
+
+</aside>
+  </div>
+</article>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span class="cross-site-links"><a href="https://portfolio.binbian.net">Engineering Portfolio</a> &middot; <a href="https://eos.binbian.net">EmptyOS</a> &middot; <a href="https://plekto.dev">Plekto</a></span>
+      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a> &middot; <a href="../atom.xml">RSS</a>
+    </div>
+  </footer>
+  <script>
+  // Theme toggle
+  (function(){
+    try{var t=localStorage.getItem('site-theme');if(t==='alt-theme')document.body.classList.add('alt-theme');}catch(e){}
+  })();
+  function toggleTheme(){
+    document.body.classList.toggle('alt-theme');
+    try{localStorage.setItem('site-theme',document.body.classList.contains('alt-theme')?'alt-theme':'dark');}catch(e){}
+    var btn=document.querySelector('.theme-toggle');
+    btn.innerHTML=document.body.classList.contains('alt-theme')?'&#9788;':'&#9790;';
+  }
+  // Search
+  var _searchIndex=null;
+  function openSearch(){
+    document.getElementById('search-overlay').classList.add('open');
+    document.getElementById('search-input').focus();
+  }
+  function closeSearch(){
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch();
+  });
+  function _countOcc(hay,term){
+    if(!hay||!term)return 0;
+    var n=0,i=hay.indexOf(term);
+    while(i>=0){n++;i=hay.indexOf(term,i+term.length);}
+    return n;
+  }
+  function doSearch(q){
+    if(!_searchIndex){
+      var searchUrl='../search-index.json';
+      if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
+      fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
+      return;
+    }
+    var el=document.getElementById('search-results');
+    if(!q.trim()){el.innerHTML='';return;}
+    // Ranked search: multi-term (AND), field-weighted (title x5, tags x3, summary x2, body x1),
+    // full-phrase-in-title bonus; sort by score desc then date desc.
+    var lq=q.toLowerCase();
+    var terms=lq.split(/\s+/).filter(function(t){return t;});
+    var scored=[];
+    for(var i=0;i<_searchIndex.length;i++){
+      var p=_searchIndex[i];
+      var title=(p.title||'').toLowerCase();
+      var tags=(p.tags||[]).join(' ').toLowerCase();
+      var summary=(p.summary||'').toLowerCase();
+      var body=(p.body_preview||'').toLowerCase();
+      var score=0,allPresent=true;
+      for(var t=0;t<terms.length;t++){
+        var h=_countOcc(title,terms[t])*5+_countOcc(tags,terms[t])*3+_countOcc(summary,terms[t])*2+_countOcc(body,terms[t]);
+        if(h===0){allPresent=false;break;}
+        score+=h;
+      }
+      if(!allPresent)continue;
+      if(title.indexOf(lq)>=0)score+=10;
+      scored.push({p:p,s:score});
+    }
+    scored.sort(function(a,b){return b.s!==a.s?b.s-a.s:(b.p.date||'').localeCompare(a.p.date||'');});
+    var hits=scored.slice(0,8).map(function(x){return x.p;});
+    el.innerHTML=hits.map(function(p){
+      var href=p.type==='page'?('../'+p.slug+'.html'):('../'+'posts/'+p.slug+'.html');
+      return '<a class="search-result" href="'+href+'">'
+        +'<div class="search-result-title">'+p.title+'</div>'
+        +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';
+    }).join('')||'<div style="padding:12px;color:var(--text-muted);font-size:0.85rem">No results</div>';
+  }
+  </script>
+</body>
+</html>

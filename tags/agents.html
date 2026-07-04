@@ -8,6 +8,9 @@
   <meta property="og:title" content="Tag: agents">
   <meta property="og:description" content="Posts tagged agents">
   <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tag: agents">
+  <meta name="twitter:description" content="Posts tagged agents">
   <link rel="stylesheet" href="../site.css">
   <link rel="alternate" type="application/atom+xml" title="Kevin (Bin) Bian Feed" href="../atom.xml">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -24,8 +27,8 @@
         <a href="../contact.html">Contact</a>
         <a href="../cable-example-wind-farm.html">Example Wind Farm — Cable network report</a>
         <a href="../tags.html">Tags</a>
-        <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+        <button class="search-toggle" onclick="openSearch()" title="Search" aria-label="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">&#9790;</button>
       </nav>
     </div>
   </header>
@@ -40,6 +43,11 @@
   Posts tagged <span class="tag" style="font-size:0.9rem">agents</span>
 </h1>
 <ul class="post-list">
+<li class="post-item">
+  <a href="posts/emptyos-native-ai-access.html" class="post-title">An AI-Native Interface Is a Contract, Not a Chatbox</a>
+  <div class="post-meta">2026-07-04 </div>
+  <div class="post-summary">AI-native isn't a chatbot beside the product — it's an interface contract: pages that declare their actions, verbs that carry safety classes, and a human at the irreversible exits. How EmptyOS exposes native AI access across pages, verbs, CLI, and coding agents.</div>
+</li>
 <li class="post-item">
   <a href="posts/the-harness-is-the-product.html" class="post-title">The Harness and the Model: Why the 'Vibe' Defines the 'Code'</a>
   <div class="post-meta">2026-04-22 </div>
@@ -58,7 +66,7 @@
   <footer class="site-footer">
     <div class="container">
       <span class="cross-site-links"><a href="https://portfolio.binbian.net">Engineering Portfolio</a> &middot; <a href="https://eos.binbian.net">EmptyOS</a> &middot; <a href="https://plekto.dev">Plekto</a></span>
-      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a>
+      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a> &middot; <a href="../atom.xml">RSS</a>
     </div>
   </footer>
   <script>
@@ -85,6 +93,12 @@
     if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
     if(e.key==='Escape')closeSearch();
   });
+  function _countOcc(hay,term){
+    if(!hay||!term)return 0;
+    var n=0,i=hay.indexOf(term);
+    while(i>=0){n++;i=hay.indexOf(term,i+term.length);}
+    return n;
+  }
   function doSearch(q){
     if(!_searchIndex){
       var searchUrl='../search-index.json';
@@ -94,10 +108,29 @@
     }
     var el=document.getElementById('search-results');
     if(!q.trim()){el.innerHTML='';return;}
+    // Ranked search: multi-term (AND), field-weighted (title x5, tags x3, summary x2, body x1),
+    // full-phrase-in-title bonus; sort by score desc then date desc.
     var lq=q.toLowerCase();
-    var hits=_searchIndex.filter(function(p){
-      return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
-    }).slice(0,8);
+    var terms=lq.split(/\s+/).filter(function(t){return t;});
+    var scored=[];
+    for(var i=0;i<_searchIndex.length;i++){
+      var p=_searchIndex[i];
+      var title=(p.title||'').toLowerCase();
+      var tags=(p.tags||[]).join(' ').toLowerCase();
+      var summary=(p.summary||'').toLowerCase();
+      var body=(p.body_preview||'').toLowerCase();
+      var score=0,allPresent=true;
+      for(var t=0;t<terms.length;t++){
+        var h=_countOcc(title,terms[t])*5+_countOcc(tags,terms[t])*3+_countOcc(summary,terms[t])*2+_countOcc(body,terms[t]);
+        if(h===0){allPresent=false;break;}
+        score+=h;
+      }
+      if(!allPresent)continue;
+      if(title.indexOf(lq)>=0)score+=10;
+      scored.push({p:p,s:score});
+    }
+    scored.sort(function(a,b){return b.s!==a.s?b.s-a.s:(b.p.date||'').localeCompare(a.p.date||'');});
+    var hits=scored.slice(0,8).map(function(x){return x.p;});
     el.innerHTML=hits.map(function(p){
       var href=p.type==='page'?('../'+p.slug+'.html'):('../'+'posts/'+p.slug+'.html');
       return '<a class="search-result" href="'+href+'">'

@@ -8,6 +8,9 @@
   <meta property="og:title" content="Home">
   <meta property="og:description" content="Senior Electrical Engineer — MV/HV Power Systems, Standards, Integrated Energy. Sydney, NSW. Also builds AI tools.">
   <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Home">
+  <meta name="twitter:description" content="Senior Electrical Engineer — MV/HV Power Systems, Standards, Integrated Energy. Sydney, NSW. Also builds AI tools.">
   <link rel="stylesheet" href="site.css">
   <link rel="alternate" type="application/atom+xml" title="Kevin (Bin) Bian Feed" href="atom.xml">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -24,8 +27,8 @@
         <a href="contact.html">Contact</a>
         <a href="cable-example-wind-farm.html">Example Wind Farm — Cable network report</a>
         <a href="tags.html">Tags</a>
-        <button class="search-toggle" onclick="openSearch()" title="Search">&#128269;</button>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
+        <button class="search-toggle" onclick="openSearch()" title="Search" aria-label="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">&#9790;</button>
       </nav>
     </div>
   </header>
@@ -47,18 +50,25 @@
   <div class="secondary-line">Also building AI tools and writing about AI coding agents + systems design — essays below ↓</div>
 </div>
 
-<a href="posts/2026-06-27-model-or-harness.html" style="text-decoration:none" class="featured">
-  <img src="media/harness-cover.png" class="featured-cover" alt="AI coding agents: is the model or the harness the bottleneck?" loading="lazy">
+<a href="posts/emptyos-native-ai-access.html" style="text-decoration:none" class="featured">
+  <img src="media/cover-emptyos-native-ai-access.png" class="featured-cover" alt="An AI-Native Interface Is a Contract, Not a Chatbox" loading="lazy">
   <div class="featured-text">
     <div class="label">Featured</div>
-    <div class="title">AI coding agents: is the model or the harness the bottleneck?</div>
-    <div class="summary">I held the model fixed and swapped the harness around it across a 12-task suite. On easy tasks it barely mattered; on hard, structured tasks the harness decided the outcome. Plus the first results I got wrong and had to correct.</div>
-    <div class="meta">2026-06-27 &middot; 10 min read <span class="tag">ai</span> <span class="tag">llm</span> <span class="tag">coding-agents</span> <span class="tag">benchmark</span> <span class="tag">engineering</span></div>
+    <div class="title">An AI-Native Interface Is a Contract, Not a Chatbox</div>
+    <div class="summary">AI-native isn't a chatbot beside the product — it's an interface contract: pages that declare their actions, verbs that carry safety classes, and a human at the irreversible exits. How EmptyOS exposes native AI access across pages, verbs, CLI, and coding agents.</div>
+    <div class="meta">2026-07-04 &middot; 13 min read <span class="tag">ai</span> <span class="tag">agents</span> <span class="tag">interface-design</span> <span class="tag">EmptyOS</span> <span class="tag">software-architecture</span></div>
   </div>
 </a>
 
 <div class="section-heading">Recent Posts</div>
 <div class="post-grid">
+<a href="posts/2026-06-27-model-or-harness.html" class="post-card" style="text-decoration:none;display:block">
+  <img src="media/harness-cover.png" class="card-cover" alt="AI coding agents: is the model or the harness the bottleneck?" loading="lazy">
+  <div class="card-title">AI coding agents: is the model or the harness the bottleneck?</div>
+  <div class="card-meta">2026-06-27 &middot; 10 min</div>
+  <div class="card-summary">I held the model fixed and swapped the harness around it across a 12-task suite. On easy tasks it barely mattered; on hard, structured tasks the harness decided the outcome. Plus the first results I got wrong and had to correct.</div>
+  <div class="card-tags"><span class="tag">ai</span> <span class="tag">llm</span> <span class="tag">coding-agents</span> <span class="tag">benchmark</span> <span class="tag">engineering</span></div>
+</a>
 <a href="posts/your-note-vault-under-ai-is-three-things-at-once.html" class="post-card" style="text-decoration:none;display:block">
   <img src="media/cover-your-note-vault-under-ai-is-three-things-at-once.png" class="card-cover" alt="Notes as Infrastructure: the emergence of the markdown OS" loading="lazy">
   <div class="card-title">Notes as Infrastructure: the emergence of the markdown OS</div>
@@ -113,7 +123,7 @@
   <footer class="site-footer">
     <div class="container">
       <span class="cross-site-links"><a href="https://portfolio.binbian.net">Engineering Portfolio</a> &middot; <a href="https://eos.binbian.net">EmptyOS</a> &middot; <a href="https://plekto.dev">Plekto</a></span>
-      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a>
+      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a> &middot; <a href="atom.xml">RSS</a>
     </div>
   </footer>
   <script>
@@ -140,6 +150,12 @@
     if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
     if(e.key==='Escape')closeSearch();
   });
+  function _countOcc(hay,term){
+    if(!hay||!term)return 0;
+    var n=0,i=hay.indexOf(term);
+    while(i>=0){n++;i=hay.indexOf(term,i+term.length);}
+    return n;
+  }
   function doSearch(q){
     if(!_searchIndex){
       var searchUrl='search-index.json';
@@ -149,10 +165,29 @@
     }
     var el=document.getElementById('search-results');
     if(!q.trim()){el.innerHTML='';return;}
+    // Ranked search: multi-term (AND), field-weighted (title x5, tags x3, summary x2, body x1),
+    // full-phrase-in-title bonus; sort by score desc then date desc.
     var lq=q.toLowerCase();
-    var hits=_searchIndex.filter(function(p){
-      return (p.title+' '+p.summary+' '+(p.tags||[]).join(' ')+' '+(p.body_preview||'')).toLowerCase().indexOf(lq)>=0;
-    }).slice(0,8);
+    var terms=lq.split(/\s+/).filter(function(t){return t;});
+    var scored=[];
+    for(var i=0;i<_searchIndex.length;i++){
+      var p=_searchIndex[i];
+      var title=(p.title||'').toLowerCase();
+      var tags=(p.tags||[]).join(' ').toLowerCase();
+      var summary=(p.summary||'').toLowerCase();
+      var body=(p.body_preview||'').toLowerCase();
+      var score=0,allPresent=true;
+      for(var t=0;t<terms.length;t++){
+        var h=_countOcc(title,terms[t])*5+_countOcc(tags,terms[t])*3+_countOcc(summary,terms[t])*2+_countOcc(body,terms[t]);
+        if(h===0){allPresent=false;break;}
+        score+=h;
+      }
+      if(!allPresent)continue;
+      if(title.indexOf(lq)>=0)score+=10;
+      scored.push({p:p,s:score});
+    }
+    scored.sort(function(a,b){return b.s!==a.s?b.s-a.s:(b.p.date||'').localeCompare(a.p.date||'');});
+    var hits=scored.slice(0,8).map(function(x){return x.p;});
     el.innerHTML=hits.map(function(p){
       var href=p.type==='page'?(''+p.slug+'.html'):(''+'posts/'+p.slug+'.html');
       return '<a class="search-result" href="'+href+'">'

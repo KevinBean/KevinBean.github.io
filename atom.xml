@@ -4,9 +4,16 @@
   <subtitle>Senior Electrical Engineer — MV/HV Power Systems, Standards, Integrated Energy. Sydney, NSW. Also builds AI tools.</subtitle>
   <link href="https://binbian.net/" rel="alternate"/>
   <link href="https://binbian.net/atom.xml" rel="self"/>
-  <updated>2026-07-04T00:00:00Z</updated>
+  <updated>2026-07-07T00:00:00Z</updated>
   <id>https://binbian.net/</id>
   <author><name>Kevin (Bin) Bian</name></author>
+  <entry>
+    <title>Chat App as Pocket Console: A Safe Front Door to EmptyOS from Telegram</title>
+    <link href="https://binbian.net/posts/telegram-pocket-console-emptyos.html"/>
+    <id>https://binbian.net/posts/telegram-pocket-console-emptyos.html</id>
+    <updated>2026-07-07T00:00:00Z</updated>
+    <summary>A chat app can become a pocket console for an AI operating system, but only if it inherits the system's safety model: propose first, show the payload, and let the human approve before anything writes.</summary>
+  </entry>
   <entry>
     <title>An AI-Native Interface Is a Contract, Not a Chatbox</title>
     <link href="https://binbian.net/posts/emptyos-native-ai-access.html"/>

@@ -14,8 +14,8 @@
   <link rel="stylesheet" href="../site.css">
   <link rel="alternate" type="application/atom+xml" title="Kevin (Bin) Bian Feed" href="../atom.xml">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <meta property="og:image" content="https://binbian.net/media/telegram-pocket-console-flow.png">
-  <meta name="twitter:image" content="https://binbian.net/media/telegram-pocket-console-flow.png">
+  <meta property="og:image" content="https://binbian.net/media/cover-telegram-pocket-console-emptyos.png">
+  <meta name="twitter:image" content="https://binbian.net/media/cover-telegram-pocket-console-emptyos.png">
   <script>(function(){try{if(navigator.doNotTrack==='1')return;var u="http://localhost:9000/web-analytics/api/collect",s="default";var b={site:s,path:location.pathname,referrer:document.referrer||''};var blob=new Blob([JSON.stringify(b)],{type:'text/plain'});if(navigator.sendBeacon){navigator.sendBeacon(u,blob);}else{fetch(u,{method:'POST',body:JSON.stringify(b),keepalive:true,headers:{'Content-Type':'text/plain'}}).catch(function(){});}}catch(e){}})();</script>
 </head>
 <body>
@@ -41,7 +41,7 @@
     </div>
   </div>
   <main class="container">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Chat App as Pocket Console: A Safe Front Door to EmptyOS from Telegram", "datePublished": "2026-07-07", "dateModified": "2026-07-07", "description": "A chat app can become a pocket console for an AI operating system, but only if it inherits the system's safety model: propose first, show the payload, and let the human approve before anything writes.", "url": "https://binbian.net/posts/telegram-pocket-console-emptyos.html", "mainEntityOfPage": "https://binbian.net/posts/telegram-pocket-console-emptyos.html", "author": {"@type": "Person", "name": "Kevin (Bin) Bian"}, "image": "https://binbian.net/media/telegram-pocket-console-flow.png"}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Chat App as Pocket Console: A Safe Front Door to EmptyOS from Telegram", "datePublished": "2026-07-07", "dateModified": "2026-07-07", "description": "A chat app can become a pocket console for an AI operating system, but only if it inherits the system's safety model: propose first, show the payload, and let the human approve before anything writes.", "url": "https://binbian.net/posts/telegram-pocket-console-emptyos.html", "mainEntityOfPage": "https://binbian.net/posts/telegram-pocket-console-emptyos.html", "author": {"@type": "Person", "name": "Kevin (Bin) Bian"}, "image": "https://binbian.net/media/cover-telegram-pocket-console-emptyos.png"}</script>
 <article>
   
   
@@ -49,10 +49,14 @@
     <div>
       <div style="margin-bottom:24px">
         <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:8px">Chat App as Pocket Console: A Safe Front Door to EmptyOS from Telegram</h1>
-        <div class="post-meta">2026-07-07 &middot; 9 min read <a href="../tags/ai.html" class="tag">AI</a> <a href="../tags/agents.html" class="tag">agents</a> <a href="../tags/interface-design.html" class="tag">interface-design</a> <a href="../tags/emptyos.html" class="tag">EmptyOS</a> <a href="../tags/software-architecture.html" class="tag">software-architecture</a></div>
+        <div class="post-meta">2026-07-07 &middot; 10 min read <a href="../tags/ai.html" class="tag">AI</a> <a href="../tags/agents.html" class="tag">agents</a> <a href="../tags/interface-design.html" class="tag">interface-design</a> <a href="../tags/emptyos.html" class="tag">EmptyOS</a> <a href="../tags/software-architecture.html" class="tag">software-architecture</a></div>
       </div>
       <div class="article">
-        <p>A chat app is a tempting front door for a personal AI system.</p>
+        <!-- eos-cover -->
+<p><img alt="Chat App as Pocket Console: A Safe Front Door to EmptyOS from Telegram — cover" src="../media/cover-telegram-pocket-console-emptyos.png" /></p>
+<!-- /eos-cover -->
+
+<p>A chat app is a tempting front door for a personal AI system.</p>
 <p>It is already on the phone. It supports text, voice notes, notifications, and inline buttons. It is the place you can reach while walking, commuting, leaving a shop, or remembering a task away from the desk. Used well, it becomes a pocket console: a small control surface for the operating system in your notes.</p>
 <p>Used badly, it becomes a back door.</p>
 <p>That was the design problem when I connected EmptyOS to Telegram. I did not want a bot that could write straight into my system just because I was on my phone. If the EmptyOS web app has review gates, safety classes, and audit trails, the chat surface should inherit those rules instead of skipping them.</p>
@@ -99,6 +103,36 @@
 <p>That matters because AI systems become dangerous when each new surface is treated as an exception. "Just let the phone bot write it." "Just let the voice assistant bypass the page." "Just let the coding agent edit the note directly." Each shortcut is small. Together they dissolve the boundary.</p>
 <p>The better pattern is boring and durable: every serious action becomes a proposed action; every proposed action has a lifecycle; every surface renders that lifecycle in its own way.</p>
 <p>For EmptyOS, that is the practical meaning of "with you, not for you." The machine can be close enough to act from my pocket. It still has to stop at the line where my judgment matters.</p>
+<hr />
+<h2 id="listen-to-this-post">Listen to this post<a class="header-link" href="#listen-to-this-post" title="Permanent link">&para;</a></h2>
+<div id="podcast-telegram_pocket_console_emptyos" style="margin:12px 0"></div>
+<noscript>
+<audio controls style="width:100%">
+  <source src="../media/podcast-telegram-pocket-console-emptyos.mp3" type="audio/mpeg">
+</audio>
+</noscript>
+<script>
+(function(){
+  var el = document.getElementById("podcast-telegram_pocket_console_emptyos");
+  var mb = (location.pathname.indexOf("/posts/") >= 0) ? "../media/" : (location.search.indexOf("path=posts/") >= 0) ? "/publish/api/site-file?path=media/" : "media/";
+  function go(d) {
+    d.audioUrl = mb + "podcast-telegram-pocket-console-emptyos.mp3";
+    (d.scenes || []).forEach(function(sc) { if (sc.image_file) sc.image_url = mb + sc.image_file; });
+    SlideshowPlayer.create(el, d);
+  }
+  function load() {
+    fetch(mb + "podcast-telegram-pocket-console-emptyos-slideshow.json").then(function(r) { return r.json(); }).then(go);
+  }
+  if (window.SlideshowPlayer) { load(); return; }
+  var s = document.createElement("script");
+  s.src = mb + "slideshow-player.js";
+  s.onload = load;
+  document.head.appendChild(s);
+})();
+</script>
+<p id="vid-telegram_pocket_console_emptyos_vid" style="margin:6px 0 0;font-size:0.85rem"><a href="media/podcast-telegram-pocket-console-emptyos.mp4" download>&#11015; Download as video</a> <span style="color:var(--text-muted)">— share on LinkedIn, X, etc.</span></p>
+<script>(function(){var a=document.querySelector("#vid-telegram_pocket_console_emptyos_vid a");if(!a)return;if(location.pathname.indexOf("/posts/")>=0)a.href="../media/podcast-telegram-pocket-console-emptyos.mp4";else if(location.search.indexOf("path=posts/")>=0)a.href="/publish/api/site-file?path=media/podcast-telegram-pocket-console-emptyos.mp4";})();</script>
+<p style="font-size:0.8rem;color:var(--text-muted)">AI-generated podcast discussion of this article</p>
       </div>
       <div class="author-card">
   <img src="../assets/avatar.png" class="author-avatar" alt="Kevin (Bin) Bian">
@@ -138,6 +172,7 @@
 <li><a href="#why-not-just-parse-commands">Why not just parse commands?</a></li>
 <li><a href="#the-safety-model">The safety model</a></li>
 <li><a href="#the-engineering-lesson">The engineering lesson</a></li>
+<li><a href="#listen-to-this-post">Listen to this post</a></li>
 </ul>
 </div>
 

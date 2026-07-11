@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Architecture Emerges in AI-Assisted Development — Kevin (Bin) Bian</title>
+  <meta name="description" content="AI makes implementations cheap to generate — but ask for the same capability twice and you get two different answers to what happens when the input is ugly. Che">
+  <meta property="og:title" content="How Architecture Emerges in AI-Assisted Development">
+  <meta property="og:description" content="AI makes implementations cheap to generate — but ask for the same capability twice and you get two different answers to what happens when the input is ugly. Che">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How Architecture Emerges in AI-Assisted Development">
+  <meta name="twitter:description" content="AI makes implementations cheap to generate — but ask for the same capability twice and you get two different answers to what happens when the input is ugly. Che">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="alternate" type="application/atom+xml" title="Kevin (Bin) Bian Feed" href="../atom.xml">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <meta property="og:image" content="https://binbian.net/media/cover-how-architecture-emerges-in-ai-assisted-development.png">
+  <meta name="twitter:image" content="https://binbian.net/media/cover-how-architecture-emerges-in-ai-assisted-development.png">
+  <script>(function(){try{if(navigator.doNotTrack==='1')return;var u="http://localhost:9000/web-analytics/api/collect",s="default";var b={site:s,path:location.pathname,referrer:document.referrer||''};var blob=new Blob([JSON.stringify(b)],{type:'text/plain'});if(navigator.sendBeacon){navigator.sendBeacon(u,blob);}else{fetch(u,{method:'POST',body:JSON.stringify(b),keepalive:true,headers:{'Content-Type':'text/plain'}}).catch(function(){});}}catch(e){}})();</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="max-width:900px">
+      <a href="../index.html" class="site-name">Kevin (Bin) Bian</a>
+      <nav class="site-nav">
+        <a href="../index.html">Blog</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../cable-example-wind-farm.html">Example Wind Farm — Cable network report</a>
+        <a href="../tags.html">Tags</a>
+        <button class="search-toggle" onclick="openSearch()" title="Search" aria-label="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">&#9790;</button>
+      </nav>
+    </div>
+  </header>
+  <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <input class="search-input" id="search-input" placeholder="Search posts..." oninput="doSearch(this.value)" autofocus>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <main class="container">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How Architecture Emerges in AI-Assisted Development", "datePublished": "2026-07-08", "dateModified": "2026-07-08", "description": "AI makes implementations cheap to generate — but ask for the same capability twice and you get two different answers to what happens when the input is ugly. Cheap code is not coherent code, so someone still has to decide what becomes shared architecture. Not upfront, though: design the rules of grow", "url": "https://binbian.net/posts/how-architecture-emerges-in-ai-assisted-development.html", "mainEntityOfPage": "https://binbian.net/posts/how-architecture-emerges-in-ai-assisted-development.html", "author": {"@type": "Person", "name": "Kevin (Bin) Bian"}, "image": "https://binbian.net/media/cover-how-architecture-emerges-in-ai-assisted-development.png"}</script>
+<article>
+  
+  
+  <div class="post-layout">
+    <div>
+      <div style="margin-bottom:24px">
+        <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:8px">How Architecture Emerges in AI-Assisted Development</h1>
+        <div class="post-meta">2026-07-08 &middot; 13 min read <a href="../tags/emptyos.html" class="tag">EmptyOS</a> <a href="../tags/software-architecture.html" class="tag">software-architecture</a> <a href="../tags/sdk.html" class="tag">SDK</a> <a href="../tags/engineering.html" class="tag">engineering</a> <a href="../tags/ai.html" class="tag">AI</a></div>
+      </div>
+      <div class="article">
+        <p>Traditional architecture often front-loads structural decisions—which components exist, what each owns, and where the seams run—because changing them later is expensive. AI-assisted development changes that economics, though not in the way "just generate it again" assumes. It produces a working app quickly; what it cannot produce is <em>consistency</em>. Ask for the same capability twice and you get two implementations — both plausible, both working, neither identical, each with its own quiet opinion about what to do when the input is ugly. Cheap code is not coherent code, and a behaviour only stays one behaviour if it lives in one place. So someone still has to decide which parts deserve to become shared architecture: the pieces that should have a single implementation, and evolve in a single place.</p>
+<p><img alt="Cheap code is not coherent code. Asked to clean up a transcript three times, a model produces three plausible implementations that disagree about what to do when the reply comes back empty — one returns an empty string, one raises, one returns the raw text. Extracted once into sdk/text_cleanup.py, there is a single behaviour and a single place to change it.|637" src="../assets/system-evolution-consistency.png" /></p>
+<p>That decision cannot be made upfront. The system now outgrows the blueprint faster than anyone can redraw it, and the boundaries worth drawing only become clear after they have met real inputs in more than one application. Fix those application-level boundaries too early and guesses calcify. Decide nothing, however, and a hundred cheaply generated apps drift into a hundred private answers to the same question — each subtly different, none of them wrong enough to notice, and no single place to fix any of them.</p>
+<p>EmptyOS therefore did not design its final app and SDK structure upfront. It designed the rules of growth: apps communicate through declared capabilities and events, never through another app’s internals, and shared code must sit behind a public boundary. Those rules are safe to establish early because they govern dependency direction and ownership — they do not try to predict what the system will become, or how a model will behave inside it. Everything above those rules — the apps, and the shared code beneath them — had to earn its place, under a single promotion rule: nothing becomes shared until a second app, built for a different reason, turns out to need the same thing. One app needing it is a hunch. Two is evidence.</p>
+<p>The rule is simple; applying it is not. What follows is how it shaped one system over three months—a field note from a fast-growing open-source project, not a controlled study. The current modules and apps are linked to the <a href="https://github.com/KevinBean/emptyos">public repository</a>; the dates come from the working history behind its snapshot releases.</p>
+<h3 id="specific-first-reusable-second">Specific first, reusable second<a class="header-link" href="#specific-first-reusable-second" title="Permanent link">&para;</a></h3>
+<p>The first version of EmptyOS's transcript cleanup lived inside one app. The <a href="https://github.com/KevinBean/emptyos/blob/main/apps/public/standard/hands-free/app.py">hands-free</a> app needed to turn rough speech-to-text output into readable prose: repair punctuation, fix obvious mis-hears, and preserve the speaker's own vocabulary. There was no framework — a <code>CLEANUP_PROMPT</code> constant and a <code>think()</code> call, sitting in <code>hands-free/app.py</code>, doing just enough to make one feature work. It sat there for three weeks.</p>
+<p>Then the <a href="https://github.com/KevinBean/emptyos/blob/main/apps/public/standard/dictation/app.py">dictation</a> app needed the same transformation, and the commit that introduced dictation is also the commit that deleted seventeen lines from hands-free and replaced them with a single import. The cleanup logic moved into <a href="https://github.com/KevinBean/emptyos/blob/main/emptyos/sdk/text_cleanup.py"><code>sdk/text_cleanup.py</code></a>, shaped by two working consumers rather than a whiteboard guess. The extraction wasn't planned; it was <em>triggered</em>.</p>
+<p>That sequence is the whole claim, so the dates are worth showing plainly rather than asking anyone to take on faith:</p>
+<p><img alt="Timeline of two extractions. hands-free carries its cleanup logic inline from May 30; when dictation arrives on Jun 21 needing the same transform, sdk/text_cleanup.py is extracted in the same commit, deleting 17 lines from hands-free. explore (Jun 11) and kb-gap-miner (Jun 12) each hand-roll the same gap-driven loop; sdk/deep_loop.py is extracted nine days later and both apps are rewired to import it. The SDK module lands only when the second consumer arrives.|637" src="../assets/system-evolution-timeline.png" /></p>
+<p>The commit alone looks like an abstraction designed for two callers; the diff shows the opposite — code <em>leaving</em> an app that had carried it alone. That is the entire difference between extraction and speculative design. EmptyOS codifies it as Rule 9:</p>
+<blockquote>
+<p><strong>Extract shared, then reuse</strong> — build specific first in one app, extract to <code>sdk/</code> when a second app needs it.</p>
+</blockquote>
+<p>Extractions stay this cheap because apps own almost no plumbing: an app <em>declares</em> what it needs and the platform provides it. Here is the live dependency graph with just those two apps lit — everything else dimmed out.</p>
+<p><img alt="One thread through the EmptyOS topology: the hands-free and dictation apps lit, reaching down through the shared layers to exactly three capabilities — listen, write, and think." src="../assets/topology-thread.png" /></p>
+<p><em>The integration, end to end. Two apps (the lit dot, L4) reach down past engines, plugins, and services to exactly three capabilities: <code>listen</code>, <code>write</code>, <code>think</code>. They never touch each other, and they never name a provider — <code>think</code> resolves to whichever model backend is configured, <code>listen</code> to whichever transcriber. That is most of what an app declares, and it is why the transcript-cleanup logic could move out from under both apps without either one noticing.</em></p>
+<p>A single extraction like that is invisible: a file moves, two apps get shorter. What three months of them looks like — underneath a system that kept growing the whole time — is the pair below. Same graph, same tiers, twelve weeks apart.</p>
+<p><img alt="EmptyOS topology on day one: a few live apps, most capabilities unused, almost no shared infrastructure." src="../assets/topology-beginning.png" /></p>
+<p><em>Day one. The tiers exist, but almost nothing is wired: a few apps reaching down to <code>write</code>, <code>think</code>, and <code>read</code>, each still carrying its own logic.</em></p>
+<p><img alt="The same topology three months later: 1,051 nodes and 2,102 edges, dense against a shared base of capabilities, engines, and SDK." src="../assets/topology-now.png" /></p>
+<p><em>Three months later. Same view, 1,051 nodes and 2,102 edges. No app reaches sideways to another — but that proves nothing, since sideways is forbidden. What the picture honestly shows is scale and layering; whether the boundaries in that thickening base are the right ones is a separate question, and the graph cannot answer it.</em></p>
+<p>The base was not designed upfront; it accumulated, one <code>text_cleanup.py</code> at a time. But accumulation on its own is just sprawl with good manners. Two things have to be true for it to be architecture: the growth has to be <em>forced</em> down onto shared ground rather than sideways into private coupling, and each piece of that ground has to have been <em>earned</em> by a second consumer. The first is a constraint. The second is a judgment — and it is the harder one, because "a second app needs the same thing" is much easier to say than to establish.</p>
+<h3 id="the-constraint-and-what-it-cannot-do">The constraint, and what it cannot do<a class="header-link" href="#the-constraint-and-what-it-cannot-do" title="Permanent link">&para;</a></h3>
+<p>The forcing move is the one rule set on day one: an app may never reach into another app's internals. When two apps need the same code, the only legal home for it is a named, public boundary.</p>
+<p><img alt="App-to-app dependency is forbidden; shared infrastructure must be extracted to the SDK. The architecture forces the right move: extraction is the only legal path to shared code.|637" src="../assets/system-evolution-extraction.png" /></p>
+<p>Be precise about what that buys, because it is easy to overclaim. It does not produce good abstractions — nothing in the architecture can tell a real shared shape from a coincidence, or stop me from extracting the wrong thing. What it removes is the <em>cheap</em> escape route: an app that wants another app's code cannot quietly import it and move on, so the decision has to be made in the open, by a person, instead of accreting as a private dependency nobody voted for. Three of those decisions are worth walking through.</p>
+<h3 id="three-boundaries-revealed-by-use">Three boundaries revealed by use<a class="header-link" href="#three-boundaries-revealed-by-use" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Extracted</th>
+<th>Triggered by</th>
+<th>What the boundary owns</th>
+<th>What stayed in the apps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/KevinBean/emptyos/blob/main/emptyos/sdk/text_cleanup.py"><code>sdk/text_cleanup.py</code></a></td>
+<td><code>hands-free</code> → <code>dictation</code></td>
+<td>Polish a raw transcript: punctuation, casing, obvious homophones — never rewrite the speaker's words. Takes a <code>think_fn</code>; returns the original text if the model call comes back empty.</td>
+<td>The microphone, the UI, and what each app does with the cleaned text.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/KevinBean/emptyos/blob/main/emptyos/sdk/deep_loop.py"><code>sdk/deep_loop.py</code></a></td>
+<td><code>explore</code> → <code>kb-gap-miner</code></td>
+<td>The gap-driven control flow: answer, find what the answer missed, retrieve evidence for the gaps, synthesise.</td>
+<td>The retrieval channels and the synthesis prompts — different in each app.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/KevinBean/emptyos/blob/main/emptyos/sdk/vault_model.py"><code>VaultModel</code></a></td>
+<td><code>jobs</code> → <code>people</code></td>
+<td>A typed contract over vault-note frontmatter. Stayed <em>unexported</em> from the SDK for weeks while it had one consumer.</td>
+<td>Each app's own fields and validation rules.</td>
+</tr>
+</tbody>
+</table>
+<p>Each carries its own reason for existing, recorded in the source rather than in anyone's memory. <code>text_cleanup</code>'s reads:</p>
+<blockquote>
+<p>"Extracted from <code>apps/public/standard/hands-free</code> when the <code>dictation</code> app became the second consumer of the same 'polish a speech-to-text transcript' think call (CLAUDE.md rule 9)"</p>
+</blockquote>
+<h3 id="telling-a-boundary-from-a-resemblance">Telling a boundary from a resemblance<a class="header-link" href="#telling-a-boundary-from-a-resemblance" title="Permanent link">&para;</a></h3>
+<p>Two apps can look like they need the same thing when they don't, and the resemblance is always easier to see than the difference. I have no checklist for telling them apart, and I don't trust the ones I have read. What the three extractions above have in common is not a test I applied beforehand — it is a pattern I noticed afterwards.</p>
+<p><strong>The shared piece was always smaller than the feature that revealed it.</strong> <code>deep_loop</code> took the control flow and left the retrieval channels and the prompts behind. <code>text_cleanup</code> took the polishing step and left the microphone, the interface, and whatever each app did with the cleaned-up text. <code>VaultModel</code> took the typed contract and left each app's own fields. In every case most of the original feature stayed exactly where it was.</p>
+<p>That gives me the closest thing I have to a warning sign. If an extraction leaves nothing behind in the app it came from, I have probably pulled out the whole feature rather than the boundary underneath it — and the shared module will end up carrying both apps' opinions, usually as a flag that switches between them. The flag is the tell. It means the two callers never wanted the same thing.</p>
+<p>And the part I would attack if I were reading this: <strong>I wrote both apps.</strong> When the same person builds both, the second one may resemble the first simply because of how that person thinks — so the shape they appear to share can be a habit rather than a real seam in the problem. Two teams arriving at the same boundary without talking to each other would be far stronger evidence than anything I have here. Which is the honest version of the rule: a second app is a reason to go and look. It is not proof that a boundary is there.</p>
+<h3 id="the-compound-effect">The compound effect<a class="header-link" href="#the-compound-effect" title="Permanent link">&para;</a></h3>
+<p>The payoff arrives later, and it is countable. The Podcast app is about 1,800 lines, and its imports tell the story: ten shared primitives from five SDK modules — the staged <code>Pipeline</code> that gives it resumable, previewable runs, <code>RunBudget</code> for cost ceilings, five media helpers for scene planning, stitching, tempo, cleanup, and output review, and the JSON parsing every model-calling app needs. Most of those boundaries were shaped by earlier pairs of consumers; the pipeline layer was extracted only after two different apps had each hand-rolled the same stage sequencing and lost work to it. What Podcast had to write itself is the part no other app could know: a two-host script plan, the voice casting, the episode assembly.</p>
+<p><img alt="Every extraction makes the next app cheaper to build. A later app is composed largely from pre-extracted SDK infrastructure.|637" src="../assets/system-evolution-compound.png" /></p>
+<p>The benefit is not the size of the SDK — a large SDK full of APIs nobody asked for is a liability, not an asset. The benefit is that every module in it was already proven by the two real apps that shaped it, and its docstring says which two. So when someone asks a year from now why a module stops where it does, the answer is on file: it does what both consumers needed, and nothing else. An abstraction designed upfront has no answer to that question except the taste of whoever drew it.</p>
+<h3 id="the-takeaway">The takeaway<a class="header-link" href="#the-takeaway" title="Permanent link">&para;</a></h3>
+<p>Build the first app. Let it keep its own copy of everything. Build the second app. When it reaches for something the first one already has, you have not found an abstraction — you have found a <em>question</em>.</p>
+<p>Then go and answer it, with the code in front of you rather than a rule in your head. Every app is cheap to write now, which is exactly why the resemblances multiply and why the judgment is the scarce part.</p>
+<p>The SDK that survives this looks less elegant on a whiteboard, because its boundaries follow the grain of real use rather than the symmetry of a diagram. But every module in it can answer the only question that matters: which concrete consumers proved that this shape deserved to be shared?</p>
+<p>That is a stronger foundation than a framework whose only consumer was the imagination that designed it.</p>
+<blockquote>
+<p><em><a href="https://github.com/KevinBean/emptyos">EmptyOS</a> is a personal operating system that runs as a local web app over a plain markdown vault. It's open source and evolving in public.</em></p>
+</blockquote>
+<hr />
+<h2 id="listen-to-this-post">Listen to this post<a class="header-link" href="#listen-to-this-post" title="Permanent link">&para;</a></h2>
+<div id="podcast-how_architecture_emerges_in_ai_assisted_development" style="margin:12px 0"></div>
+<noscript>
+<audio controls style="width:100%">
+  <source src="../media/podcast-how-architecture-emerges-in-ai-assisted-development.mp3" type="audio/mpeg">
+</audio>
+</noscript>
+<script>
+(function(){
+  var el = document.getElementById("podcast-how_architecture_emerges_in_ai_assisted_development");
+  var mb = (location.pathname.indexOf("/posts/") >= 0) ? "../media/" : (location.search.indexOf("path=posts/") >= 0) ? "/publish/api/site-file?path=media/" : "media/";
+  function go(d) {
+    d.audioUrl = mb + "podcast-how-architecture-emerges-in-ai-assisted-development.mp3";
+    (d.scenes || []).forEach(function(sc) { if (sc.image_file) sc.image_url = mb + sc.image_file; });
+    SlideshowPlayer.create(el, d);
+  }
+  function load() {
+    fetch(mb + "podcast-how-architecture-emerges-in-ai-assisted-development-slideshow.json").then(function(r) { return r.json(); }).then(go);
+  }
+  if (window.SlideshowPlayer) { load(); return; }
+  var s = document.createElement("script");
+  s.src = mb + "slideshow-player.js";
+  s.onload = load;
+  document.head.appendChild(s);
+})();
+</script>
+<p id="vid-how_architecture_emerges_in_ai_assisted_development_vid" style="margin:6px 0 0;font-size:0.85rem"><a href="media/podcast-how-architecture-emerges-in-ai-assisted-development.mp4" download>&#11015; Download as video</a> <span style="color:var(--text-muted)">— share on LinkedIn, X, etc.</span></p>
+<script>(function(){var a=document.querySelector("#vid-how_architecture_emerges_in_ai_assisted_development_vid a");if(!a)return;if(location.pathname.indexOf("/posts/")>=0)a.href="../media/podcast-how-architecture-emerges-in-ai-assisted-development.mp4";else if(location.search.indexOf("path=posts/")>=0)a.href="/publish/api/site-file?path=media/podcast-how-architecture-emerges-in-ai-assisted-development.mp4";})();</script>
+<p style="font-size:0.8rem;color:var(--text-muted)">AI-generated podcast discussion of this article</p>
+      </div>
+      <div class="author-card">
+  <img src="../assets/avatar.png" class="author-avatar" alt="Kevin (Bin) Bian">
+  <div class="author-info">
+    <div class="author-name">Kevin (Bin) Bian</div>
+    <div class="author-bio">Senior electrical engineer — MV/HV power systems, standards, integrated energy. Sydney, NSW. Also builds AI tools and writes about coding agents and systems design.</div>
+    <div class="author-links"><a href="https://www.linkedin.com/in/bianbin/">LinkedIn</a> <a href="https://github.com/KevinBean/">GitHub</a> <a href="mailto:bianbin+contact@gmail.com">Email</a></div>
+  </div>
+</div>
+      
+      <div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--border)">
+  <h3 style="font-size:1rem;color:var(--text-heading);margin-bottom:12px">Related Posts</h3>
+  <ul class="post-list" style="margin:0">
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/telegram-pocket-console-emptyos.html" class="post-title" style="font-size:0.95rem">Chat App as Pocket Console: A Safe Front Door to EmptyOS from Telegram</a>
+  <div class="post-meta">2026-07-07</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/emptyos-native-ai-access.html" class="post-title" style="font-size:0.95rem">An AI-Native Interface Is a Contract, Not a Chatbox</a>
+  <div class="post-meta">2026-07-04</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/your-note-vault-under-ai-is-three-things-at-once.html" class="post-title" style="font-size:0.95rem">Notes as Infrastructure: the emergence of the markdown OS</a>
+  <div class="post-meta">2026-04-27</div>
+</li>
+  </ul>
+</div>
+      <div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border)">
+        <a href="../index.html">&larr; Back to posts</a>
+      </div>
+    </div>
+    <aside class="toc-sidebar">
+  <div class="toc-title">Contents</div>
+  <div class="toc">
+<ul>
+<li><a href="#specific-first-reusable-second">Specific first, reusable second</a></li>
+<li><a href="#the-constraint-and-what-it-cannot-do">The constraint, and what it cannot do</a></li>
+<li><a href="#three-boundaries-revealed-by-use">Three boundaries revealed by use</a></li>
+<li><a href="#telling-a-boundary-from-a-resemblance">Telling a boundary from a resemblance</a></li>
+<li><a href="#the-compound-effect">The compound effect</a></li>
+<li><a href="#the-takeaway">The takeaway</a></li>
+<li><a href="#listen-to-this-post">Listen to this post</a></li>
+</ul>
+</div>
+
+</aside>
+  </div>
+</article>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span class="cross-site-links"><a href="https://portfolio.binbian.net">Engineering Portfolio</a> &middot; <a href="https://eos.binbian.net">EmptyOS</a> &middot; <a href="https://plekto.dev">Plekto</a></span>
+      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a> &middot; <a href="../atom.xml">RSS</a>
+    </div>
+  </footer>
+  <script>
+  // Theme toggle
+  (function(){
+    try{var t=localStorage.getItem('site-theme');if(t==='alt-theme')document.body.classList.add('alt-theme');}catch(e){}
+  })();
+  function toggleTheme(){
+    document.body.classList.toggle('alt-theme');
+    try{localStorage.setItem('site-theme',document.body.classList.contains('alt-theme')?'alt-theme':'dark');}catch(e){}
+    var btn=document.querySelector('.theme-toggle');
+    btn.innerHTML=document.body.classList.contains('alt-theme')?'&#9788;':'&#9790;';
+  }
+  // Search
+  var _searchIndex=null;
+  function openSearch(){
+    document.getElementById('search-overlay').classList.add('open');
+    document.getElementById('search-input').focus();
+  }
+  function closeSearch(){
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch();
+  });
+  function _countOcc(hay,term){
+    if(!hay||!term)return 0;
+    var n=0,i=hay.indexOf(term);
+    while(i>=0){n++;i=hay.indexOf(term,i+term.length);}
+    return n;
+  }
+  function doSearch(q){
+    if(!_searchIndex){
+      var searchUrl='../search-index.json';
+      if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
+      fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
+      return;
+    }
+    var el=document.getElementById('search-results');
+    if(!q.trim()){el.innerHTML='';return;}
+    // Ranked search: multi-term (AND), field-weighted (title x5, tags x3, summary x2, body x1),
+    // full-phrase-in-title bonus; sort by score desc then date desc.
+    var lq=q.toLowerCase();
+    var terms=lq.split(/\s+/).filter(function(t){return t;});
+    var scored=[];
+    for(var i=0;i<_searchIndex.length;i++){
+      var p=_searchIndex[i];
+      var title=(p.title||'').toLowerCase();
+      var tags=(p.tags||[]).join(' ').toLowerCase();
+      var summary=(p.summary||'').toLowerCase();
+      var body=(p.body_preview||'').toLowerCase();
+      var score=0,allPresent=true;
+      for(var t=0;t<terms.length;t++){
+        var h=_countOcc(title,terms[t])*5+_countOcc(tags,terms[t])*3+_countOcc(summary,terms[t])*2+_countOcc(body,terms[t]);
+        if(h===0){allPresent=false;break;}
+        score+=h;
+      }
+      if(!allPresent)continue;
+      if(title.indexOf(lq)>=0)score+=10;
+      scored.push({p:p,s:score});
+    }
+    scored.sort(function(a,b){return b.s!==a.s?b.s-a.s:(b.p.date||'').localeCompare(a.p.date||'');});
+    var hits=scored.slice(0,8).map(function(x){return x.p;});
+    el.innerHTML=hits.map(function(p){
+      var href=p.type==='page'?('../'+p.slug+'.html'):('../'+'posts/'+p.slug+'.html');
+      return '<a class="search-result" href="'+href+'">'
+        +'<div class="search-result-title">'+p.title+'</div>'
+        +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';
+    }).join('')||'<div style="padding:12px;color:var(--text-muted);font-size:0.85rem">No results</div>';
+  }
+  </script>
+</body>
+</html>

@@ -2,10 +2,10 @@
 :root {
   --bg: #f8f8f4; --bg-card: #fff; --bg-input: #fff;
   --text: #2a2a30; --text-heading: #141418;
-  --text-secondary: #606068; --text-muted: #9898a0;
+  --text-secondary: #606068; --text-muted: #83838a;
   --border: #e4e4e0; --border-strong: #d0d0cc;
   --accent: #5b5fd0; --accent-bg: rgba(91,95,208,0.06);
-  --success: #34d399; --warning: #d97706; --danger: #dc2626;
+  --success: #0c8955; --warning: #c26800; --danger: #dc2626;
   --radius: 8px; --radius-lg: 14px;
   --font: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --mono: 'IBM Plex Mono', 'JetBrains Mono', monospace;
@@ -13,7 +13,7 @@
 body.alt-theme {
   --bg: #08080f; --bg-card: rgba(255,255,255,0.025); --bg-input: rgba(255,255,255,0.04);
   --text: #c8c8d0; --text-heading: #ededf0;
-  --text-secondary: #8888a0; --text-muted: #555568;
+  --text-secondary: #8888a0; --text-muted: #666677;
   --border: rgba(255,255,255,0.06); --border-strong: rgba(255,255,255,0.12);
   --accent: #8b7bf6; --accent-bg: rgba(139,123,246,0.1);
   --success: #34d399; --warning: #fbbf24; --danger: #f87171;

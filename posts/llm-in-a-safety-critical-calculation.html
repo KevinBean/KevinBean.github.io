@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Would You Let an LLM Into a Safety-Critical Calculation? — Kevin (Bin) Bian</title>
+  <meta name="description" content="In a safety-critical engineering calculation you often can't tell a good answer from a bad one by reading it — which makes an eloquent model more dangerous, not">
+  <meta property="og:title" content="Would You Let an LLM Into a Safety-Critical Calculation?">
+  <meta property="og:description" content="In a safety-critical engineering calculation you often can't tell a good answer from a bad one by reading it — which makes an eloquent model more dangerous, not">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Would You Let an LLM Into a Safety-Critical Calculation?">
+  <meta name="twitter:description" content="In a safety-critical engineering calculation you often can't tell a good answer from a bad one by reading it — which makes an eloquent model more dangerous, not">
+  <link rel="stylesheet" href="../site.css">
+  <link rel="alternate" type="application/atom+xml" title="Kevin (Bin) Bian Feed" href="../atom.xml">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <script>(function(){try{if(navigator.doNotTrack==='1')return;var u="http://localhost:9000/web-analytics/api/collect",s="default";var b={site:s,path:location.pathname,referrer:document.referrer||''};var blob=new Blob([JSON.stringify(b)],{type:'text/plain'});if(navigator.sendBeacon){navigator.sendBeacon(u,blob);}else{fetch(u,{method:'POST',body:JSON.stringify(b),keepalive:true,headers:{'Content-Type':'text/plain'}}).catch(function(){});}}catch(e){}})();</script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container" style="max-width:900px">
+      <a href="../index.html" class="site-name">Kevin (Bin) Bian</a>
+      <nav class="site-nav">
+        <a href="../index.html">Blog</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../cable-example-wind-farm.html">Example Wind Farm — Cable network report</a>
+        <a href="../tags.html">Tags</a>
+        <button class="search-toggle" onclick="openSearch()" title="Search" aria-label="Search">&#128269;</button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">&#9790;</button>
+      </nav>
+    </div>
+  </header>
+  <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+    <div class="search-box">
+      <input class="search-input" id="search-input" placeholder="Search posts..." oninput="doSearch(this.value)" autofocus>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+  <main class="container">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Would You Let an LLM Into a Safety-Critical Calculation?", "datePublished": "2026-08-08", "dateModified": "2026-08-08", "description": "In a safety-critical engineering calculation you often can't tell a good answer from a bad one by reading it — which makes an eloquent model more dangerous, not less. The move that makes AI usable there isn't a stronger model. It's a deterministic validity gate the model can't talk its way past: the", "url": "https://binbian.net/posts/llm-in-a-safety-critical-calculation.html", "mainEntityOfPage": "https://binbian.net/posts/llm-in-a-safety-critical-calculation.html", "author": {"@type": "Person", "name": "Kevin (Bin) Bian"}}</script>
+<article>
+  
+  
+  <div class="post-layout">
+    <div>
+      <div style="margin-bottom:24px">
+        <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:8px">Would You Let an LLM Into a Safety-Critical Calculation?</h1>
+        <div class="post-meta">2026-08-08 &middot; 4 min read <a href="../tags/ai.html" class="tag">AI</a> <a href="../tags/engineering.html" class="tag">engineering</a> <a href="../tags/energy.html" class="tag">energy</a> <a href="../tags/safety-critical.html" class="tag">safety-critical</a> <a href="../tags/verification.html" class="tag">verification</a></div>
+      </div>
+      <div class="article">
+        <p>Here's a question I keep coming back to as a power engineer who also builds AI tools: <strong>would you let a language model into a calculation where a wrong answer is a safety incident?</strong></p>
+<p>Most people answer one of two ways. "No, never" — and they miss where AI genuinely helps. Or "sure, the models are good now" — and they're trusting a probabilistic text generator with a number that has to be <em>right</em>, not <em>plausible</em>. Both answers miss the actual move.</p>
+<h2 id="the-failure-mode-isnt-wrong-its-confidently-wrong">The failure mode isn't "wrong." It's "confidently wrong."<a class="header-link" href="#the-failure-mode-isnt-wrong-its-confidently-wrong" title="Permanent link">&para;</a></h2>
+<p>A safety-critical engineering calculation has a property most software doesn't: you often <strong>can't tell a good answer from a bad one by reading it.</strong> A clearance, a rating, a fault level — the wrong number looks exactly as authoritative as the right one. That's the whole danger. An LLM is very good at producing authoritative-looking output, which means a more eloquent model can make the problem <em>worse</em>, not better.</p>
+<p>So the instinct everyone reaches for — "use a stronger model, add more reasoning" — doesn't address the real risk. A better model lowers the error rate; it doesn't tell you <em>which</em> outputs are the errors. For a regulated calculation, an unknown error rate is the same as no answer at all.</p>
+<h2 id="the-pattern-a-validity-gate-the-model-cant-talk-its-way-past">The pattern: a validity gate the model can't talk its way past<a class="header-link" href="#the-pattern-a-validity-gate-the-model-cant-talk-its-way-past" title="Permanent link">&para;</a></h2>
+<p>The discipline that makes AI usable in safety-critical work is the opposite of trusting it more: <strong>refuse to trust any output until it passes a deterministic check you control.</strong></p>
+<p>The model <em>proposes</em>; physics and the standard <em>dispose</em>:</p>
+<ol>
+<li><strong>The model generates a candidate</strong> — an implementation, a number, a derivation.</li>
+<li><strong>A deterministic gate validates it</strong> — not another LLM, not a judgment call. Real checks: unit/dimensional consistency, physical bounds (no negative resistances, no super-luminal anything), conservation laws, and — the strongest one — <strong>agreement with published reference cases</strong> from the governing standard, to a tolerance.</li>
+<li><strong>Hard fail → regenerate or escalate to a human.</strong> Soft smell → surface a warning, don't silently pass.</li>
+<li><strong>Only a candidate that clears the gate is ever shown as an answer.</strong></li>
+</ol>
+<p>The model is the <em>generator</em>. The gate is <em>ground truth</em>. The eloquence of the model is irrelevant to whether the answer is trusted, because the answer earns trust by passing a check, not by sounding right.</p>
+<h2 id="why-this-also-changes-the-which-model-question">Why this also changes the "which model" question<a class="header-link" href="#why-this-also-changes-the-which-model-question" title="Permanent link">&para;</a></h2>
+<p>Once a validity gate exists, the model becomes the <em>cheap, swappable</em> part. This is the through-line from <a href="/posts/2026-06-27-model-or-harness.html">a benchmark I ran recently</a> on whether the model or the harness is the bottleneck: when the loop around the model verifies the output, a much cheaper model often does the job, because the gate catches errors regardless of which model produced them. <strong>Verification architecture is what lets you stop overpaying for raw model strength.</strong></p>
+<h2 id="this-isnt-an-ai-idea-its-how-engineering-already-works">This isn't an AI idea. It's how engineering already works.<a class="header-link" href="#this-isnt-an-ai-idea-its-how-engineering-already-works" title="Permanent link">&para;</a></h2>
+<p>The reason this pattern feels obvious to an engineer is that it's the same instinct we apply without AI: you don't <em>trust</em> a calculation, you <em>verify</em> it — against the standard, against a hand check, against a reference case. The validity gate is just that instinct, automated, sitting between a fast generator and a human decision.</p>
+<p>Which is also why I think "AI for the grid" (or for any safety-critical domain) is mostly <strong>not a model problem — it's a verification-architecture problem.</strong> The interesting, durable work sits elsewhere: building the deterministic gates, grounding the generation in the actual standards, and designing the regenerate-and-escalate loop so a confident-but-wrong answer never reaches the field. That's the work I find worth doing — bringing software/AI rigor <em>to</em> engineering, with the engineer still owning the judgment.</p>
+<p>The model can draft. It just doesn't get to decide.</p>
+      </div>
+      <div class="author-card">
+  <img src="../assets/avatar.png" class="author-avatar" alt="Kevin (Bin) Bian">
+  <div class="author-info">
+    <div class="author-name">Kevin (Bin) Bian</div>
+    <div class="author-bio">Senior electrical engineer — MV/HV power systems, standards, integrated energy. Sydney, NSW. Also builds AI tools and writes about coding agents and systems design.</div>
+    <div class="author-links"><a href="https://www.linkedin.com/in/bianbin/">LinkedIn</a> <a href="https://github.com/KevinBean/">GitHub</a> <a href="mailto:bianbin+contact@gmail.com">Email</a></div>
+  </div>
+</div>
+      
+      <div style="margin-top:48px;padding-top:20px;border-top:1px solid var(--border)">
+  <h3 style="font-size:1rem;color:var(--text-heading);margin-bottom:12px">Related Posts</h3>
+  <ul class="post-list" style="margin:0">
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/how-architecture-emerges-in-ai-assisted-development.html" class="post-title" style="font-size:0.95rem">How Architecture Emerges in AI-Assisted Development</a>
+  <div class="post-meta">2026-07-08</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/chatgpt-4o-image-generation.html" class="post-title" style="font-size:0.95rem">Exploring ChatGPT 4o's New Image Generation from an Engineer's Perspective</a>
+  <div class="post-meta">2025-04-01</div>
+</li>
+<li class="post-item" style="padding:10px 0">
+  <a href="../posts/telegram-pocket-console-emptyos.html" class="post-title" style="font-size:0.95rem">Chat App as Pocket Console: A Safe Front Door to EmptyOS from Telegram</a>
+  <div class="post-meta">2026-07-07</div>
+</li>
+  </ul>
+</div>
+      <div style="margin-top:32px;padding-top:16px;border-top:1px solid var(--border)">
+        <a href="../index.html">&larr; Back to posts</a>
+      </div>
+    </div>
+    <aside class="toc-sidebar">
+  <div class="toc-title">Contents</div>
+  <div class="toc">
+<ul>
+<li><a href="#the-failure-mode-isnt-wrong-its-confidently-wrong">The failure mode isn't "wrong." It's "confidently wrong."</a></li>
+<li><a href="#the-pattern-a-validity-gate-the-model-cant-talk-its-way-past">The pattern: a validity gate the model can't talk its way past</a></li>
+<li><a href="#why-this-also-changes-the-which-model-question">Why this also changes the "which model" question</a></li>
+<li><a href="#this-isnt-an-ai-idea-its-how-engineering-already-works">This isn't an AI idea. It's how engineering already works.</a></li>
+</ul>
+</div>
+
+</aside>
+  </div>
+</article>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span class="cross-site-links"><a href="https://portfolio.binbian.net">Engineering Portfolio</a> &middot; <a href="https://eos.binbian.net">EmptyOS</a> &middot; <a href="https://plekto.dev">Plekto</a></span>
+      Powered by <a href="https://github.com/KevinBean/emptyos-site">EmptyOS</a> &middot; <a href="../atom.xml">RSS</a>
+    </div>
+  </footer>
+  <script>
+  // Theme toggle
+  (function(){
+    try{var t=localStorage.getItem('site-theme');if(t==='alt-theme')document.body.classList.add('alt-theme');}catch(e){}
+  })();
+  function toggleTheme(){
+    document.body.classList.toggle('alt-theme');
+    try{localStorage.setItem('site-theme',document.body.classList.contains('alt-theme')?'alt-theme':'dark');}catch(e){}
+    var btn=document.querySelector('.theme-toggle');
+    btn.innerHTML=document.body.classList.contains('alt-theme')?'&#9788;':'&#9790;';
+  }
+  // Search
+  var _searchIndex=null;
+  function openSearch(){
+    document.getElementById('search-overlay').classList.add('open');
+    document.getElementById('search-input').focus();
+  }
+  function closeSearch(){
+    document.getElementById('search-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape')closeSearch();
+  });
+  function _countOcc(hay,term){
+    if(!hay||!term)return 0;
+    var n=0,i=hay.indexOf(term);
+    while(i>=0){n++;i=hay.indexOf(term,i+term.length);}
+    return n;
+  }
+  function doSearch(q){
+    if(!_searchIndex){
+      var searchUrl='../search-index.json';
+      if(location.pathname.indexOf('/publish/api/')>=0)searchUrl='/publish/api/site-file?path=search-index.json';
+      fetch(searchUrl).then(function(r){return r.json();}).then(function(d){_searchIndex=d;doSearch(q);});
+      return;
+    }
+    var el=document.getElementById('search-results');
+    if(!q.trim()){el.innerHTML='';return;}
+    // Ranked search: multi-term (AND), field-weighted (title x5, tags x3, summary x2, body x1),
+    // full-phrase-in-title bonus; sort by score desc then date desc.
+    var lq=q.toLowerCase();
+    var terms=lq.split(/\s+/).filter(function(t){return t;});
+    var scored=[];
+    for(var i=0;i<_searchIndex.length;i++){
+      var p=_searchIndex[i];
+      var title=(p.title||'').toLowerCase();
+      var tags=(p.tags||[]).join(' ').toLowerCase();
+      var summary=(p.summary||'').toLowerCase();
+      var body=(p.body_preview||'').toLowerCase();
+      var score=0,allPresent=true;
+      for(var t=0;t<terms.length;t++){
+        var h=_countOcc(title,terms[t])*5+_countOcc(tags,terms[t])*3+_countOcc(summary,terms[t])*2+_countOcc(body,terms[t]);
+        if(h===0){allPresent=false;break;}
+        score+=h;
+      }
+      if(!allPresent)continue;
+      if(title.indexOf(lq)>=0)score+=10;
+      scored.push({p:p,s:score});
+    }
+    scored.sort(function(a,b){return b.s!==a.s?b.s-a.s:(b.p.date||'').localeCompare(a.p.date||'');});
+    var hits=scored.slice(0,8).map(function(x){return x.p;});
+    el.innerHTML=hits.map(function(p){
+      var href=p.type==='page'?('../'+p.slug+'.html'):('../'+'posts/'+p.slug+'.html');
+      return '<a class="search-result" href="'+href+'">'
+        +'<div class="search-result-title">'+p.title+'</div>'
+        +'<div class="search-result-summary">'+p.date+' &middot; '+(p.summary||'').substring(0,100)+'</div></a>';
+    }).join('')||'<div style="padding:12px;color:var(--text-muted);font-size:0.85rem">No results</div>';
+  }
+  </script>
+</body>
+</html>

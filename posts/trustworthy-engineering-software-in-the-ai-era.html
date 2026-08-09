@@ -47,7 +47,7 @@
     <div>
       <div style="margin-bottom:24px">
         <h1 style="font-size:1.8rem;color:var(--text-heading);margin-bottom:8px">How to Build Trustworthy Engineering Software in the AI Era</h1>
-        <div class="post-meta">2026-08-09 &middot; 13 min read <a href="../tags/ai.html" class="tag">AI</a> <a href="../tags/engineering.html" class="tag">engineering</a> <a href="../tags/energy.html" class="tag">energy</a> <a href="../tags/power-systems.html" class="tag">power-systems</a> <a href="../tags/verification.html" class="tag">verification</a> <a href="../tags/emptyos.html" class="tag">EmptyOS</a></div>
+        <div class="post-meta">2026-08-09 &middot; 12 min read <a href="../tags/ai.html" class="tag">AI</a> <a href="../tags/engineering.html" class="tag">engineering</a> <a href="../tags/energy.html" class="tag">energy</a> <a href="../tags/power-systems.html" class="tag">power-systems</a> <a href="../tags/verification.html" class="tag">verification</a> <a href="../tags/emptyos.html" class="tag">EmptyOS</a></div>
       </div>
       <div class="article">
         <p>I mentioned to a colleague that I had created an engineering calculator with AI's help. His first reaction was immediate:</p>
@@ -146,10 +146,6 @@
 </tbody>
 </table>
 <p><img alt="Trust Loop's stage cards for Stages 2 to 4, each listing its actions in order with HUMAN or AI marked on every step and a DECIDES line naming what holds authority|430" src="../assets/trustloop-live-roles.png" /></p>
-<p>The order is the part worth reading twice. This is not "AI drafts, a human approves" applied seven times: the sequence inverts by stage, and it inverts for a reason.</p>
-<p>At Stage 2 a person works <strong>first</strong>, because scope is a judgment — what the calculator will refuse to answer cannot be recovered by reviewing a draft that already assumed it. At Stage 6 the model works first and a person checks after, because assembling arithmetic is mechanical while confirming it is not. Where a stage produces a judgment, the human is upstream; where it produces labour, the human is downstream.</p>
-<p>And at the two gates, nobody is present for the verdict at all. Stage 4 and Stage 7 are decided by an execution rather than an opinion — which is the only reason the rest of the table is safe to write.</p>
-<p>So AI may draft the source digest, algorithm document, engine, interface, report assembly, and tests — nearly every artifact on the page. What it may not do is produce the runtime number, decide whether its own answer passes, or move the tolerance until a test turns green. At either gate, neither the model nor the reviewer gets a vote: the published result decides Stage 4, and the run decides Stage 7.</p>
 <h2 id="what-the-loop-does-not-prove">What the loop does not prove<a class="header-link" href="#what-the-loop-does-not-prove" title="Permanent link">&para;</a></h2>
 <p>One conformance case does not validate the entire input space. Agreement between two formulations is strong evidence only when they are genuinely independent. A mistyped published anchor can also approve wrong code with complete confidence.</p>
 <p>The loop does not eliminate engineering judgment or guarantee that no bug will ship. It makes each claim small, visible, repeatable, and open to challenge. It also makes refusals possible: when a method cannot be derived or validated, returning “not implemented” is safer than returning a plausible number.</p>
